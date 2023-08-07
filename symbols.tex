@@ -11,17 +11,17 @@
     ;
 }
 
-\newcommand{\CheckFormulaVariable}[2]{
+\newcommand{\FormulaVariable}[2]{
   \tikz[baseline] \path
     node[draw, shape=rectangle, anchor=base] (box) { #2 }
     (box.south) node[below=-0.5ex] {\tiny \scshape #1};
 }
 
 \newcommand{\CheckFormula}[1]{
-  \(\mbox{1d20} + \CheckFormulaVariable{}{\phantom{10}} \left(
+  \(\mbox{1d20} + \FormulaVariable{}{\phantom{10}} \left(
     \foreach[count=\index] \name/\value in {#1} {
       \ifnum \index > 1 + \fi
-      \CheckFormulaVariable{\name}{\ifx \name \value \phantom{1}\else \value \fi}
+      \FormulaVariable{\name}{\ifx \name \value \phantom{1}\else \value \fi}
     }
     \right)
   \)
