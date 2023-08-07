@@ -28,6 +28,7 @@
 \newcommand{\Flavor}[1]{\textit{#1}}
 
 \newcommand{\Reference}[2]{{\small #1 #2}}
+\newcommand{\DamageType}[1]{\operatorname{\mbox{#1}}}
 
 
 \section{Frightened}
@@ -73,7 +74,7 @@ A shield bash is not actually a weapon, but a maneuver in which you thrust or sw
 
 \CheckFormula{str, prof, item/1, stat, circ}
 
-Any hit with this sword deals 1 extra fire damage.
+\(\operatorname{1d8} + \FormulaVariable{str}{\phantom{1}} \DamageType{Slashing or Piercing} + 1 \DamageType{Fire}\)
 
 \Action{BB:GMG}{51}{1}{Activate}
 
