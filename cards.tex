@@ -24,6 +24,7 @@
 \newcommand{\WeaponType}[1]{\textbf{Type} #1}
 \newcommand{\WeaponCategory}[1]{\textbf{Category} #1}
 \newcommand{\WeaponGroup}[1]{\textbf{Group} #1}
+\newcommand{\Flavor}[1]{\textit{#1}}
 
 \newcommand{\Reference}[2]{{\small #1 #2}}
 
@@ -65,19 +66,27 @@ A shield bash is not actually a weapon, but a maneuver in which you thrust or sw
 
 \Item{3}{Smoking Sword}
 
+\Flavor{Smoke constantly belches from this magic longsword.}
+
+\Action{}{}{1}{Strike}
+
+Any hit with this sword deals 1 extra fire damage.
+
+Melee attack: 1d20 + STR + PROF + ITEM + CIRC - penalties
+
+\Action{}{}{1}{Activate}
+
+\Flavor{The blade's edges light on fire.}
+
+Until the end of your turn, the blade deals 1d6 extra fire damage instead of just 1. After you use this action, you can't use it again for 10 minutes.
+
+\vfill
+
 \WeaponDamage{1d8 Slashing + 1 Fire}
 \ItemHands{1}
 \\
 \WeaponType{Melee}
 \WeaponCategory{Martial}
 \WeaponGroup{Sword}
-
-Smoke constantly belches from this +1 magic longsword. Any hit with this sword deals 1 extra fire damage. You can use a special action while holding the sword to command the blade's edges to light on fire.
-
-\Action{}{}{1}{Strike}
-
-\Action{}{}{1}{Activate}
-
-Until the end of your turn, the blade deals 1d6 extra fire damage instead of just 1. After you use this action, you can't use it again for 10 minutes.
 
 \end{document}
