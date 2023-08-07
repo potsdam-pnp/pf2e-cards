@@ -1,0 +1,83 @@
+\documentclass[paper=a7, DIV=15, fontsize=8pt]{scrartcl}
+\usepackage{tikz}
+
+\begin{document}
+
+\pagestyle{empty}
+
+\input{symbols.tex}
+
+\setlength\parindent{0pt} % todo: avoid in favor of some komascript feature
+\setlength\parskip{4pt} % todo: avoid in favor of some komascript feature
+
+\addtokomafont{section}{\clearpage}
+
+\renewcommand*{\sectionformat}{}
+\renewcommand*{\subsectionformat}{}
+
+\newcommand{\Item}[2]{\section{#2 \hfill Item #1}}
+\newcommand{\Action}[4]{\subsection[#4]{#4 \ActionSymbol{#3} \hfill {\normalfont \small #1 #2}}}
+
+\newcommand{\Requirements}[1]{\paragraph{Requirements} #1.}
+\newcommand{\WeaponDamage}[1]{\textbf{Damage} #1}
+\newcommand{\ItemHands}[1]{\textbf{Hands} #1}
+\newcommand{\WeaponType}[1]{\textbf{Type} #1}
+\newcommand{\WeaponCategory}[1]{\textbf{Category} #1}
+\newcommand{\WeaponGroup}[1]{\textbf{Group} #1}
+
+\newcommand{\Reference}[2]{{\small #1 #2}}
+
+
+\section{Frightened}
+
+You're gripped by fear and struggle to control your nerves.
+The frightened condition always includes a value.
+You take a status penalty equal to this value to all your checks and DCs.
+Unless specified otherwise, at the end of each of your turns, the value of your frightened condition decreases by 1.
+
+\Item{1}{Steel Shield}
+
+Like wooden shields, steel shields come in a variety of shapes and sizes. Though more expensive than wooden shields, they are much more durable.
+
+Price 2gp
+AC Bonus 2
+Speed Penalty -
+Bulk 1
+Hardness 5
+HP 20 (BT 10)
+
+\Action{CRB}{472}{1}{Raise a Shield}
+
+\Requirements{You are wielding a shield}
+
+You position your shield to protect yourself. When you have Raised a Shield, you gain its listed circumstance bonus to AC. Your shield remains raised until the start of your next turn.
+
+\Action{CRB}{281}{3}{Shield Bash}
+
+\WeaponDamage{1d4 B}
+\ItemHands{1}
+\\
+\WeaponType{Melee}
+\WeaponCategory{Martial}
+\WeaponGroup{Shield}
+
+A shield bash is not actually a weapon, but a maneuver in which you thrust or swing your shield to hit your foe with an impromptu attack.
+
+\Item{3}{Smoking Sword}
+
+\WeaponDamage{1d8 Slashing + 1 Fire}
+\ItemHands{1}
+\\
+\WeaponType{Melee}
+\WeaponCategory{Martial}
+\WeaponGroup{Sword}
+
+Smoke constantly belches from this +1 magic longsword. Any hit with this sword deals 1 extra fire damage. You can use a special action while holding the sword to command the blade's edges to light on fire.
+
+\Action{}{}{1}{Strike}
+
+\Action{}{}{1}{Activate}
+
+Until the end of your turn, the blade deals 1d6 extra fire damage instead of just 1. After you use this action, you can't use it again for 10 minutes.
+
+\end{document}
