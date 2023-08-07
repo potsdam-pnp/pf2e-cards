@@ -6,8 +6,26 @@
         {
             "label": "xelatex",
             "type": "shell",
-            "command": "xelatex cards",
-            "problemMatcher": [],
+            "command": "xelatex -interaction=nonstopmode -file-line-error cards",
+            "presentation": {
+                "reveal": "never",
+                "revealProblems": "onProblem"
+            },
+            "problemMatcher": [
+                {
+                    "owner": "latex",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}"
+                    ],
+                    "pattern": {
+                        "regexp": "^(.*):([0-9]+): (.*)$",
+                        "file": 1,
+                        "line": 2,
+                        "message": 3
+                    }
+                }
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
