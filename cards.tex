@@ -27,7 +27,7 @@
 \renewcommand*{\subsectionformat}{}
 
 \newcommand{\Item}[2]{\section{#2 \hfill \color{gray} Item #1}}
-\newcommand{\Action}[4]{\subsection[#4]{#4\ActionSymbol{#3} \hfill \Reference{#1}{#2}}}
+\newcommand{\Action}[5][]{\subsection[#5]{#5\ActionSymbol{#4} \ifx&#1&\else{\normalsize\engschrift (#1)}\fi \hfill \Reference{#2}{#3}}}
 
 \newcommand{\Requirements}[1]{\paragraph{Requirements} #1.}
 
@@ -83,7 +83,7 @@ A shield bash is not actually a weapon, but a maneuver in which you thrust or sw
 
 \Flavor{Smoke constantly belches from this magic longsword.}
 
-\Action{CRB}{471}{1}{Strike}
+\Action[attack]{CRB}{471}{1}{Strike}
 
 \CheckFormula{strength, profic., item/1, status, circum.}
 
