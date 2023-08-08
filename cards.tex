@@ -4,6 +4,7 @@
 \usepackage{tikz}
 
 \newfontfamily{\postamt}{postamt.ttf}
+\newfontfamily{\engschrift}{tgl_0-1451eng.ttf}
 
 \begin{document}
 
@@ -24,7 +25,7 @@
 
 \newcommand{\Requirements}[1]{\paragraph{Requirements} #1.}
 
-\newcommand{\Attribute}[2]{\textbf{#1} #2}
+\newcommand{\Attribute}[2]{{\engschrift #1 #2}}
 \newcommand{\WeaponDamage}[1]{\Attribute{Damage}{#1}}
 \newcommand{\ItemHands}[1]{\Attribute{Hands}{#1}}
 \newcommand{\ItemBulk}[1]{\Attribute{Bulk}{#1}}
