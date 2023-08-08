@@ -1,6 +1,9 @@
 \documentclass[paper=63mm:88mm, DIV=21, fontsize=7.5pt]{scrartcl}
+\usepackage{fontspec}
 \usepackage{mathtools}
 \usepackage{tikz}
+
+\newfontfamily{\postamt}{postamt.ttf}
 
 \begin{document}
 
@@ -11,7 +14,7 @@
 \setlength\parindent{0pt} % todo: avoid in favor of some komascript feature
 \setlength\parskip{4pt} % todo: avoid in favor of some komascript feature
 
-\addtokomafont{section}{\clearpage}
+\addtokomafont{section}{\clearpage\normalfont\postamt}
 
 \renewcommand*{\sectionformat}{}
 \renewcommand*{\subsectionformat}{}
