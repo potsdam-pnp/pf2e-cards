@@ -20,13 +20,15 @@
 \newcommand{\Action}[4]{\subsection[#4]{#4 \ActionSymbol{#3} \hfill {\normalfont \small #1 #2}}}
 
 \newcommand{\Requirements}[1]{\paragraph{Requirements} #1.}
-\newcommand{\WeaponDamage}[1]{\textbf{Damage} #1}
-\newcommand{\ItemHands}[1]{\textbf{Hands} #1}
-\newcommand{\ItemBulk}[1]{\textbf{Bulk} #1}
-\newcommand{\ItemPrice}[1]{\textbf{Price} #1}
-\newcommand{\WeaponType}[1]{\textbf{Type} #1}
-\newcommand{\WeaponCategory}[1]{\textbf{Category} #1}
-\newcommand{\WeaponGroup}[1]{\textbf{Group} #1}
+
+\newcommand{\Attribute}[2]{\textbf{#1} #2}
+\newcommand{\WeaponDamage}[1]{\Attribute{Damage}{#1}}
+\newcommand{\ItemHands}[1]{\Attribute{Hands}{#1}}
+\newcommand{\ItemBulk}[1]{\Attribute{Bulk}{#1}}
+\newcommand{\ItemPrice}[1]{\Attribute{Price}{#1}}
+\newcommand{\WeaponType}[1]{\Attribute{Type}{#1}}
+\newcommand{\WeaponCategory}[1]{\Attribute{Category}{#1}}
+\newcommand{\WeaponGroup}[1]{\Attribute{Group}{#1}}
 \newcommand{\Flavor}[1]{\textit{#1}}
 
 \newcommand{\Reference}[2]{{\small #1 #2}}
