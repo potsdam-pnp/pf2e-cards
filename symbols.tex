@@ -15,7 +15,7 @@
   \operatorname{
     \tikz[baseline] \path
       node[draw, shape=rectangle, anchor=base] (box) { #2 }
-      (box.south) node[below=-0.5ex] {\tiny \scshape #1};
+      (box.south) node[below=-0.5ex] {\makebox[0pt][c]{\tiny \engschrift #1}};
     }
   }
 
