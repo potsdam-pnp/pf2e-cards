@@ -6,6 +6,7 @@
 
 \newfontfamily{\postamt}{postamt.ttf}
 \newfontfamily{\engschrift}{tgl_0-1451eng.ttf}
+\newfontfamily{\mittelschrift}{din1451alt.ttf}
 
 \begin{document}
 
@@ -17,6 +18,7 @@
 \setlength\parskip{4pt} % todo: avoid in favor of some komascript feature
 
 \addtokomafont{section}{\clearpage\normalfont\postamt}
+\addtokomafont{subsection}{\normalfont\mittelschrift}
 
 \renewcommand*{\sectionformat}{}
 \renewcommand*{\subsectionformat}{}
@@ -80,9 +82,9 @@ A shield bash is not actually a weapon, but a maneuver in which you thrust or sw
 
 \Action{CRB}{471}{1}{Strike}
 
-\CheckFormula{str, prof, item/1, stat, circ}
+\CheckFormula{strength, profic., item/1, status, circum.}
 
-\(\operatorname{1d8} + \FormulaVariable{str}{\phantom{1}} \DamageType{Slashing or Piercing} + 1 \DamageType{Fire}\)
+\(\operatorname{1d8} + \FormulaVariable{strength}{\phantom{1}} \DamageType{Slashing or Piercing} + 1 \DamageType{Fire}\)
 
 \Action{BB:GMG}{51}{1}{Activate}
 
