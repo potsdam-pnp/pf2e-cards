@@ -27,6 +27,7 @@
 \renewcommand*{\subsectionformat}{}
 
 \newcommand{\Item}[2]{\section{#2 \hfill \color{gray} Item #1}}
+\newcommand{\Spell}[2]{\section{#2 \hfill \color{gray} Spell #1}}
 \newcommand{\Action}[5][]{\subsection[#5]{#5\ActionSymbol{#4} \ifx&#1&\else{\normalsize\engschrift (#1)}\fi \hfill \Reference{#2}{#3}}}
 
 \newcommand{\Requirements}[1]{\paragraph{Requirements} #1.}
@@ -103,5 +104,28 @@ Until the end of your turn, the blade deals 1d6 extra fire damage instead of jus
 \WeaponType{Melee}
 \WeaponCategory{Martial}
 \WeaponGroup{Sword}
+
+\Spell{1}{Heal}
+
+\Flavor{You channel positive energy.}
+
+Restore \(\operatorname{1d8}\) hit points to willing living creatures.\\
+Deal \(\operatorname{1d8}\) positive damage to undead creatures.\\
+They get a basic Fortituate save.
+
+\Action[somatic]{CRB}{343}{1}{Cast}
+
+Target 1 creature within touch range.
+
+\Action[somatic, verbal]{CRB}{343}{2}{Cast}
+
+Target 1 creature within 30 feet.\\
+You can restore \(\operatorname{1d8}+8\) instead of \(\operatorname{1d8}\) hit points.
+
+\Action[material, somatic, verbal]{CRB}{343}{3}{Cast}
+
+\Flavor{You disperse positive energy in a 30-foot emanation.}
+
+Target every creature within 30 feet.
 
 \end{document}
