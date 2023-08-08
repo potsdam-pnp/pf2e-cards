@@ -1,4 +1,5 @@
 \documentclass[paper=63mm:88mm, DIV=21, fontsize=7.5pt]{scrartcl}
+\usepackage{xcolor}
 \usepackage{fontspec}
 \usepackage{mathtools}
 \usepackage{tikz}
@@ -20,12 +21,12 @@
 \renewcommand*{\sectionformat}{}
 \renewcommand*{\subsectionformat}{}
 
-\newcommand{\Item}[2]{\section{#2 \hfill Item #1}}
+\newcommand{\Item}[2]{\section{#2 \hfill \color{gray} Item #1}}
 \newcommand{\Action}[4]{\subsection[#4]{#4 \ActionSymbol{#3} \hfill \Reference{#1}{#2}}}
 
 \newcommand{\Requirements}[1]{\paragraph{Requirements} #1.}
 
-\newcommand{\Attribute}[2]{{\engschrift #1 #2}}
+\newcommand{\Attribute}[2]{{\engschrift \color{gray} #1 \normalcolor #2}}
 \newcommand{\WeaponDamage}[1]{\Attribute{Damage}{#1}}
 \newcommand{\ItemHands}[1]{\Attribute{Hands}{#1}}
 \newcommand{\ItemBulk}[1]{\Attribute{Bulk}{#1}}
@@ -35,7 +36,7 @@
 \newcommand{\WeaponGroup}[1]{\Attribute{Group}{#1}}
 \newcommand{\Flavor}[1]{\textit{#1}}
 
-\newcommand{\Reference}[2]{{\small \engschrift #1 #2}}
+\newcommand{\Reference}[2]{{\small \color{gray} \engschrift #1 #2}}
 \newcommand{\DamageType}[1]{\operatorname{\mbox{#1}}}
 
 
