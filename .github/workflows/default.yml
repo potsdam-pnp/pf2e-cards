@@ -1,0 +1,26 @@
+name: 'compile'
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Compile LaTeX document
+      uses: xu-cheng/latex-action@v2
+      with:
+        root_file: cards.tex
+        latexmk_use_xelatex: true
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: result
+        path: cards.pdf
