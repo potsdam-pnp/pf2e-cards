@@ -55,30 +55,31 @@ Unless specified otherwise, at the end of each of your turns, the value of your 
 
 \Item{1}{Steel Shield}
 
-Like wooden shields, steel shields come in a variety of shapes and sizes. Though more expensive than wooden shields, they are much more durable.
+\Flavor{Steel shields come in a variety of shapes and sizes.}
 
-Price 2gp
-AC Bonus 2
-Speed Penalty -
-Bulk 1
 Hardness 5
 HP 20 (BT 10)
 
 \Action{CRB}{472}{1}{Raise a Shield}
 
-\Requirements{You are wielding a shield}
+\Flavor{You position your shield to protect yourself.}
 
-You position your shield to protect yourself. When you have Raised a Shield, you gain its listed circumstance bonus to AC. Your shield remains raised until the start of your next turn.
+Gain \(+2\) circumstance bonus to AC until the start of your next turn.
 
-\Action{CRB}{281}{3}{Shield Bash}
+\Action[attack]{CRB}{281}{1}{Shield Bash}
 
-\WeaponDamage{1d4 B}
+\Flavor{Thrust or swing your shield to hit your foe with an impromptu attack.}
+
+\CheckFormula{strength, profic., item, status, circum.}
+
+\(\operatorname{1d4} + \FormulaVariable{strength}{\phantom{1}} \DamageType{Bludgeoning}\)
+
+\ItemPrice{2gp}
+\ItemBulk{1}
 \ItemHands{1}
 \WeaponType{Melee}
 \WeaponCategory{Martial}
 \WeaponGroup{Shield}
-
-A shield bash is not actually a weapon, but a maneuver in which you thrust or swing your shield to hit your foe with an impromptu attack.
 
 \Item{3}{Smoking Sword}
 
