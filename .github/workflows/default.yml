@@ -2,7 +2,8 @@ name: 'compile'
 on:
   workflow_dispatch:
   push:
-    - main
+    branches:
+      - main
   pull_request:
 permissions:
   contents: read
