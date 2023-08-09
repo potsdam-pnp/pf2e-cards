@@ -28,6 +28,7 @@
 
 \newcommand{\Item}[2]{\section{#2 \hfill \color{gray} Item #1}}
 \newcommand{\Spell}[2]{\section{#2 \hfill \color{gray} Spell #1}}
+\newcommand{\Cantrip}[2]{\section{#2 \hfill \color{gray} Cantrip #1}}
 \newcommand{\Action}[5][]{\subsection[#5]{#5\ActionSymbol{#4} \ifx&#1&\else{\normalsize\engschrift (#1)}\fi \hfill \Reference{#2}{#3}}}
 
 \newcommand{\Requirements}[1]{\paragraph{Requirements} #1.}
@@ -129,6 +130,23 @@ You can restore \(\operatorname{\level d8}+\bonus\) instead of \(\operatorname{\
 \Flavor{You disperse positive energy in a 30-foot emanation.}
 
 Target every creature within 30 feet.
+}
+
+\foreach[evaluate=\level as \bonus using int(\level*8)] \level in {1, ..., 10} {
+\Cantrip{\level}{Ray of Frost}
+
+\Flavor{You blast an icy ray.}
+
+\Action[attack, somatic, verbal]{CRB}{362}{2}{Cast}
+
+Target 1 creature within 120 feet with a spell atack.
+
+\CheckFormula{int., profic., item, status, circum.}
+
+\(\operatorname{\level d4} + \FormulaVariable{int.}{\phantom{1}} \DamageType{cold}\)
+
+On a critical success, the target takes double damage
+and takes a \(-10\)-foot status penalty to its Speeds for 1 round.
 }
 
 \end{document}
