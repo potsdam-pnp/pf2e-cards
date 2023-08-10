@@ -29,3 +29,12 @@
   \)
 }
   
+\newcommand{\DamageType}[1]{
+  \operatorname{\mbox{
+    \ifcsname DamageType#1\endcsname
+    \csname DamageType#1\endcsname
+    \else
+    #1
+    \fi
+  }}
+}
