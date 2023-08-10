@@ -46,6 +46,22 @@
 \newcommand{\Reference}[2]{{\small \color{gray} \engschrift #1 #2}}
 \newcommand{\DamageType}[1]{\operatorname{\mbox{#1}}}
 
+\newcommand{\Tag}[2]{%
+    \tikz[baseline]{%
+        \node[anchor=base, text=white, fill=#1, font=\sffamily, text depth=.5mm] {#2};
+    }%
+}
+
+\definecolor{tagsBg}{RGB}{217, 196, 132}
+\definecolor{uncommonBg}{RGB}{152, 81, 61}
+\definecolor{rareBg}{RGB}{0, 38, 100}
+\definecolor{traitBg}{RGB}{94, 0, 0}
+
+\newcommand{\Trait}[1]{\Tag{traitBg}{#1}}
+\newcommand{\Rare}[0]{\Tag{rareBg}{Rare}}
+\newcommand{\Uncommon}[0]{\Tag{uncommonBg}{Uncommon}}
+
+\newcommand{\Traits}[1]{\colorbox{tagsBg}{#1}}
 
 \section{Frightened}
 
@@ -73,7 +89,7 @@ Gain \(+2\) circumstance bonus to AC until the start of your next turn.
 
 \CheckFormula{strength, profic., item, status, circum.}
 
-\(\operatorname{1d4} + \FormulaVariable{strength}{\phantom{1}} \DamageType{Bludgeoning}\)
+\(\operatorname{1d4} + \FormulaVariable{strength}{\phantom{1}} \hfill \DamageType{Bludgeoning}\)
 
 \ItemPrice{2gp}
 \ItemBulk{1}
@@ -83,6 +99,8 @@ Gain \(+2\) circumstance bonus to AC until the start of your next turn.
 \WeaponGroup{Shield}
 
 \Item{3}{Smoking Sword}
+
+\Traits{\Trait{Evocation} \Trait{Fire} \Trait{Magical}}
 
 \Flavor{Smoke constantly belches from this magic longsword.}
 
@@ -110,6 +128,8 @@ Until the end of your turn, the blade deals 1d6 extra fire damage instead of jus
 \foreach[evaluate=\level as \bonus using int(\level*8)] \level in {1, ..., 10} {
 \Spell{\level}{Heal}
 
+\Traits{\Trait{Healing} \Trait{Necromancy} \Trait{Positive}}
+
 \Flavor{You channel positive energy.}
 
 Restore \(\operatorname{\level d8}\) hit points to willing living creatures.\\
@@ -134,6 +154,8 @@ Target every creature within 30 feet.
 
 \foreach[evaluate=\level as \bonus using int(\level*8)] \level in {1, ..., 10} {
 \Cantrip{\level}{Ray of Frost}
+
+\Traits{\Trait{Attack} \Trait{Cantrip} \Trait{Cold} \Trait{Evocation}}
 
 \Flavor{You blast an icy ray.}
 
