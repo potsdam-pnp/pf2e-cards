@@ -18,7 +18,9 @@ The font **Postamt** is taken from http://www.peter-wiegel.de/Postamt.html and u
 
 Various icons are taken from https://game-icons.net/ and used under [CC-by-3.0], see the comments in [symbols.tex] on the SVG path data.
 
+[cc-by-3.0]: http://creativecommons.org/licenses/by/3.0/
 [license]: LICENSE
 [license-altedin1451]: LICENSE-alteDin1451
 [license-stix2]: LICENSE-STIX2
 [sil open font license]: https://scripts.sil.org/OFL
+[symbols.tex]: [symbols.tex]
