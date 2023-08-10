@@ -16,6 +16,8 @@ The font **TGL 0-1451 Engschrift** is taken from http://www.peter-wiegel.de/TGL_
 
 The font **Postamt** is taken from http://www.peter-wiegel.de/Postamt.html and used based on the permissions on the FAQ in http://www.peter-wiegel.de. The downloads page states that all fonts are provided under Creative Commons, GPL mit Font-Exception and/or SIL Open Font License. Unfortunately it is not clear which of these licenses is supposed to apply to the Postamt font in particular.
 
+Various icons are taken from https://game-icons.net/ and used under [CC-by-3.0], see the comments in [symbols.tex] on the SVG path data.
+
 [license]: LICENSE
 [license-altedin1451]: LICENSE-alteDin1451
 [license-stix2]: LICENSE-STIX2
