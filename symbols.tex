@@ -29,14 +29,24 @@
   \)
 }
 
+\newcommand{\Damage}[3]{
+  \foreach \type in {#1} {
+    \DamageType{\type}
+  }
+  \(
+    \mbox{#2}
+    \foreach \part in {#3} {
+      + \FormulaVariable{\part}{\phantom{1}}
+    }
+  \)
+}
+
 \newcommand{\DamageType}[1]{
-  \operatorname{\mbox{
-    \ifcsname DamageType#1\endcsname
-    \csname DamageType#1\endcsname
-    \else
-    #1
-    \fi
-  }}
+  \ifcsname DamageType#1\endcsname
+  \csname DamageType#1\endcsname
+  \else
+  #1
+  \fi
 }
 
 \newcommand{\DamageTypeFire}{

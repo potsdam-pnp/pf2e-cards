@@ -144,7 +144,7 @@ Gain \(+2\) circumstance bonus to AC until the start of your next turn.
 
 \CheckFormula{strength, profic., item, status, circum.}
 
-\(\operatorname{1d4} + \FormulaVariable{strength}{\phantom{1}} \DamageType{Bludgeoning}\)
+\Damage{Bludgeoning}{1d4}{strength}
 
 \ItemPrice{2gp}
 \ItemBulk{1}
@@ -163,7 +163,8 @@ Gain \(+2\) circumstance bonus to AC until the start of your next turn.
 
 \CheckFormula{strength, profic., item/1, status, circum.}
 
-\(\operatorname{1d8} + \FormulaVariable{strength}{\phantom{1}} \DamageType{Slashing} or \DamageType{Piercing} + 1 \DamageType{Fire}\)
+\Damage{Slashing, Piercing}{1d8}{strength}
+\Damage{Fire}{1}{}
 
 \Action[concentrate]{BB:GMG}{51}{1}{Activate}
 
@@ -221,7 +222,7 @@ Target 1 creature within 120 feet with a spell atack.
 
 \CheckFormula{int., profic., item, status, circum.}
 
-\(\operatorname{\level d4} + \FormulaVariable{int.}{\phantom{1}} \DamageType{Cold}\)
+\Damage{Cold}{\level d4}{int.}
 
 On a critical success, the target takes double damage
 and takes a \(-10\)-foot status penalty to its Speeds for 1 round.
