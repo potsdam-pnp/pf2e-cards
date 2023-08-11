@@ -4,6 +4,9 @@
 \usepackage{mathtools}
 \usepackage{tikz}
 \usepackage{unicode-math}
+\usepackage{multicol}
+
+\usetikzlibrary{svg.path}
 
 \input{fonts.tex}
 
@@ -40,7 +43,6 @@
 \newcommand{\Flavor}[1]{\textit{#1}}
 
 \newcommand{\Reference}[2]{{\small \color{gray} \engschrift #1 #2}}
-\newcommand{\DamageType}[1]{\operatorname{\mbox{#1}}}
 
 \newcommand{\Tag}[2]{%
     \tikz[baseline]{%
@@ -58,6 +60,62 @@
 \newcommand{\Uncommon}[0]{\Tag{uncommonBg}{Uncommon}}
 
 \newcommand{\Traits}[1]{\colorbox{tagsBg}{#1}}
+
+\section{Symbol Reference}
+
+\subsection{Actions\hfill\Reference{CRB}{17}}
+
+\ActionSymbol{1} single action 
+
+\ActionSymbol{2}, \ActionSymbol{3} activity using 2 or 3 actions
+
+??? free action 
+??? reaction
+
+\subsection{Damage Types\hfill\Reference{CRB}{451}}
+
+\begin{multicols}{3}
+\footnotesize
+
+\(\DamageType{Bludgeoning}\) bludgeoning
+
+\(\DamageType{Slashing}\) slashing
+
+\(\DamageType{Piercing}\) piercing
+
+\(\DamageType{Cold}\) cold
+
+\(\DamageType{Fire}\) fire
+
+\(\DamageType{Acid}\) acid
+
+\(\DamageType{Electricity}\) electricity
+
+\(\DamageType{Sonic}\) sonic
+
+\(\DamageType{Positive}\) positive
+
+\(\DamageType{Negative}\) negative
+
+\(\DamageType{Force}\) force
+
+\(\DamageType{Chaotic}\) chaotic
+
+\(\DamageType{Evil}\) evil
+
+\(\DamageType{Good}\) good
+
+\(\DamageType{Lawful}\) lawful
+
+\(\DamageType{Poison}\) poison
+
+\(\DamageType{Magic}\) magic
+
+\(\DamageType{Mental}\) mental
+
+\(\DamageType{Bleed}\) bleed
+
+\end{multicols}
 
 \section{Frightened}
 
@@ -86,7 +144,7 @@ Gain \(+2\) circumstance bonus to AC until the start of your next turn.
 
 \CheckFormula{strength, profic., item, status, circum.}
 
-\(\operatorname{1d4} + \FormulaVariable{strength}{\phantom{1}} \hfill \DamageType{Bludgeoning}\)
+\(\operatorname{1d4} + \FormulaVariable{strength}{\phantom{1}} \DamageType{Bludgeoning}\)
 
 \ItemPrice{2gp}
 \ItemBulk{1}
@@ -105,7 +163,7 @@ Gain \(+2\) circumstance bonus to AC until the start of your next turn.
 
 \CheckFormula{strength, profic., item/1, status, circum.}
 
-\(\operatorname{1d8} + \FormulaVariable{strength}{\phantom{1}} \DamageType{Slashing or Piercing} + 1 \DamageType{Fire}\)
+\(\operatorname{1d8} + \FormulaVariable{strength}{\phantom{1}} \DamageType{Slashing} or \DamageType{Piercing} + 1 \DamageType{Fire}\)
 
 \Action[concentrate]{BB:GMG}{51}{1}{Activate}
 
@@ -163,7 +221,7 @@ Target 1 creature within 120 feet with a spell atack.
 
 \CheckFormula{int., profic., item, status, circum.}
 
-\(\operatorname{\level d4} + \FormulaVariable{int.}{\phantom{1}} \DamageType{cold}\)
+\(\operatorname{\level d4} + \FormulaVariable{int.}{\phantom{1}} \DamageType{Cold}\)
 
 On a critical success, the target takes double damage
 and takes a \(-10\)-foot status penalty to its Speeds for 1 round.
