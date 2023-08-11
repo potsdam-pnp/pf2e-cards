@@ -5,6 +5,7 @@
 \usepackage{tikz}
 \usepackage{unicode-math}
 \usepackage{multicol}
+\usepackage{xparse}
 
 \usetikzlibrary{svg.path}
 
@@ -163,7 +164,7 @@ Gain \(+2\) circumstance bonus to AC until the start of your next turn.
 
 \CheckFormula{strength, profic., item/1, status, circum.}
 
-\Damage{Slashing, Piercing}{1d8}{strength}
+\Damage{Piercing}[Slashing]{1d8}{strength}
 \Damage{Fire}{1}{}
 
 \Action[concentrate]{BB:GMG}{51}{1}{Activate}
