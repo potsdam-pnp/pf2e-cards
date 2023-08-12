@@ -8,6 +8,8 @@
 \usepackage{xparse}
 
 \usetikzlibrary{svg.path}
+\usetikzlibrary{fit}
+\usetikzlibrary{backgrounds}
 
 \input{fonts.tex}
 
@@ -143,9 +145,8 @@ Gain \(+2\) circumstance bonus to AC until the start of your next turn.
 
 \Flavor{Thrust or swing your shield to hit your foe with an impromptu attack.}
 
-\CheckFormula{strength, profic., item, status, circum.}
-
-\Damage{Bludgeoning}{1d4}{strength}
+\CheckRoll{MeleeAttack}{str, prof}
+\DamageRoll{Bludgeoning}{1d4}{str}
 
 \ItemPrice{2gp}
 \ItemBulk{1}
@@ -162,10 +163,9 @@ Gain \(+2\) circumstance bonus to AC until the start of your next turn.
 
 \Action[attack]{CRB}{471}{1}{Strike}
 
-\CheckFormula{strength, profic., item/1, status, circum.}
-
-\Damage{Piercing}[Slashing]{1d8}{strength}
-\Damage{Fire}{1}{}
+\CheckRoll{MeeleAttack}{str, prof, 1}
+\DamageRoll{Piercing}[Slashing]{1d8}{str}
+\DamageRoll{Fire}{1}{}
 
 \Action[concentrate]{BB:GMG}{51}{1}{Activate}
 
@@ -221,9 +221,8 @@ Target every creature within 30 feet.
 
 Target 1 creature within 120 feet with a spell atack.
 
-\CheckFormula{int., profic., item, status, circum.}
-
-\Damage{Cold}{\level d4}{int.}
+\CheckRoll{SpellAttack}{int, prof}
+\DamageRoll{Cold}{\level d4}{int}
 
 On a critical success, the target takes double damage
 and takes a \(-10\)-foot status penalty to its Speeds for 1 round.
