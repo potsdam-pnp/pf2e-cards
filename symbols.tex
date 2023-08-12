@@ -47,8 +47,12 @@
     \node (content) {
       \strut\smash{
         \IfValueTF{#2}
-          {\parbox[c]{1.25em}{\DamageType{#1}\DamageType{#2}}}
-          {\parbox[t]{1.25em}{\DamageType{#1}}}
+          {%
+            \raisebox{0.4em}{\DamageType{#1}}%
+            \clap{\tikz[baseline] \draw (-0.6em, -0.4em) -- (0.6em, 1.2em);}%
+            \raisebox{-0.4em}{\DamageType{#2}}%
+          }
+          {\DamageType{#1}}
         \(
           \mbox{#3}
           \foreach \part in {#4} {
