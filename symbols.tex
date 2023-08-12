@@ -20,13 +20,26 @@
   }
 
 \newcommand{\CheckFormula}[1]{
-  \(\operatorname{1d20} + \FormulaVariable{}{\phantom{10}} \left(
-    \foreach[count=\index] \name/\value in {#1} {
-      \ifnum \index > 1 + \fi
-      \FormulaVariable{\name}{\ifx \name \value \phantom{1}\else \value \fi}
-    }
-    \right)
+  \(
+    \operatorname{1d20} + \FormulaVariable{
+      \foreach[count=\index] \summand in {#1}
+        {\ifnum \index > 1 ~+~ \fi \summand}
+      }{\phantom{100}}
   \)
+}
+
+\NewDocumentCommand{\CheckRoll}{mm}{
+  \tikz{
+    \node (content) {
+      \strut\smash{
+        \parbox[t]{1.25em}{\CheckType{#1}}
+        \CheckFormula{#2}
+      }
+    };
+    \begin{pgfonlayer}{background}
+      \node [fit=(content), inner ysep=0.7em, fill=blue!20] (box) {};
+    \end{pgfonlayer}
+  }
 }
 
 \NewDocumentCommand{\Damage}{momm}{
@@ -48,6 +61,12 @@
       \node [fit=(content), inner ysep=0.7em, fill=black!20] (box) {};
     \end{pgfonlayer}
   }
+}
+
+\newcommand{\CheckType}[1]{
+  \ifcsname CheckType#1\endcsname
+  \csname CheckType#1\endcsname
+  \fi
 }
 
 \newcommand{\DamageType}[1]{

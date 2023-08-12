@@ -145,8 +145,7 @@ Gain \(+2\) circumstance bonus to AC until the start of your next turn.
 
 \Flavor{Thrust or swing your shield to hit your foe with an impromptu attack.}
 
-\CheckFormula{strength, profic., item, status, circum.}
-
+\CheckRoll{MeleeAttack}{str, prof}
 \Damage{Bludgeoning}{1d4}{strength}
 
 \ItemPrice{2gp}
@@ -164,8 +163,7 @@ Gain \(+2\) circumstance bonus to AC until the start of your next turn.
 
 \Action[attack]{CRB}{471}{1}{Strike}
 
-\CheckFormula{strength, profic., item/1, status, circum.}
-
+\CheckRoll{MeeleAttack}{str, prof, 1}
 \Damage{Piercing}[Slashing]{1d8}{strength}
 \Damage{Fire}{1}{}
 
@@ -223,8 +221,7 @@ Target every creature within 30 feet.
 
 Target 1 creature within 120 feet with a spell atack.
 
-\CheckFormula{int., profic., item, status, circum.}
-
+\CheckRoll{SpellAttack}{int, prof}
 \Damage{Cold}{\level d4}{int.}
 
 On a critical success, the target takes double damage
