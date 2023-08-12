@@ -32,7 +32,7 @@
   \tikz{
     \node (content) {
       \strut\smash{
-        \parbox[t]{1.25em}{\CheckType{#1}}
+        \parbox[t]{1.25em}{\CheckType{#1}[]}
         \CheckFormula{#2}
       }
     };
@@ -63,17 +63,19 @@
   }
 }
 
-\newcommand{\CheckType}[1]{
+\NewDocumentCommand{\CheckType}{mo}{
   \ifcsname CheckType#1\endcsname
   \csname CheckType#1\endcsname
+  \else
+  \IfValueTF{#2}{#2}{#1}
   \fi
 }
 
-\newcommand{\DamageType}[1]{
+\NewDocumentCommand{\DamageType}{mo}{
   \ifcsname DamageType#1\endcsname
   \csname DamageType#1\endcsname
   \else
-  #1
+  \IfValueTF{#2}{#2}{#1}
   \fi
 }
 
