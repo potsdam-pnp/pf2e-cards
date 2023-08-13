@@ -1,3 +1,7 @@
+\tikzset{roll box/.style={fill, inner ysep=0.7em, fill=black!20}}
+\tikzset{check roll box/.style={roll box, fill=blue!20}}
+\tikzset{damage roll box/.style={roll box, fill=red!20}}
+
 \newcommand{\ActionSymbol}[1]{
   \tikz[baseline=0.25ex] \path[draw, fill]
     (0.0ex, 1.0ex) -- (0.3ex, 1.3ex) -- (0.6ex, 1.0ex) -- (0.3ex, 0.7ex)
@@ -37,7 +41,7 @@
       }
     };
     \begin{pgfonlayer}{background}
-      \node [fit=(content), inner ysep=0.7em, fill=blue!20] (box) {};
+      \node [fit=(content), check roll box] (box) {};
     \end{pgfonlayer}
   }
 }
@@ -62,7 +66,7 @@
       }
     };
     \begin{pgfonlayer}{background}
-      \node [fit=(content), inner ysep=0.7em, fill=red!20] (box) {};
+      \node [fit=(content), damage roll box] (box) {};
     \end{pgfonlayer}
   }
 }
