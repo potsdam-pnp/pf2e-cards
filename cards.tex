@@ -31,6 +31,7 @@
 \newcommand{\Item}[2]{\section{#2 \hfill \color{gray} Item #1}}
 \newcommand{\Spell}[2]{\section{#2 \hfill \color{gray} Spell #1}}
 \newcommand{\Cantrip}[2]{\section{#2 \hfill \color{gray} Cantrip #1}}
+\newcommand{\FocusSpell}[2]{\section{#2 \hfill \color{gray} Focus #1}}
 \newcommand{\Action}[5][]{\subsection[#5]{#5\ActionSymbol{#4} \ifx&#1&\else{\normalsize\engschrift (#1)}\fi \hfill \Reference{#2}{#3}}}
 
 \newcommand{\Requirements}[1]{\paragraph{Requirements} #1.}
@@ -226,6 +227,23 @@ Target 1 creature within 120 feet with a spell atack.
 
 On a critical success, the target takes double damage
 and takes a \(-10\)-foot status penalty to its Speeds for 1 round.
+}
+
+% Force Bolt
+% https://2e.aonprd.com/Spells.aspx?ID=529
+
+\foreach[evaluate=\level as \half using int(ceil(\level/2))] \level in {1, ..., 10} {
+\FocusSpell{\level}{Force Bolt}
+
+\Traits{\Uncommon \Trait{Evocation} \Trait{Force} \Trait{Wizard}}
+
+\Flavor{You fire an unerring dart of force from your fingertips. It automatically hits and deals force damage to the target}.
+
+\Action[somatic]{CRB}{362}{1}{Cast}
+
+Target 1 creature within 30 feet.
+
+\DamageRoll{Force}{\half d4 + \half}{}
 }
 
 \end{document}
