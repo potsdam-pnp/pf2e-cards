@@ -1,14 +1,21 @@
 \newcommand{\ActionSymbol}[1]{
-  \tikz[baseline=0.25ex] \path[draw, fill]
-    (0.0ex, 1.0ex) -- (0.3ex, 1.3ex) -- (0.6ex, 1.0ex) -- (0.3ex, 0.7ex)
-    (0.5ex, 0.5ex) -- (1.0ex, 1.0ex) -- (0.5ex, 1.5ex) -- (1.0ex, 2.0ex) -- (2.0ex, 1.0ex) -- (1.0ex, 0.0ex)
-    \ifnum #1 > 1
-    (1.9ex, 0.5ex) -- (2.4ex, 1.0ex) -- (1.9ex, 1.5ex) -- (2.3ex, 1.9ex) -- (3.2ex, 1.0ex) -- (2.3ex, 0.1ex)
-    \ifnum #1 > 2
-    (3.1ex, 0.5ex) -- (3.6ex, 1.0ex) -- (3.1ex, 1.5ex) -- (3.4ex, 1.8ex) -- (4.2ex, 1.0ex) -- (3.4ex, 0.2ex)
-    \fi
+  \tikz[baseline=0.25ex]{    
+    \ifnum #1 = 0
+      \path[draw, fill=white, line width=0.2ex] (0.0ex, 1.0ex) -- (1.0ex, 2.0ex) -- (2.0ex, 1.0ex) -- (1.0ex, 0.0ex) -- cycle;
+      \path[draw, line width=0.25ex](0.5ex, 1.5ex) -- (1.0ex, 1.0ex) -- (0.5ex, 0.5ex);
+    \else
+      \path[draw, fill, line width=0.2ex] (0.0ex, 1.0ex) -- (1.0ex, 2.0ex) -- (2.0ex, 1.0ex) -- (1.0ex, 0.0ex) -- cycle;
+      \path[draw, fill, line width=0.25ex, white] (0.0ex, 1.0ex) -- (0.45ex, 1.45ex) -- (0.9ex, 1.0ex) -- (0.45ex, 0.55ex) -- cycle;
+      \path[draw, fill, line width=0.2ex] (0.0ex, 1.0ex) -- (0.3ex, 1.3ex) -- (0.6ex, 1.0ex) -- (0.3ex, 0.7ex) -- cycle;
+      \ifnum #1 > 1
+        \path[draw, fill](1.9ex, 0.5ex) -- (2.4ex, 1.0ex) -- (1.9ex, 1.5ex) -- (2.3ex, 1.9ex) -- (3.2ex, 1.0ex) -- (2.3ex, 0.1ex);
+        \ifnum #1 > 2
+          \path[draw, fill](3.1ex, 0.5ex) -- (3.6ex, 1.0ex) -- (3.1ex, 1.5ex) -- (3.4ex, 1.8ex) -- (4.2ex, 1.0ex) -- (3.4ex, 0.2ex);
+        \fi
+      \fi
     \fi
     ;
+  }
 }
 
 \newcommand{\FormulaVariable}[2]{
