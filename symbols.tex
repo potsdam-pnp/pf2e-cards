@@ -1,3 +1,7 @@
+\tikzset{roll box/.style={inner ysep=0.7em, fill=black!20}}
+\tikzset{check roll box/.style={roll box, fill=blue!20}}
+\tikzset{damage roll box/.style={roll box, fill=red!20, rounded corners=0.5em}}
+
 % TODO fix distance between actions, maybe avoid draw in favor of more fill?
 \newcommand{\ActionSymbol}[1]{
   \ifnum\strcmp{#1}{R} = 0
@@ -55,7 +59,7 @@
       }
     };
     \begin{pgfonlayer}{background}
-      \node [fit=(content), inner ysep=0.7em, fill=blue!20] (box) {};
+      \node [fit=(content), check roll box] (box) {};
     \end{pgfonlayer}
   }
 }
@@ -80,7 +84,7 @@
       }
     };
     \begin{pgfonlayer}{background}
-      \node [fit=(content), inner ysep=0.7em, fill=red!20] (box) {};
+      \node [fit=(content), damage roll box] (box) {};
     \end{pgfonlayer}
   }
 }
