@@ -29,10 +29,6 @@
 \renewcommand*{\subsectionformat}{}
 
 \newcommand{\Card}[3]{\section{#3 \hfill \color{gray} #1 #2}}
-\newcommand{\Item}[2]{\Card{Item}{#1}{#2}}
-\newcommand{\Spell}[2]{\Card{Spell}{#1}{#2}}
-\newcommand{\Cantrip}[2]{\Card{Cantrip}{#1}{#2}}
-\newcommand{\FocusSpell}[2]{\Card{Focus}{#1}{#2}}
 
 \newcommand{\Action}[5][]{\subsection[#5]{#5\ActionSymbol{#4} \ifx&#1&\else{\normalsize\engschrift (#1)}\fi \hfill \Reference{#2}{#3}}}
 
@@ -131,7 +127,7 @@ The frightened condition always includes a value.
 You take a status penalty equal to this value to all your checks and DCs.
 Unless specified otherwise, at the end of each of your turns, the value of your frightened condition decreases by 1.
 
-\Item{1}{Steel Shield}
+\Card{Item}{1}{Steel Shield}
 
 % TODO: Make room for some flavor text? Or maybe not, because the text is not very flavorful anyway
 % \Flavor{Steel shields come in a variety of shapes and sizes.}
@@ -159,7 +155,7 @@ Gain \(+2\) circumstance bonus to AC until the start of your next turn.
 \WeaponCategory{Martial}
 \WeaponGroup{Shield}
 
-\Item{3}{Smoking Sword}
+\Card{Item}{3}{Smoking Sword}
 
 \Traits{\Trait{Evocation} \Trait{Fire} \Trait{Magical}}
 
@@ -187,7 +183,7 @@ Until the end of your turn, the blade deals 1d6 extra fire damage instead of jus
 \WeaponGroup{Sword}
 
 \foreach[evaluate=\level as \bonus using int(\level*8)] \level in {1, ..., 10} {
-\Spell{\level}{Heal}
+\Card{Spell}{\level}{Heal}
 
 \Traits{\Trait{Healing} \Trait{Necromancy} \Trait{Positive}}
 
@@ -215,7 +211,7 @@ Target every creature within 30 feet.
 }
 
 \foreach[evaluate=\level as \bonus using int(\level*8)] \level in {1, ..., 10} {
-\Cantrip{\level}{Ray of Frost}
+\Card{Cantrip}{\level}{Ray of Frost}
 
 \Traits{\Trait{Attack} \Trait{Cantrip} \Trait{Cold} \Trait{Evocation}}
 
@@ -236,7 +232,7 @@ and takes a \(-10\)-foot status penalty to its Speeds for 1 round.
 % https://2e.aonprd.com/Spells.aspx?ID=529
 
 \foreach[evaluate=\level as \half using int(ceil(\level/2))] \level in {1, ..., 10} {
-\FocusSpell{\level}{Force Bolt}
+\Card{Focus}{\level}{Force Bolt}
 
 \Traits{\Uncommon \Trait{Evocation} \Trait{Force} \Trait{Wizard}}
 
