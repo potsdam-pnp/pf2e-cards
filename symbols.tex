@@ -2,17 +2,35 @@
 \tikzset{check roll box/.style={roll box, fill=blue!20}}
 \tikzset{damage roll box/.style={roll box, fill=red!20, rounded corners=0.5em}}
 
+% TODO fix distance between actions, maybe avoid draw in favor of more fill?
 \newcommand{\ActionSymbol}[1]{
-  \tikz[baseline=0.25ex] \path[draw, fill]
-    (0.0ex, 1.0ex) -- (0.3ex, 1.3ex) -- (0.6ex, 1.0ex) -- (0.3ex, 0.7ex)
-    (0.5ex, 0.5ex) -- (1.0ex, 1.0ex) -- (0.5ex, 1.5ex) -- (1.0ex, 2.0ex) -- (2.0ex, 1.0ex) -- (1.0ex, 0.0ex)
-    \ifnum #1 > 1
-    (1.9ex, 0.5ex) -- (2.4ex, 1.0ex) -- (1.9ex, 1.5ex) -- (2.3ex, 1.9ex) -- (3.2ex, 1.0ex) -- (2.3ex, 0.1ex)
-    \ifnum #1 > 2
-    (3.1ex, 0.5ex) -- (3.6ex, 1.0ex) -- (3.1ex, 1.5ex) -- (3.4ex, 1.8ex) -- (4.2ex, 1.0ex) -- (3.4ex, 0.2ex)
-    \fi
-    \fi
-    ;
+  \ifnum\strcmp{#1}{R} = 0
+    \ReactionSymbol
+  \else  
+    \tikz[baseline=0.25ex]{    
+      \ifnum #1 = 0
+        \path[draw, fill=white, line width=0.2ex] (0.0ex, 1.0ex) -- (1.0ex, 2.0ex) -- (2.0ex, 1.0ex) -- (1.0ex, 0.0ex) -- cycle;
+        \path[draw, line width=0.25ex](0.5ex, 1.5ex) -- (1.0ex, 1.0ex) -- (0.5ex, 0.5ex);
+      \else
+        \path[draw, fill, line width=0.2ex] (0.0ex, 1.0ex) -- (1.0ex, 2.0ex) -- (2.0ex, 1.0ex) -- (1.0ex, 0.0ex) -- cycle;
+        \path[draw, fill, line width=0.25ex, white] (0.0ex, 1.0ex) -- (0.45ex, 1.45ex) -- (0.9ex, 1.0ex) -- (0.45ex, 0.55ex) -- cycle;
+        \path[draw, fill, line width=0.2ex] (0.0ex, 1.0ex) -- (0.3ex, 1.3ex) -- (0.6ex, 1.0ex) -- (0.3ex, 0.7ex) -- cycle;
+        \ifnum #1 > 1
+          \path[draw, fill](2.0ex, 0.5ex) -- (2.5ex, 1.0ex) -- (2.0ex, 1.5ex) -- (2.4ex, 1.9ex) -- (3.3ex, 1.0ex) -- (2.4ex, 0.1ex) -- cycle;
+          \ifnum #1 > 2
+            \path[draw, fill](3.2ex, 0.5ex) -- (3.7ex, 1.0ex) -- (3.2ex, 1.5ex) -- (3.5ex, 1.8ex) -- (4.3ex, 1.0ex) -- (3.5ex, 0.2ex) -- cycle;
+          \fi
+        \fi
+      \fi
+    }
+  \fi
+}
+
+\newcommand{\ReactionSymbol}{%
+  \tikz \path[fill,scale=0.0045em,yscale=-1,baseline=0.25ex]
+    svg {
+      M 331.48828 722.78125 C 294.03855 722.87199 252.7653 738.90449 216.06836 780.86133 C 367.29593 705.24753 457.4943 827.35963 335.7168 876.90625 C 331.19388 851.10872 346.60742 830.37695 346.60742 830.37695 L 248.75 890.19922 L 356.60742 912.87695 C 345.9387 902.93153 340.03591 892.73489 337.16211 883.05078 C 522.17599 866.45683 444.13003 722.50831 331.48828 722.78125 z 
+    };%
 }
 
 \newcommand{\FormulaVariable}[2]{
