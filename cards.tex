@@ -28,10 +28,12 @@
 \renewcommand*{\sectionformat}{}
 \renewcommand*{\subsectionformat}{}
 
-\newcommand{\Item}[2]{\section{#2 \hfill \color{gray} Item #1}}
-\newcommand{\Spell}[2]{\section{#2 \hfill \color{gray} Spell #1}}
-\newcommand{\Cantrip}[2]{\section{#2 \hfill \color{gray} Cantrip #1}}
-\newcommand{\FocusSpell}[2]{\section{#2 \hfill \color{gray} Focus #1}}
+\newcommand{\Card}[3]{\section{#3 \hfill \color{gray} #1 #2}}
+\newcommand{\Item}[2]{\Card{Item}{#1}{#2}}
+\newcommand{\Spell}[2]{\Card{Spell}{#1}{#2}}
+\newcommand{\Cantrip}[2]{\Card{Cantrip}{#1}{#2}}
+\newcommand{\FocusSpell}[2]{\Card{Focus}{#1}{#2}}
+
 \newcommand{\Action}[5][]{\subsection[#5]{#5\ActionSymbol{#4} \ifx&#1&\else{\normalsize\engschrift (#1)}\fi \hfill \Reference{#2}{#3}}}
 
 \newcommand{\Requirements}[1]{\paragraph{Requirements} #1.}
