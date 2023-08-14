@@ -245,4 +245,28 @@ Target 1 creature within 30 feet.
 \DamageRoll{Force}{\half d4 + \half}{}
 }
 
+\Card{Action}{}{Demoralize}
+\Traits{\Trait{Emotion} \Trait{Fear} \Trait{Mental}}
+
+
+\Flavor{With a sudden shout, a well-timed taunt, or a cutting putdown, you can shake an enemy's resolve.}
+
+Target a creature you're aware of within 30 feet.
+The target becomes immune to your attempts to Demoralize it for 10 minutes.
+
+% TODO figure out spacing
+\vspace{-1em}
+
+\Action[auditory, concentrate]{CRB}{247}{1}{Demoralize}
+
+If you speak a language that the target understands.
+
+\CheckRoll{Intimidation}{cha, prof}[Will DC]
+\EffectBox{Frightened 2}{Frightened 1}
+
+\Action[auditory, concentrate]{CRB}{247}{1}{Demoralize}
+
+\CheckRoll{Intimidation}{cha, prof, -4}[Will DC]
+\EffectBox{Frightened 2}{Frightened 1}
+
 \end{document}
