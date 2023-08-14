@@ -1,6 +1,7 @@
 \tikzset{roll box/.style={inner ysep=0.7em, fill=black!20}}
 \tikzset{check roll box/.style={roll box, fill=blue!20}}
 \tikzset{damage roll box/.style={roll box, fill=red!20, rounded corners=0.5em}}
+\tikzset{effect box/.style={roll box, fill=red!20, rounded corners=0.5em}}
 
 % TODO fix distance between actions, maybe avoid draw in favor of more fill?
 \newcommand{\ActionSymbol}[1]{
@@ -41,31 +42,31 @@
     }
   }
 
-\newcommand{\CheckFormula}[1]{
+\NewDocumentCommand{\CheckFormula}{mo}{
   \(
     \operatorname{1d20} + \FormulaVariable{
       \foreach[count=\index] \summand in {#1}
         {\ifnum \index > 1 ~+~ \fi \summand}
-      }{\phantom{100}}
-  \)
+      }{\phantom{100}}\IfValueT{#2}{\ge \operatorname{\mbox{#2}}}%
+  \)%
 }
 
-\NewDocumentCommand{\CheckRoll}{mm}{
-  \tikz{
-    \node (content) {
+\NewDocumentCommand{\CheckRoll}{mmo}{
+  \tikz[baseline=(content.base)]{
+    \node (content)  {
       \strut\smash{
         \parbox[t]{1.25em}{\CheckType{#1}[]}
-        \CheckFormula{#2}
-      }
+        \CheckFormula{#2}[#3]%
+      }%
     };
     \begin{pgfonlayer}{background}
       \node [fit=(content), check roll box] (box) {};
-    \end{pgfonlayer}
-  }
+    \end{pgfonlayer}%
+  }%
 }
 
 \NewDocumentCommand{\DamageRoll}{momm}{
-  \tikz{
+  \tikz[baseline=(content.base)]{
     \node (content) {
       \strut\smash{
         \IfValueTF{#2}
@@ -89,6 +90,17 @@
   }
 }
 
+\NewDocumentCommand{\EffectBox}{mm}{
+  \tikz[baseline=(content.base)]{
+    \node (content) {\strut\smash{
+      {\setlength{\tabcolsep}{0pt}\begin{tabular}{l}#1\\#2\end{tabular}}
+    }};
+    \begin{pgfonlayer}{background}
+      \node [fit=(content), effect box] (box) {};
+    \end{pgfonlayer}
+  }
+}
+
 \NewDocumentCommand{\CheckType}{mo}{
   \ifcsname CheckType#1\endcsname
   \csname CheckType#1\endcsname
@@ -105,7 +117,7 @@
   \fi
 }
 
-\tikzset{game-icons.net/.style={fill,scale=0.002em,yscale=-1}}
+\tikzset{game-icons.net/.style={baseline=,fill,scale=0.002em,yscale=-1}}
 
 \newcommand{\DamageTypeFire}{%
   \tikz \path[game-icons.net]
