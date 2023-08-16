@@ -8,8 +8,11 @@ on:
 permissions:
   contents: read
   pull-requests: read
+  pages: write
+  id-token: write
 jobs:
   compile:
+    name: Generate cards.pdf
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -24,3 +27,7 @@ jobs:
       with:
         name: result
         path: cards.pdf
+  gh-pages:
+    name: Generate website
+    uses: ./.github/workflows/gh-pages.yml
+    needs: compile
