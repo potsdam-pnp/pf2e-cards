@@ -31,3 +31,5 @@ jobs:
     name: Generate website
     uses: ./.github/workflows/gh-pages.yml
     needs: compile
+  pf2e-font:
+    uses: ./.github/workflows/pf2e-font.yml

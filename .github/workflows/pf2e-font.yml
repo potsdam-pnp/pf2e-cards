@@ -1,0 +1,28 @@
+name: 'pf2e-font'
+on:
+  workflow_call:
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  check-ttf:
+    name: Check reproducibility of generating PF2ESymbols.ttf
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Install fontforge
+      run: sudo apt-get install fontforge-nox
+    - name: Generate PF2ESymbols.ttf
+      working-directory: fonts/PF2ESymbols
+      run: mkdir build && fontforge -lang=ff -c 'Open("pf2e-symbols.sfd"); Generate("build/PF2ESymbols.ttf")' 
+      id: generate-ttf
+    - name: Check equality of generated ttf file with checked-in ttf file
+      run: diff PF2ESymbols.ttf build/PF2ESymbols.ttf
+      working-directory: fonts/PF2ESymbols
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: PF2ESymbols
+        path: fonts/PF2ESymbols/build/PF2ESymbols.ttf
+      if: success() || steps.generate-ttf.conclusion == 'success'
