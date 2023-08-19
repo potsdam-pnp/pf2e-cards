@@ -44,6 +44,11 @@
 \newcommand{\WeaponGroup}[1]{\Attribute{Group}{#1}}
 \newcommand{\Flavor}[1]{\textit{#1}}
 
+\newcommand{\Hardness}[1]{\Attribute{Hardness}{#1}}
+% TODO: Render a box to enter current hit points
+\newcommand{\HitPoints}[1]{\Attribute{HP}{#1}}
+\newcommand{\BrokenThreshold}[1]{\Attribute{BT}{#1}}
+
 \newcommand{\Reference}[2]{{\small \color{gray} \engschrift #1 #2}}
 
 \newcommand{\Tag}[2]{%
@@ -129,11 +134,12 @@ Unless specified otherwise, at the end of each of your turns, the value of your 
 
 \Card{Item}{1}{Steel Shield}
 
-% TODO: Make room for some flavor text? Or maybe not, because the text is not very flavorful anyway
-% \Flavor{Steel shields come in a variety of shapes and sizes.}
+\Flavor{Steel shields come in a variety of shapes and sizes.}
 
-Hardness 5
-HP 20 (BT 10)
+% TODO: How should we render these item stats?
+\Hardness{5}
+\HitPoints{20}
+\BrokenThreshold{10}
 
 \Action{CRB}{472}{1}{Raise a Shield}
 
