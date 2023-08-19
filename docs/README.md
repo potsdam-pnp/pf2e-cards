@@ -7,6 +7,6 @@ These have been generated using the software provided at <https://github.com/tox
 {% include LICENSES.md %}
 
 [license]: https://github.com/Toxaris/pathfinder2-cards/blob/main/LICENSE
-[license-altedin1451]: https://github.com/Toxaris/pathfinder2-cards/blob/main/LICENSE-alteDin1451
-[license-stix2]: https://github.com/Toxaris/pathfinder2-cards/blob/main/LICENSE-STIX2
+[license-altedin1451]: https://github.com/Toxaris/pathfinder2-cards/blob/main/fonts/LICENSE-din1451alt
+[license-stix2]: https://github.com/Toxaris/pathfinder2-cards/blob/main/fonts/LICENSE-STIXTwo
 [symbols.tex]: https://github.com/Toxaris/pathfinder2-cards/blob/main/symbols.tex
