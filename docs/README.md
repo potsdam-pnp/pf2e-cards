@@ -10,3 +10,4 @@ These have been generated using the software provided at <https://github.com/tox
 [license-altedin1451]: https://github.com/Toxaris/pathfinder2-cards/blob/main/fonts/LICENSE-din1451alt
 [license-stix2]: https://github.com/Toxaris/pathfinder2-cards/blob/main/fonts/LICENSE-STIXTwo
 [symbols.tex]: https://github.com/Toxaris/pathfinder2-cards/blob/main/symbols.tex
+[fonts/PF2ESymbols]: https://github.com/Toxaris/pathfinder2-cards/tree/main/fonts/PF2ESymbols
