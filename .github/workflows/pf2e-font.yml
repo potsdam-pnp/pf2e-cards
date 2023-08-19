@@ -19,10 +19,11 @@ jobs:
       id: generate-ttf
     - name: Check equality of generated ttf file with checked-in ttf file
       run: diff PF2ESymbols.ttf build/PF2ESymbols.ttf
+      id: check-equality
       working-directory: fonts/PF2ESymbols
     - name: Archive production artifacts
       uses: actions/upload-artifact@v3
       with:
         name: PF2ESymbols
         path: fonts/PF2ESymbols/build/PF2ESymbols.ttf
-      if: success() || steps.generate-ttf.conclusion == 'success'
+      if: (success() || steps.generate-ttf.conclusion == 'success') && steps.check-equality.conclusion == 'failure'
