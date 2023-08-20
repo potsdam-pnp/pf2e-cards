@@ -48,8 +48,7 @@
 \newcommand{\Flavor}[1]{\textit{#1}}
 
 \newcommand{\Hardness}[1]{\Attribute{Hardness}{#1}}
-% TODO: Render a box to enter current hit points
-\newcommand{\HitPoints}[1]{\Attribute{HP}{#1}}
+\newcommand{\HitPoints}[1]{\Attribute{HP}{\(\FormulaVariable{current}{\phantom{100}}\) / #1}}
 \newcommand{\BrokenThreshold}[1]{\Attribute{BT}{#1}}
 
 \newcommand{\Reference}[2]{{\small \color{gray} \engschrift #1 #2}}
