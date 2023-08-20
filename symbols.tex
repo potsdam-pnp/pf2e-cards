@@ -7,6 +7,49 @@
   \mbox{\pfsymbols\selectfont#1}
 }
 
+\newcommand{\Action}[5][]{\subsection[#5]{#5\ActionSymbol{#4} \ifx&#1&\else{\normalsize\engschrift (#1)}\fi \hfill \Reference{#2}{#3}}}
+
+\newcommand{\Requirements}[1]{\paragraph{Requirements} #1.}
+
+\newcommand{\Attribute}[2]{\smallskip\mbox{\engschrift \color{gray} #1 \normalcolor #2}}
+\newcommand{\WeaponDamage}[1]{\Attribute{Damage}{#1}}
+\newcommand{\ItemHands}[1]{\Attribute{Hands}{#1}}
+\newcommand{\ItemBulk}[1]{\Attribute{Bulk}{#1}}
+\newcommand{\ItemPrice}[1]{\Attribute{Price}{#1}}
+\newcommand{\WeaponType}[1]{\Attribute{Type}{#1}}
+\newcommand{\WeaponCategory}[1]{\Attribute{Category}{#1}}
+\newcommand{\WeaponGroup}[1]{\Attribute{Group}{#1}}
+\newcommand{\Flavor}[1]{\textit{#1}}
+
+\newcommand{\Hardness}[1]{\Attribute{Hardness}{#1}}
+\newcommand{\BrokenThreshold}[1]{\Attribute{BT}{#1}}
+
+\NewDocumentCommand{\HitPoints}{o}{%
+  \Attribute{HP}{%
+    \IfNoValueTF{#1}
+      {}
+      {\(\FormulaVariable{current}{\phantom{100}}\) / #1}}%
+}
+
+\newcommand{\Reference}[2]{{\small \color{gray} \engschrift #1 #2}}
+
+\newcommand{\Tag}[2]{%
+    \tikz[baseline]{%
+        \node[anchor=base, text=white, fill=#1, font=\sffamily, text depth=.5mm] {#2};
+    }%
+}
+
+\definecolor{tagsBg}{RGB}{217, 196, 132}
+\definecolor{uncommonBg}{RGB}{152, 81, 61}
+\definecolor{rareBg}{RGB}{0, 38, 100}
+\definecolor{traitBg}{RGB}{94, 0, 0}
+
+\newcommand{\Trait}[1]{\Tag{traitBg}{#1}}
+\newcommand{\Rare}[0]{\Tag{rareBg}{Rare}}
+\newcommand{\Uncommon}[0]{\Tag{uncommonBg}{Uncommon}}
+
+\newcommand{\Traits}[1]{\colorbox{tagsBg}{#1}}
+
 % TODO fix distance between actions, maybe avoid draw in favor of more fill?
 \newcommand{\ActionSymbol}[1]{
   \ifnum\strcmp{#1}{R} = 0
