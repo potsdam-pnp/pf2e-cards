@@ -28,6 +28,9 @@
 \renewcommand*{\sectionformat}{}
 \renewcommand*{\subsectionformat}{}
 
+% TODO: move all these custom commands to a different file?
+%       would allow for simpler reuse in a macro reference overview
+
 \newcommand{\Card}[3]{\section{#3 \hfill \color{gray} #1 #2}}
 
 \newcommand{\Action}[5][]{\subsection[#5]{#5\ActionSymbol{#4} \ifx&#1&\else{\normalsize\engschrift (#1)}\fi \hfill \Reference{#2}{#3}}}
@@ -245,7 +248,7 @@ Target 1 creature within 120 feet with a spell atack.
 \CheckRoll{SpellAttack}{int, prof}
 \DamageRoll{Cold}{\level d4}{int}
 
-On a critical success, the target takes double damage
+\pfsymbol{critical-success} The target takes double damage
 and takes a \(-10\)-foot status penalty to its Speeds for 1 round.
 }
 
@@ -283,11 +286,19 @@ The target becomes immune to your attempts to Demoralize it for 10 minutes.
 If you speak a language that the target understands.
 
 \CheckRoll{Intimidation}{cha, prof}[Will DC]
-\EffectBox{Frightened 2}{Frightened 1}
+\EffectBox{%
+\pfsymbol{critical-success}Frightened 2
+}{%
+\pfsymbol{success}Frightened 1
+}
 
 \Action[auditory, concentrate]{CRB}{247}{1}{Demoralize}
 
 \CheckRoll{Intimidation}{cha, prof, -4}[Will DC]
-\EffectBox{Frightened 2}{Frightened 1}
+\EffectBox{%
+\pfsymbol{critical-success}Frightened 2
+}{%
+\pfsymbol{success}Frightened 1
+}
 
 \end{document}
