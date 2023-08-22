@@ -119,6 +119,8 @@
     cha                      & Charisma \\
 \end{tabular}
 
+\input{cards/actions/demoralize.tex}
+
 \section{Frightened}
 
 You're gripped by fear and struggle to control your nerves.
@@ -128,37 +130,6 @@ Unless specified otherwise, at the end of each of your turns, the value of your 
 
 \input{cards/items/smoking-sword.tex}
 \input{cards/items/steel-shield.tex}
-
-\Card{Action}{}{Demoralize}
-\CardTraits{Emotion, Fear, Mental}
-
-\Flavor{With a sudden shout, a well-timed taunt, or a cutting putdown, you can shake an enemy's resolve.}
-
-Target a creature you're aware of within 30 feet.
-The target becomes immune to your attempts to Demoralize it for 10 minutes.
-
-% TODO figure out spacing
-\vspace{-1em}
-
-\Action[Auditory, Concentrate]{CRB}{247}{1}{Demoralize}
-
-If you speak a language that the target understands.
-
-\CheckRoll{Intimidation}{cha, prof}[Will DC]
-\EffectBox{%
-\pfsymbol{critical-success}Frightened 2
-}{%
-\pfsymbol{success}Frightened 1
-}
-
-\Action[Auditory, Concentrate]{CRB}{247}{1}{Demoralize}
-
-\CheckRoll{Intimidation}{cha, prof, -4}[Will DC]
-\EffectBox{%
-\pfsymbol{critical-success}Frightened 2
-}{%
-\pfsymbol{success}Frightened 1
-}
 
 \input{cards/spells/force-bolt.tex}
 \input{cards/spells/heal.tex}
