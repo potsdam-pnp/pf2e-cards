@@ -1,0 +1,24 @@
+% Shocking Grasp
+% https://2e.aonprd.com/Spells.aspx?ID=283
+
+\Card{Spell}{1}{Shocking Grasp}
+\CardTraits{Electricity, Evocation}
+
+\Flavor{Shroud your hands in a crackling field of lightning.}
+ 
+Target 1 creature you can touch.
+
+\Action[Attack, Somatic, Verbal]{CRB}{369}{2}{Cast}
+
+If target is wearing metal armor or made of metal.
+
+\CheckRoll{Spell Attack}{int, prof, 1}
+% TODO: how to express persistent damage?
+\DamageRoll{Electricity}{2d12}{} \DamageRoll{Electricity}{1d4}{} (persistent)
+
+\pfsymbol{critical-success} Double the initial damage, but not the persistent damage.
+
+\Action[Attack, Somatic, Verbal]{CRB}{369}{2}{Cast}
+
+\CheckRoll{Spell Attack}{int, prof}
+\DamageRoll{Electricity}{2d12}{}
