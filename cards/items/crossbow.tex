@@ -1,0 +1,28 @@
+% Crossbow
+% https://2e.aonprd.com/Weapons.aspx?ID=67
+
+\Card{Item}{1}{Crossbow}
+
+\Flavor{%
+This ranged weapon has a bow-like assembly mounted on a handled frame called a
+tiller. The tiller has a mechanism to lock the bowstring in place, attached to a
+trigger mechanism that releases the tension and launches a bolt.
+}
+
+\Action[Attack]{CRB}{471}{1}{Strike}
+
+% TODO: How to track range incr, reload, and ammo?
+\Attribute{Range Incr}{120 ft}
+\Attribute{Reload}{1}
+\Attribute{Ammo}{\(\FormulaVariable{}{\phantom{100}}\)}
+
+\CheckRoll{RangeAttack}{dex, prof}
+\DamageRoll{Piercing}{1d8}{str}
+
+
+\ItemPrice{3gp}
+\ItemBulk{1}
+\ItemHands{2}
+\WeaponType{Ranged}
+\WeaponCategory{Simple}
+\WeaponGroup{Bow}
