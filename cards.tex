@@ -126,34 +126,7 @@ The frightened condition always includes a value.
 You take a status penalty equal to this value to all your checks and DCs.
 Unless specified otherwise, at the end of each of your turns, the value of your frightened condition decreases by 1.
 
-\Card{Item}{1}{Steel Shield}
-
-\Flavor{Steel shields come in a variety of shapes and sizes.}
-
-% TODO: How should we render these item stats?
-\Hardness{5}
-\HitPoints[20]
-\BrokenThreshold{10}
-
-\Action{CRB}{472}{1}{Raise a Shield}
-
-\Flavor{You position your shield to protect yourself.}
-
-Gain \(+2\) circumstance bonus to AC until the start of your next turn.
-
-\Action[Attack]{CRB}{281}{1}{Shield Bash}
-
-\Flavor{Thrust or swing your shield to hit your foe with an impromptu attack.}
-
-\CheckRoll{MeleeAttack}{str, prof}
-\DamageRoll{Bludgeoning}{1d4}{str}
-
-\ItemPrice{2gp}
-\ItemBulk{1}
-\ItemHands{1}
-\WeaponType{Melee}
-\WeaponCategory{Martial}
-\WeaponGroup{Shield}
+\input{cards/items/steel-shield.tex}
 
 \Card{Item}{3}{Smoking Sword}
 
