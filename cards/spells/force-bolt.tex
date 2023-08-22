@@ -1,0 +1,16 @@
+% Force Bolt
+% https://2e.aonprd.com/Spells.aspx?ID=529
+
+\foreach[evaluate=\level as \half using int(ceil(\level/2))] \level in {1, ..., 10} {
+\Card{Focus}{\level}{Force Bolt}
+
+\CardTraits{Force, Evocation, Uncommon, Wizard}
+
+\Flavor{You fire an unerring dart of force from your fingertips. It automatically hits and deals force damage to the target}.
+
+\Action[Somatic]{CRB}{362}{1}{Cast}
+
+Target 1 creature within 30 feet.
+
+\DamageRoll{Force}{\half d4 + \half}{}
+}
