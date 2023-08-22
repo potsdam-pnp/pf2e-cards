@@ -7,7 +7,7 @@
   \mbox{\pfsymbols\selectfont#1}
 }
 
-\newcommand{\Action}[5][]{\subsection[#5]{#5\ActionSymbol{#4} \ifx&#1&\else{\normalsize\engschrift (#1)}\fi \hfill \Reference{#2}{#3}}}
+\newcommand{\Action}[5][]{\subsection[#5]{#5\ActionSymbol{#4} \ActionTraits{#1} \hfill \Reference{#2}{#3}}}
 
 \newcommand{\Requirements}[1]{\paragraph{Requirements} #1.}
 
@@ -33,22 +33,12 @@
 
 \newcommand{\Reference}[2]{{\small \color{gray} \engschrift #1 #2}}
 
-\newcommand{\Tag}[2]{%
-    \tikz[baseline]{%
-        \node[anchor=base, text=white, fill=#1, font=\sffamily, text depth=.5mm] {#2};
-    }%
-}
+\newcommand{\CardTraits}[1]{\strut\raisebox{1em}[0pt][0pt]{\ActionTraits{#1}}}
 
-\definecolor{tagsBg}{RGB}{217, 196, 132}
-\definecolor{uncommonBg}{RGB}{152, 81, 61}
-\definecolor{rareBg}{RGB}{0, 38, 100}
-\definecolor{traitBg}{RGB}{94, 0, 0}
-
-\newcommand{\Trait}[1]{\Tag{traitBg}{#1}}
-\newcommand{\Rare}[0]{\Tag{rareBg}{Rare}}
-\newcommand{\Uncommon}[0]{\Tag{uncommonBg}{Uncommon}}
-
-\newcommand{\Traits}[1]{\colorbox{tagsBg}{#1}}
+\newcommand{\ActionTraits}[1]{{%
+  \small \engschrift
+  \foreach[count=\index] \trait in {#1}{\ifnum \index > 1 ~~ \fi \DamageType{\trait}[]\trait}%
+}}
 
 % TODO fix distance between actions, maybe avoid draw in favor of more fill?
 \newcommand{\ActionSymbol}[1]{

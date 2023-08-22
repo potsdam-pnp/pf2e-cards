@@ -141,7 +141,7 @@ Unless specified otherwise, at the end of each of your turns, the value of your 
 
 Gain \(+2\) circumstance bonus to AC until the start of your next turn.
 
-\Action[attack]{CRB}{281}{1}{Shield Bash}
+\Action[Attack]{CRB}{281}{1}{Shield Bash}
 
 \Flavor{Thrust or swing your shield to hit your foe with an impromptu attack.}
 
@@ -157,17 +157,17 @@ Gain \(+2\) circumstance bonus to AC until the start of your next turn.
 
 \Card{Item}{3}{Smoking Sword}
 
-\Traits{\Trait{Evocation} \Trait{Fire} \Trait{Magical}}
+\CardTraits{Fire, Magical, Evocation}
 
 \Flavor{Smoke constantly belches from this magic longsword.}
 
-\Action[attack]{CRB}{471}{1}{Strike}
+\Action[Attack]{CRB}{471}{1}{Strike}
 
 \CheckRoll{MeeleAttack}{str, prof, 1}
 \DamageRoll{Slashing}[Piercing]{1d8}{str}
 \DamageRoll{Fire}{1}{}
 
-\Action[concentrate]{BB:GMG}{51}{1}{Activate}
+\Action[Concentrate]{BB:GMG}{51}{1}{Activate}
 
 \Flavor{The blade's edges light on fire.}
 
@@ -185,7 +185,7 @@ Until the end of your turn, the blade deals 1d6 extra fire damage instead of jus
 \foreach[evaluate=\level as \bonus using int(\level*8)] \level in {1, ..., 10} {
 \Card{Spell}{\level}{Heal}
 
-\Traits{\Trait{Healing} \Trait{Necromancy} \Trait{Positive}}
+\CardTraits{Positive, Healing, Necromancy}
 
 % TODO make room for some flavor text?
 % \Flavor{You channel positive energy.}
@@ -194,16 +194,16 @@ Restore \(\operatorname{\level d8}\) hit points to willing living creatures.\\
 Deal \(\operatorname{\level d8}\) positive damage to undead creatures.\\
 They get a basic Fortituate save.
 
-\Action[somatic]{CRB}{343}{1}{Cast}
+\Action[Somatic]{CRB}{343}{1}{Cast}
 
 Target 1 creature within touch range.
 
-\Action[somatic, verbal]{CRB}{343}{2}{Cast}
+\Action[Somatic, Verbal]{CRB}{343}{2}{Cast}
 
 Target 1 creature within 30 feet.\\
 You can restore \(\operatorname{\level d8}+\bonus\) instead of \(\operatorname{\level d8}\) hit points.
 
-\Action[material, somatic, verbal]{CRB}{343}{3}{Cast}
+\Action[Material, Somatic, Verbal]{CRB}{343}{3}{Cast}
 
 \Flavor{Disperse positive energy in a 30-foot emanation.}
 
@@ -213,11 +213,11 @@ Target every creature within 30 feet.
 \foreach[evaluate=\level as \bonus using int(\level*8)] \level in {1, ..., 10} {
 \Card{Cantrip}{\level}{Ray of Frost}
 
-\Traits{\Trait{Attack} \Trait{Cantrip} \Trait{Cold} \Trait{Evocation}}
+\CardTraits{Cold, Evocation}
 
 \Flavor{You blast an icy ray.}
 
-\Action[attack, somatic, verbal]{CRB}{362}{2}{Cast}
+\Action[Attack, Somatic, Verbal]{CRB}{362}{2}{Cast}
 
 Target 1 creature within 120 feet with a spell atack.
 
@@ -234,11 +234,11 @@ and takes a \(-10\)-foot status penalty to its Speeds for 1 round.
 \foreach[evaluate=\level as \half using int(ceil(\level/2))] \level in {1, ..., 10} {
 \Card{Focus}{\level}{Force Bolt}
 
-\Traits{\Uncommon \Trait{Evocation} \Trait{Force} \Trait{Wizard}}
+\CardTraits{Force, Evocation, Uncommon, Wizard}
 
 \Flavor{You fire an unerring dart of force from your fingertips. It automatically hits and deals force damage to the target}.
 
-\Action[somatic]{CRB}{362}{1}{Cast}
+\Action[Somatic]{CRB}{362}{1}{Cast}
 
 Target 1 creature within 30 feet.
 
@@ -246,7 +246,7 @@ Target 1 creature within 30 feet.
 }
 
 \Card{Action}{}{Demoralize}
-\Traits{\Trait{Emotion} \Trait{Fear} \Trait{Mental}}
+\CardTraits{Emotion, Fear, Mental}
 
 \Flavor{With a sudden shout, a well-timed taunt, or a cutting putdown, you can shake an enemy's resolve.}
 
@@ -256,7 +256,7 @@ The target becomes immune to your attempts to Demoralize it for 10 minutes.
 % TODO figure out spacing
 \vspace{-1em}
 
-\Action[auditory, concentrate]{CRB}{247}{1}{Demoralize}
+\Action[Auditory, Concentrate]{CRB}{247}{1}{Demoralize}
 
 If you speak a language that the target understands.
 
@@ -267,7 +267,7 @@ If you speak a language that the target understands.
 \pfsymbol{success}Frightened 1
 }
 
-\Action[auditory, concentrate]{CRB}{247}{1}{Demoralize}
+\Action[Auditory, Concentrate]{CRB}{247}{1}{Demoralize}
 
 \CheckRoll{Intimidation}{cha, prof, -4}[Will DC]
 \EffectBox{%
