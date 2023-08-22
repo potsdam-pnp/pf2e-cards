@@ -1,0 +1,25 @@
+% Shocking Grasp
+% https://2e.aonprd.com/Spells.aspx?ID=283
+
+\Card{Spell}{1}{Shocking Grasp}
+\CardTraits{Electricity, Evocation}
+
+\Flavor{You shroud your hands in a crackling field of lightning.}
+ 
+\Action[Attack, Somatic, Verbal]{CRB}{369}{2}{Cast}
+
+Target 1 creature you can touch.
+
+If the target is wearing metal armor or is made of metal.
+
+% TODO: CheckRoll needs a way to add further modifiers (like +1)
+\CheckRoll{Spell Attack}{spell atk} \(+ 1\)
+% TODO: how to express persistent damage?
+\DamageRoll{Electricity}{2d12}{} \DamageRoll{Electricity}{1d4}{} (persistent)
+
+\pfsymbol{critical-success} Double the initial damage, but not the persistent damage.
+
+Otherwise
+
+\CheckRoll{Spell Attack}{spell atk}
+\DamageRoll{Electricity}{2d12}{}
