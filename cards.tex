@@ -130,34 +130,6 @@ Unless specified otherwise, at the end of each of your turns, the value of your 
 \input{cards/items/steel-shield.tex}
 
 \foreach[evaluate=\level as \bonus using int(\level*8)] \level in {1, ..., 10} {
-\Card{Spell}{\level}{Heal}
-
-\CardTraits{Positive, Healing, Necromancy}
-
-% TODO make room for some flavor text?
-% \Flavor{You channel positive energy.}
-
-Restore \(\operatorname{\level d8}\) hit points to willing living creatures.\\
-Deal \(\operatorname{\level d8}\) positive damage to undead creatures.\\
-They get a basic Fortituate save.
-
-\Action[Somatic]{CRB}{343}{1}{Cast}
-
-Target 1 creature within touch range.
-
-\Action[Somatic, Verbal]{CRB}{343}{2}{Cast}
-
-Target 1 creature within 30 feet.\\
-You can restore \(\operatorname{\level d8}+\bonus\) instead of \(\operatorname{\level d8}\) hit points.
-
-\Action[Material, Somatic, Verbal]{CRB}{343}{3}{Cast}
-
-\Flavor{Disperse positive energy in a 30-foot emanation.}
-
-Target every creature within 30 feet.
-}
-
-\foreach[evaluate=\level as \bonus using int(\level*8)] \level in {1, ..., 10} {
 \Card{Cantrip}{\level}{Ray of Frost}
 
 \CardTraits{Cold, Evocation}
@@ -223,6 +195,7 @@ If you speak a language that the target understands.
 \pfsymbol{success}Frightened 1
 }
 
+\input{cards/spells/heal.tex}
 \input{cards/spells/shocking-grasp.tex}
 
 \end{document}
