@@ -10,7 +10,11 @@
 
 \newcommand{\Action}[5][]{\subsection[#5]{#5\ActionSymbol{#4} \ActionTraits{#1} \hfill \Reference{#2}{#3}}}
 
-\NewDocumentCommand{\Activity}{ommmm}{\subsection[#5]{#5 {\small\engschrift (#4)}\ActionTraits{#1} \hfill \Reference{#2}{#3}}}
+\NewDocumentCommand{\Activity}{sommmm}{
+  \IfBooleanTF{#1}
+    {\subsection[#6]{#6 {\small\engschrift (#5)} \hfill \Reference{#3}{#4}\\\ActionTraits{#2}}}
+    {\subsection[#6]{#6 {\small\engschrift (#5)}\ActionTraits{#2} \hfill \Reference{#3}{#4}}}
+}
 
 \newcommand{\Requirements}[1]{\paragraph{Requirements} #1.}
 
