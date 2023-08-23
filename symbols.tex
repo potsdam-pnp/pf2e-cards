@@ -10,6 +10,8 @@
 
 \newcommand{\Action}[5][]{\subsection[#5]{#5\ActionSymbol{#4} \ActionTraits{#1} \hfill \Reference{#2}{#3}}}
 
+\NewDocumentCommand{\Activity}{ommmm}{\subsection[#5]{#5 {\small\engschrift (#4)}\ActionTraits{#1} \hfill \Reference{#2}{#3}}}
+
 \newcommand{\Requirements}[1]{\paragraph{Requirements} #1.}
 
 \newcommand{\Attribute}[2]{\smallskip\mbox{\engschrift \color{gray} #1 \normalcolor #2}}
@@ -17,10 +19,12 @@
 \newcommand{\ItemHands}[1]{\Attribute{Hands}{#1}}
 \newcommand{\ItemBulk}[1]{\Attribute{Bulk}{#1}}
 \newcommand{\ItemPrice}[1]{\Attribute{Price}{#1}}
+\newcommand{\ItemUsage}[1]{\Attribute{Usage}{#1}}
 \newcommand{\WeaponType}[1]{\Attribute{Type}{#1}}
 \newcommand{\WeaponCategory}[1]{\Attribute{Category}{#1}}
 \newcommand{\WeaponGroup}[1]{\Attribute{Group}{#1}}
 \newcommand{\EffectDuration}[1]{\Attribute{Duration}{#1}}
+\newcommand{\Frequency}[1]{\Attribute{Frequency}{#1}}
 \newcommand{\Flavor}[1]{\textit{#1}}
 
 \newcommand{\Hardness}[1]{\Attribute{Hardness}{#1}}
