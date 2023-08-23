@@ -13,12 +13,14 @@ trigger mechanism that releases the tension and launches a bolt.
 
 % TODO: How to track range incr, reload, and ammo?
 \Attribute{Range Incr}{120 ft}
-\Attribute{Reload}{1}
 \Attribute{Ammo}{\(\FormulaVariable{}{\phantom{100}}\)}
 
 \CheckRoll{RangeAttack}{dex, prof}
 \DamageRoll{Piercing}{1d8}{str}
 
+\Action[Manipulate]{CRB}{279}{1}{Reload}
+
+\Flavor{Prepare your next shot by loading another bolt.}
 
 \ItemPrice{3gp}
 \ItemBulk{1}
