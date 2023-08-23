@@ -1,0 +1,30 @@
+% Wand of Heal
+
+% https://2e.aonprd.com/Spells.aspx?ID=148
+% https://2e.aonprd.com/Equipment.aspx?ID=368
+
+\Card{Item}{3}{Wand of Heal}
+
+\CardTraits{Wand, Magical, Healing, Necromancy}
+
+% TODO make room for some flavor text?
+% \Flavor{You channel positive energy.}
+
+Restore \(\operatorname{1d8}\) hit points to willing living creatures.\\
+Deal \(\operatorname{1d8}\) positive damage to undead creatures.\\
+They get a basic Fortituate save.
+
+\Action[Somatic]{CRB}{343}{1}{Cast}
+
+Target 1 creature within touch range.
+
+\Action[Somatic, Verbal]{CRB}{343}{2}{Cast}
+
+Target 1 creature within 30 feet.\\
+You can restore \(\operatorname{1d8}+8\) instead of \(\operatorname{1d8}\) hit points.
+
+\Action[Somatic, Verbal]{CRB}{343}{3}{Cast}
+
+\Flavor{Disperse positive energy in a 30-foot emanation.}
+
+Target every creature within 30 feet.
