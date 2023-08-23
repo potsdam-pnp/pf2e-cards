@@ -1,6 +1,7 @@
 \tikzset{roll box/.style={inner ysep=0.7em, fill=black!20}}
 \tikzset{check roll box/.style={roll box, fill=blue!20}}
 \tikzset{damage roll box/.style={roll box, fill=red!20, rounded corners=0.5em}}
+\tikzset{healing roll box/.style={roll box, fill=green!20, rounded corners=0.5em}}
 \tikzset{effect box/.style={roll box, fill=red!20, rounded corners=0.5em}}
 
 \newcommand{\pfsymbol}[1]{%
@@ -111,6 +112,24 @@
     };
     \begin{pgfonlayer}{background}
       \node [fit=(content), damage roll box] (box) {};
+    \end{pgfonlayer}
+  }
+}
+
+\NewDocumentCommand{\HealingRoll}{mm}{
+  \tikz[baseline=(content.base)]{
+    \node (content) {
+      \strut\smash{
+        \(
+          \mbox{#1}
+          \foreach \part in {#2} {
+            + \FormulaVariable{\part}{\phantom{1}}
+          }
+        \)
+      }
+    };
+    \begin{pgfonlayer}{background}
+      \node [fit=(content), healing roll box] (box) {};
     \end{pgfonlayer}
   }
 }
