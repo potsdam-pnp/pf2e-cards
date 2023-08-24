@@ -1,0 +1,28 @@
+% Acid Splash
+% https://2e.aonprd.com/Spells.aspx?ID=3
+
+\foreach[
+  evaluate=\level as \half using int(ceil(\level/2)),
+  evaluate=\level as \dice using int(floor((\level-1)/2))
+] \level in {1, ..., 10} {
+\Card{Cantrip}{\level}{Acid Splash}
+
+\CardTraits{Acid, Evocation}
+
+\Flavor{You splash a glob of acid that splatters your target and nearby creatures.}
+
+\Action[Attack, Somatic, Verbal]{CRB}{316}{2}{Cast}
+
+Target one creature within 30 feet.
+
+\CheckRoll{SpellAttack}{spell atk}
+
+% TODO: add icon for "splash" damage?
+\ifnum \level < 3
+\DamageRoll{Acid}{1d6}{}\DamageRoll{Acid}{1 (splash)}{}
+\else
+\DamageRoll{Acid}{\dice{}d6}{key}\DamageRoll{Acid}{\dice{} (splash)}{}
+\fi
+
+\pfsymbol{critical-success} The target takes \pfsymbol{acid} \half{} persistent damage.
+}
