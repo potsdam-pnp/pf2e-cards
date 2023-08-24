@@ -1,0 +1,26 @@
+% Detect Magic
+% https://2e.aonprd.com/Spells.aspx?ID=66
+
+\foreach \level in {1, ..., 10} {
+\Card{Cantrip}{\level}{Detect Magic}
+
+\CardTraits{Detection, Divination}
+
+\Flavor{You send out a pulse that registers the presence of magic.}
+
+\Attribute{Area}{30-foot emanation}
+
+\Action[Somatic, Verbal]{CRB}{328}{2}{Cast}
+
+You receive no information beyond the presence or absence of magic. 
+
+Detect illusion magic for effects with a level \(< \level\).
+
+\ifnum \level > 2 
+  You learn the school of magic for the highest-level effect within range that the spell detects.
+\fi
+
+\ifnum \level > 3
+  You also pinpoint the source of the highest-level magic to a 5-foot cube.
+\fi
+}
