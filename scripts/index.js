@@ -56,20 +56,19 @@ async function main(argv) {
 
   let folderName = item.type.toLowerCase() + "s";
   const fileName = item.name.toLowerCase().replace(/ /g, "-") + ".tex";
-  const fileContent = `
-  % ${item.name}
-  % https://2e.aonprd.com${item.url}
+  const fileContent =
+  `% ${item.name}
+% https://2e.aonprd.com${item.url}
 
-  \\Card{${item.type}}{}{${item.name}}
+\\Card{${item.type}}{}{${item.name}}
 
+\\vfill
 
-  \\vfill
-
-  \\ItemPrice{${item.price_raw.replace(/ /, "")}}
-  \\ItemBulk{${item.bulk_raw}}
-  \\ItemHands{${item.hands}}
-  \\hfill${sourceReference}
-  `
+\\ItemPrice{${item.price_raw.replace(/ /, "")}}
+\\ItemBulk{${item.bulk_raw}}
+\\ItemHands{${item.hands}}
+\\hfill${sourceReference}
+`
 
   const rl = readline.createInterface({ input, output });
 
@@ -89,10 +88,10 @@ async function main(argv) {
   });
 
 
-  const cardsTex = fullFolder + ".tex";
+  const cardsTex = path.resolve(fullFolder, "../../cards.tex");
 
   //TODO: Write to correct location in cards.tex
-  await fs.writeFile(cardsTex, `\\input{cards/${folderName}/${fileName}}\n`, {
+  await fs.appendFile(cardsTex, `\\input{cards/${folderName}/${fileName}}\n`, {
     flags: "ax",
     encoding: "utf8"
   });
