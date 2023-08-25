@@ -12,7 +12,7 @@ Target 1 creature you can touch.
 
 If target is wearing metal armor or made of metal.
 
-\CheckRoll{Spell Attack}{int, prof, 1}
+\CheckRoll{Spell Attack}{spell atk, 1}
 % TODO: how to express persistent damage?
 \DamageRoll{Electricity}{2d12}{} \DamageRoll{Electricity}{1d4}{} (persistent)
 
@@ -20,5 +20,5 @@ If target is wearing metal armor or made of metal.
 
 \Action[Attack, Somatic, Verbal]{CRB}{369}{2}{Cast}
 
-\CheckRoll{Spell Attack}{int, prof}
+\CheckRoll{Spell Attack}{spell atk}
 \DamageRoll{Electricity}{2d12}{}
