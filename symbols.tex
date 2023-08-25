@@ -9,7 +9,7 @@
 }
 
 \NewDocumentCommand{\Action}{ommmom}{
-  \subsection[#6]{#6\ActionSymbol{#4}\IfNoValueTF{#5}{}{- \ActionSymbol{#5}} \ActionTraits{#1} \hfill \Reference{#2}{#3}}
+  \subsection[#6]{#6\ActionSymbol{#4}\IfValueT{#5}{- \ActionSymbol{#5}} \IfValueT{#1}{\ActionTraits{#1}} \hfill \Reference{#2}{#3}}
 }
 
 \NewDocumentCommand{\Activity}{sommmm}{
