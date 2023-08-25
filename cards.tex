@@ -1,34 +1,6 @@
-\documentclass[paper=63mm:88mm, DIV=21, fontsize=7.5pt]{scrartcl}
-\usepackage{xcolor}
-\usepackage{fontspec}
-\usepackage{mathtools}
-\usepackage{tikz}
-\usepackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
-\usepackage{multicol}
-\usepackage{xparse}
-
-\usetikzlibrary{svg.path}
-\usetikzlibrary{fit}
-\usetikzlibrary{backgrounds}
-
-\input{fonts.tex}
+\documentclass{card-style}
 
 \begin{document}
-
-\pagestyle{empty}
-
-\input{symbols.tex}
-
-\setlength\parindent{0pt} % todo: avoid in favor of some komascript feature
-\setlength\parskip{4pt} % todo: avoid in favor of some komascript feature
-
-\addtokomafont{section}{\clearpage\normalfont\postamt}
-\addtokomafont{subsection}{\normalfont\mittelschrift}
-
-\renewcommand*{\sectionformat}{}
-\renewcommand*{\subsectionformat}{}
-
-\newcommand{\Card}[3]{\section{#3 \hfill \color{gray} #1 #2}}
 
 \section{Symbol Reference}
 
