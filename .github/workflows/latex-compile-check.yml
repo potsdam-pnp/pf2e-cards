@@ -19,7 +19,7 @@ jobs:
           name: compile-log
       - name: Create checks
         run: |
-         node .github/workflows/latex-compile-check.js cards.log cards.tex ${{ github.event.pull_request.head.sha }} | curl -L \
+         node .github/workflows/latex-compile-check.js cards.log cards.tex ${{ github.event.pull_request.head.sha || github.sha }} | curl -L \
            -X POST \
            -H "Accept: application/vnd.github+json" \
            -H "Authorization: Bearer ${{ github.token }}" \
