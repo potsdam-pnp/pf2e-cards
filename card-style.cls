@@ -12,6 +12,8 @@
 \RequirePackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
 \RequirePackage{multicol}
 \RequirePackage{xparse}
+\RequirePackage[implicit=false]{hyperref}
+\RequirePackage{bookmark}
 
 \usetikzlibrary{svg.path}
 \usetikzlibrary{fit}
@@ -30,6 +32,12 @@
 \renewcommand*{\sectionformat}{}
 \renewcommand*{\subsectionformat}{}
 
-\newcommand{\Card}[3]{\section{#3 \hfill \color{gray} #1 #2}}
+\newcommand{\Category}[1]{\clearpage\bookmark[page=\thepage, level=0]{#1}}
+
+\newcommand{\Card}[3]{%
+  \clearpage
+  \bookmark[page=\thepage, level=1]{#3 \ifnum\pdfstrcmp{#2}{}=0\else (#1 #2)\fi}%
+  \section{#3 \hfill \color{gray} #1 #2}%
+}
 
 \pagestyle{empty}
