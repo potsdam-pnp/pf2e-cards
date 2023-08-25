@@ -5,3 +5,4 @@
 *.fls
 *.synctex.gz
 *.xdv
+scripts/node_modules
