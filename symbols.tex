@@ -160,12 +160,23 @@
   }
 }
 
-% TODO: allow for up to four arguments (crit success, success, failure, crit failure)
-% TODO: render degrees of success icons in respective rows
-\NewDocumentCommand{\EffectBox}{mm}{
+% \Effect{success | failure}{<description>}   - for regular success or failure
+% \Effect*{success | failure}{<description>}  - for critical success or critical failure
+\NewDocumentCommand{\Effect}{smm}{
+  \pfsymbol{\IfBooleanT{#1}{critical-}#2} & #3 \\
+}
+
+% \EffectBox{%
+%   \Effect*{success}{…}
+%   \Effect{success}{…}
+%   \Effect{failure}{…}
+%   \Effect*{failure}{…}
+% }
+% TODO: adjust colored box based on number of rows in the table
+\NewDocumentCommand{\EffectBox}{m}{
   \tikz[baseline=(content.base)]{
     \node (content) {\strut\smash{
-      {\setlength{\tabcolsep}{0pt}\begin{tabular}{l}#1\\#2\end{tabular}}
+      {\setlength{\tabcolsep}{0pt}\begin{tabular}{ll}#1\end{tabular}}
     }};
     \begin{pgfonlayer}{background}
       \node [fit=(content), effect box] (box) {};
