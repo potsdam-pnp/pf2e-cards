@@ -2,8 +2,7 @@
 \ProvidesClass{card-style}
   [2023/08/25 v0.01]
 
-\LoadClass{scrartcl}
-
+\LoadClass[DIV=21, fontsize=7.5pt]{scrartcl}
 \KOMAoptions{paper=63mm:88mm, DIV=21, fontsize=7.5pt}
 
 \RequirePackage{xcolor}
