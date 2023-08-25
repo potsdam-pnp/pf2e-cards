@@ -8,10 +8,16 @@
   \mbox{\pfsymbols\selectfont#1}
 }
 
+% \Action[<trait 1>, <trait 2>, …]{<source book>}{<page>}{<actions>}[<action range>]{<name>}
+%
+% Use \Action*{…} to render action traits on a new line.
 \NewDocumentCommand{\Action}{ommmom}{
   \subsection[#6]{#6\ActionSymbol{#4}\IfValueT{#5}{- \ActionSymbol{#5}} \IfValueT{#1}{\ActionTraits{#1}} \hfill \Reference{#2}{#3}}
 }
 
+% \Activity[<trait 1>, <trait 2>, …]{<source book>}{<page>}{<duration>}{<name>}
+% 
+% Use \Activity*{…} to render activity traits on a new line.
 \NewDocumentCommand{\Activity}{sommmm}{
   \IfBooleanTF{#1}
     {\subsection[#6]{#6 {\small\engschrift (#5)} \hfill \Reference{#3}{#4}\\\ActionTraits{#2}}}
@@ -36,6 +42,11 @@
 \newcommand{\Hardness}[1]{\Attribute{Hardness}{#1}}
 \newcommand{\BrokenThreshold}[1]{\Attribute{BT}{#1}}
 
+% \HitPoints 
+%   renders the Attribute for hit points (HP). 
+% \HitPoints[<max>]
+%   renders the Attribute for hit points (HP) and 
+%   a box to track [current] / <max>.
 \NewDocumentCommand{\HitPoints}{o}{%
   \Attribute{HP}{%
     \IfNoValueTF{#1}
@@ -43,6 +54,7 @@
       {\(\FormulaVariable{current}{\phantom{100}}\) / #1}}%
 }
 
+% \Reference{<source book>}{<page>}
 \newcommand{\Reference}[2]{{\small \color{gray} \engschrift #1 #2}}
 
 \newcommand{\CardTraits}[1]{\strut\raisebox{1em}[0pt][0pt]{\ActionTraits{#1}}}
@@ -88,6 +100,7 @@
   \)%
 }
 
+% \CheckRoll{<check type>}{<mod desc>}[<DC>]
 \NewDocumentCommand{\CheckRoll}{mmo}{
   \tikz[baseline=(content.base)]{
     \node (content)  {
@@ -102,6 +115,7 @@
   }%
 }
 
+% \DamageRoll{<damage type>}[<alternative damage type>]{<damage roll>}{<mod descr>}
 \NewDocumentCommand{\DamageRoll}{momm}{
   \tikz[baseline=(content.base)]{
     \node (content) {
@@ -127,6 +141,7 @@
   }
 }
 
+% \HealingRoll{<healing roll>}{<mod descr>}
 \NewDocumentCommand{\HealingRoll}{mm}{
   \tikz[baseline=(content.base)]{
     \node (content) {
