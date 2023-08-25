@@ -1,7 +1,7 @@
 % Detect Magic
 % https://2e.aonprd.com/Spells.aspx?ID=66
 
-\foreach \level in {1, ..., 10} {
+\foreach[evaluate=\level as \lower using int(\level - 1)] \level in {1, ..., 10} {
 \Card{Cantrip}{\level}{Detect Magic}
 
 \CardTraits{Detection, Divination}
@@ -12,15 +12,23 @@
 
 \Action[Somatic, Verbal]{CRB}{328}{2}{Cast}
 
-You receive no information beyond the presence or absence of magic. 
+\ifnum \level < 3
+  You receive no information beyond the presence or absence of magic.
+\fi
 
-Detect illusion magic for effects with a level \(< \level\).
-
-\ifnum \level > 2 
+\ifnum \level = 3
   You learn the school of magic for the highest-level effect within range that the spell detects.
 \fi
 
 \ifnum \level > 3
-  You also pinpoint the source of the highest-level magic to a 5-foot cube.
+  You learn the school of magic for the highest-level effect within range that the spell detects and pinpoint its source to a 5-foot cube.
+\fi
+
+You can choose to ignore magic you're fully aware of, such as the magic items and ongoing spells of you and your allies.
+
+\ifnum \lower > 0
+Detect illusion magic for effects with a level \(\le \lower\).
+\else
+You cannot detect illusion magic.
 \fi
 }
