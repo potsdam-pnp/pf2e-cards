@@ -1,0 +1,20 @@
+% Burning Hands
+% https://2e.aonprd.com/Spells.aspx?ID=30
+
+\foreach[
+  evaluate=\level as \dice using int(2*\level)
+] \level in {1, ..., 10} {
+\Card{Spell}{\level}{Burning Hands}
+
+\CardTraits{Evocation, Fire}
+
+\Flavor{Gouts of flame rush from your hands.}
+
+\Action[Somatic, Verbal]{CRB}{322}{2}{Cast}
+
+Affect all creatures in a 15-foot cone.
+
+They get a basic Reflex save.
+
+\DamageRoll{Fire}{\dice{}d6}{}
+}
