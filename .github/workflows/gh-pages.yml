@@ -36,7 +36,7 @@ jobs:
       - name: Download cards.pdf
         uses: actions/download-artifact@v3
         with:
-          name: result
+          name: cards
           path: _site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
