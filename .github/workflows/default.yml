@@ -24,10 +24,10 @@ jobs:
         root_file: cards.tex
         latexmk_use_xelatex: true
         pre_compile: "export max_print_line=1000"
-    - name: Archive production artifacts
+    - name: Archive cards.pdf
       uses: actions/upload-artifact@v3
       with:
-        name: result
+        name: cards
         path: cards.pdf
     - name: Show cards.log
       run: cat cards.log
