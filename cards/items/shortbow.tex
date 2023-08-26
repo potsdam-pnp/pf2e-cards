@@ -1,0 +1,29 @@
+% Shortbow
+% https://2e.aonprd.com/Weapons.aspx?ID=77
+
+\Card{Item}{0}{Shortbow}
+
+\CardTraits{Deadly d10}
+
+
+\Action[Attack]{CRB}{471}{1}{Strike}
+
+% TODO: How to track range incr, reload, and ammo?
+\Attribute{Range Incr}{60 ft}
+\Attribute{Ammo}{\(\FormulaVariable{}{\phantom{100}}\)} \hfill (10 arrows \ItemPrice{1sp} \ItemBulk{L})
+
+\CheckRoll{RangeAttack}{dex, prof}
+\DamageRoll{Piercing}{1d6}{}
+
+
+\vfill
+
+\ItemPrice{3gp}
+\ItemBulk{1}
+\ItemHands{1+}
+\WeaponType{Ranged}
+\WeaponCategory{Martial}
+\WeaponGroup{Bow}
+
+%TODO Put reference somewhere
+% \Reference{CRB}{282}
