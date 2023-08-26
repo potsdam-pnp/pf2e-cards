@@ -21,7 +21,7 @@
 \NewDocumentCommand{\Activity}{sommmm}{
   \IfBooleanTF{#1}
     {\subsection[#6]{#6 {\small\engschrift (#5)} \hfill \Reference{#3}{#4}\\\ActionTraits{#2}}}
-    {\subsection[#6]{#6 {\small\engschrift (#5)}\ActionTraits{#2} \hfill \Reference{#3}{#4}}}
+    {\subsection[#6]{#6 {\small\engschrift (#5)} \ActionTraits{#2} \hfill \Reference{#3}{#4}}}
 }
 
 \newcommand{\Requirements}[1]{\paragraph{Requirements} #1.}
