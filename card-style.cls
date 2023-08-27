@@ -29,6 +29,8 @@
 \addtokomafont{section}{\clearpage\normalfont\postamt}
 \addtokomafont{subsection}{\normalfont\mittelschrift}
 
+\RedeclareSectionCommand[runin=false, afterindent=false, beforeskip=1.5mm, afterskip=1mm]{subsection}
+
 \renewcommand*{\sectionformat}{}
 \renewcommand*{\subsectionformat}{}
 

@@ -116,20 +116,21 @@
 }
 
 % \DamageRoll{<damage type>}[<alternative damage type>]{<damage roll>}{<mod descr>}
-\NewDocumentCommand{\DamageRoll}{momm}{
+\NewDocumentCommand{\DamageRoll}{omomm}{
   \tikz[baseline=(content.base)]{
     \node (content) {
       \strut\smash{
-        \IfValueTF{#2}
+        \IfValueTF{#1}{\mbox{#1}}{}
+        \IfValueTF{#3}
           {%
-            \raisebox{0.4em}{\DamageType{#1}}%
+            \raisebox{0.4em}{\DamageType{#2}}%
             \clap{\tikz[baseline] \draw (-0.6em, -0.4em) -- (0.6em, 1.2em);}%
-            \raisebox{-0.4em}{\DamageType{#2}}%
+            \raisebox{-0.4em}{\DamageType{#3}}%
           }
-          {\ifnum\pdfstrcmp{#1}{}=0 \else\DamageType{#1}\fi}
+          {\ifnum\pdfstrcmp{#2}{}=0 \else\DamageType{#2}\fi}
         \(
-          \mbox{#3}
-          \foreach \part in {#4} {
+          \mbox{#4}
+          \foreach \part in {#5} {
             + \FormulaVariable{\part}{\phantom{10}}
           }
         \)
@@ -143,14 +144,15 @@
 
 
 % \HealingRoll{<healing roll>}{<mod descr>}
-\NewDocumentCommand{\HealingRoll}{mm}{
+\NewDocumentCommand{\HealingRoll}{omm}{
   \tikz[baseline=(content.base)]{
     \node (content) {
       \strut\smash{
         \(
-          \mbox{#1}
-          \foreach[count=\index] \part in {#2} {
-            \pgfmathparse{\index > 1 || \pdfstrcmp{#1}{} != 0}
+          \IfValueTF{#1}{\mbox{#1}}{}
+          \mbox{#2}
+          \foreach[count=\index] \part in {#3} {
+            \pgfmathparse{\index > 1 || \pdfstrcmp{#2}{} != 0}
             \ifnum\pgfmathresult=1 + \fi
             \FormulaVariable{\part}{\phantom{10}}
           }

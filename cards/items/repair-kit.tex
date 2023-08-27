@@ -13,12 +13,12 @@ You attempt to fix a damaged item, placing the item on a stable surface and usin
 The GM sets the DC, it's usually about the same DC as it is to craft the item in the first place.
 You can't repair a destroyed item.
 
-\CheckRoll{Crafting}{int, prof}
-\pfsymbol{success}\HealingRoll{}{5*(prof rank + 1)}
+\CheckRoll{Crafting}{int, prof} 
+\HealingRoll[\pfsymbol{success}]{}{5*(rank + 1)} \\
+\HealingRoll[\pfsymbol{critical-success}]{}{10*(rank + 1)}
+\DamageRoll[\pfsymbol{critical-failure}]{}{2d6}{}
 
-\pfsymbol{critical-success} \HealingRoll{}{10*(prof rank + 1)}
-\pfsymbol{critical-failure} \DamageRoll{}{2d6}{}
-
+where rank is the proficiency rank in crafting.
 \vfill
 
 \ItemPrice{2gp}
