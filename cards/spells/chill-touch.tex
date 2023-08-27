@@ -1,0 +1,28 @@
+% Chill Touch
+% https://2e.aonprd.com/Spells.aspx?ID=35
+
+\foreach \level in {1, ..., 10} {
+\Card{Cantrip}{\level}{Chill Touch}
+
+\CardTraits{Necromancy, Negative}
+
+\Flavor{Siphoning negative energy into yourself, your hand radiates a pale darkness.}
+
+Touch 1 living or undead creature.
+
+\Action[Somatic, Verbal]{CRB}{323}{2}{Weaken Living}
+
+\DamageRoll{Negative}{\level{}d4}{spell mod}
+
+The target gets a basic Fortitude save.
+
+\pfsymbol{critical-failure} The target is also enfeebled 1 for 1 round.
+
+\Action[Somatic, Verbal]{CRB}{323}{2}{Disorient Undead}
+
+The target gets a basic Fortitude save.
+
+\pfsymbol{failure} The target is flat-footed for 1.
+
+\pfsymbol{critical-failure} The target is also fleeing for 1 round unless it succeeds at a Will save.
+}
