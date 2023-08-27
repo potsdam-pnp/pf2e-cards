@@ -234,28 +234,65 @@ function parseLaTeXFileStack(line, fileStack, nested) {
     return nested
 }
 
+function toAnnotationLevel(errorLevel) {
+    switch (errorLevel) {
+        case "typesetting": return "notice"
+        case "error": return "failure"
+        case "warning": return "warning"
+        case _: 
+            console.warn("unknown errorLevel", errorLevel);
+            return "notice"
+    }
+}
+
 async function main() {
   const log = await fs.readFile(process.argv[2], "utf8");
   const rootFile = process.argv[3];
   const result = parse(log, rootFile);
 
 
+  const tooBigCardRegex = /^Previous card defined in (.*) needed ([0-9]*) pages too much.$/
+  const tooBigCards = result.filter(x => tooBigCardRegex.test(x.text.trim())).map(x => {
+    x.type = "error";
+    return tooBigCardRegex.exec(x.text.trim())
+  });
+
+  let title = `Found ${result.length} issues`
+  let conclusion = "neutral";
+  let summary = `Found a total of ${result.length} issues`;
+
+  if (tooBigCards.length > 0) {
+    const files = {};
+    const filesArray = [];
+    for (const c of tooBigCards) {
+        if (!files[c[1]]) {
+            files[c[1]] = 0;
+            filesArray.push(c[1]);
+        }
+        files[c[1]] += 1;
+    }
+
+    title = `${tooBigCards.length} cards don't fit on single page, defined in \"${filesArray[0]}\"` + ((filesArray.length > 1) ? " and others" : "");
+    summary = summary + "\n\nCards in following files are too large:\n" + filesArray.map(fileName => `   ${fileName}: ${files[fileName]} times`).join("\n");
+    conclusion = "failure";
+  }
+
   //TODO Also support more than 50 warnings (we need to do multiple POST requests for that)
   const result50 = result.slice(0, 50);
 
   const apiPayload = {
-    name: "latex-compile-check",
+    name: "latex",
     head_sha: process.argv[4],
-    conclusion: "neutral",
+    conclusion: conclusion,
     output: {
-      title: `Found ${result.length} issues`,
-      summary: `Found ${result.length} issues`,
+      title: title,
+      summary: summary,
       annotations: result50.map(finding => {
         return {
           path: finding.file,
           start_line: finding.line,
           end_line: finding.line,
-          annotation_level: finding.type === "typesetting" ? "notice" : finding.type,
+          annotation_level: toAnnotationLevel(finding.type),
           message: finding.text
         }
       })
