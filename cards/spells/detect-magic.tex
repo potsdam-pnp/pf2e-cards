@@ -1,7 +1,7 @@
 % Detect Magic
 % https://2e.aonprd.com/Spells.aspx?ID=66
 
-\foreach[evaluate=\level as \lower using int(\level - 1)] \level in {1, ..., 10} {
+\foreach[evaluate=\level as \lowerLevel using int(\level - 1)] \level in {1, ..., 10} {
 \Card{Cantrip}{\level}{Detect Magic}
 
 \CardTraits{Detection, Divination}
@@ -26,8 +26,8 @@
 
 You can choose to ignore magic you're fully aware of, such as the magic items and ongoing spells of you and your allies.
 
-\ifnum \lower > 0
-Detect illusion magic for effects with a level \(\le \lower\).
+\ifnum \lowerLevel > 0
+Detect illusion magic for effects with a level \(\le \lowerLevel\).
 \else
 You cannot detect illusion magic.
 \fi
