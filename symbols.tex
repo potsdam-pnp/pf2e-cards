@@ -148,8 +148,10 @@
       \strut\smash{
         \(
           \mbox{#1}
-          \foreach \part in {#2} {
-            + \FormulaVariable{\part}{\phantom{1}}
+          \foreach[count=\index] \part in {#2} {
+            \pgfmathparse{\index > 1 || \pdfstrcmp{#1}{} != 0}
+            \ifnum\pgfmathresult=1 + \fi
+            \FormulaVariable{\part}{\phantom{1}}
           }
         \)
       }
