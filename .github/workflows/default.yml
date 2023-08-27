@@ -21,21 +21,23 @@ jobs:
     - name: Compile LaTeX document
       uses: xu-cheng/latex-action@v2
       with:
-        root_file: cards.tex
+        root_file: |
+           cards.tex
+           a4print.tex
         latexmk_use_xelatex: true
         pre_compile: "export max_print_line=1000"
     - name: Archive cards.pdf
       uses: actions/upload-artifact@v3
       with:
         name: cards
-        path: cards.pdf
+        path: "*.pdf"
     - name: Show cards.log
       run: cat cards.log
     - name: Archive compile logs
       uses: actions/upload-artifact@v3
       with:
         name: compile-log
-        path: cards.log
+        path: "*.log"
   gh-pages:
     name: Generate website
     uses: ./.github/workflows/gh-pages.yml

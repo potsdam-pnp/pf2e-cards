@@ -2,6 +2,8 @@ Generate printable playing cards for Pathfinder 2.
 
 [View some sample cards](./cards.pdf)
 
+[Same cards arranged on A4 paper](./a4print.pdf)
+
 These have been generated using the software provided at <https://github.com/potsdam-pnp/pathfinder2-cards>.
 
 {% include LICENSES.md %}
