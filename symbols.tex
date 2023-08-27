@@ -126,7 +126,7 @@
             \clap{\tikz[baseline] \draw (-0.6em, -0.4em) -- (0.6em, 1.2em);}%
             \raisebox{-0.4em}{\DamageType{#2}}%
           }
-          {\DamageType{#1}}
+          {\ifnum\pdfstrcmp{#1}{}=0 \else\DamageType{#1}\fi}
         \(
           \mbox{#3}
           \foreach \part in {#4} {
