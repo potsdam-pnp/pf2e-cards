@@ -49,11 +49,13 @@
     \ifnum\pgfmathresult=0
       % good
     \else
-      \ClassWarning{card-style}{Previous card needed \pgfmathresult pages too much}
+      \ClassWarning{card-style}{Previous card defined in \LastCardFilePath\space needed \pgfmathresult\space pages too much}
       % make sure remaining cards are not warned against, by pretending there were more cards
       \addtocounter{cards}{\pgfmathresult}
     \fi
   \fi
+  % store current file in LastCardFilePath, in case it's needed later to produce a better error message
+  \xdef\LastCardFilePath{\CurrentFilePath/\CurrentFile}
 
   \stepcounter{cards}
 
