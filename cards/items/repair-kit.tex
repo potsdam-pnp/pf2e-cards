@@ -3,21 +3,21 @@
 
 \Card{Item}{0}{Repair Kit}
 
-\Flavor{A repair kit allows you to perform simple repairs while traveling.
-It contains a portable anvil, tongs, woodworking tools, a whetstone, and oils for conditioning leather and wood.}
+\Flavor{Perform simple repairs while traveling.
+Contains a portable anvil, tongs, woodworking tools, a whetstone, and oils for conditioning leather and wood.}
+
+You can draw and replace a worn repair kit as part of the action that uses it.
 
 \Activity[Exploration, Manipulate]{CRB}{243}{10 minutes}{Repair}
 You attempt to fix a damaged item, placing the item on a stable surface and using the repair kit with both hands.
 The GM sets the DC, it's usually about the same DC as it is to craft the item in the first place.
 You can't repair a destroyed item.
 
-\pfsymbol{critical-success} Restore 10*(prof rank in crafting + 1) HP
+\CheckRoll{Crafting}{int, prof} 
+\HealingRoll{}{5*(rank + 1)} \begin{tabular}{c}rank=\\crafting prof rank\end{tabular}
 
-\pfsymbol{success} Restore 5*(prof rank in crafting + 1) HP
-
-\pfsymbol{critical-failure} Deal 2d6 damage. Apply Hardness of item.
-
-
+\pfsymbol{critical-success} The item gets double the amount of HPs \\
+\pfsymbol{critical-failure} The item takes 2d6 damage instead
 \vfill
 
 \ItemPrice{2gp}
