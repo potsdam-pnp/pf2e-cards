@@ -34,8 +34,29 @@
 
 \newcommand{\Category}[1]{\clearpage\bookmark[page=\thepage, level=0]{#1}}
 
+\newcounter{cards}
+
 \newcommand{\Card}[3]{%
   \clearpage
+
+  % Check that last card fitted on one page
+  \pgfmathparse{int(\value{cards})}
+  \ifnum\pgfmathresult=0
+    \pgfmathparse{int(\value{page})}
+    \let\pageOfFirstCard\pgfmathresult
+  \else
+    \pgfmathparse{int(\value{page} - \pageOfFirstCard - \value{cards})}
+    \ifnum\pgfmathresult=0
+      % good
+    \else
+      \ClassWarning{card-style}{Previous card needed \pgfmathresult pages too much}
+      % make sure remaining cards are not warned against, by pretending there were more cards
+      \addtocounter{cards}{\pgfmathresult}
+    \fi
+  \fi
+
+  \stepcounter{cards}
+
   \bookmark[page=\thepage, level=1]{#3 \ifnum\pdfstrcmp{#2}{}=0\else (#1 #2)\fi}%
   \section{#3 \hfill \color{gray} #1 #2}%
 }
