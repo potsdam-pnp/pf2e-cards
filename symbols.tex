@@ -24,6 +24,11 @@
     {\subsection[#6]{#6 {\small\engschrift (#5)} \ActionTraits{#2} \hfill \Reference{#3}{#4}}}
 }
 
+% \Rule{<source book>}{<page>}{<name>}
+\NewDocumentCommand{\Rule}{mmm}{
+  \subsection[#3]{#3 \hfill \Reference{#1}{#2}}
+}
+
 \newcommand{\Requirements}[1]{\paragraph{Requirements} #1.}
 
 \newcommand{\Attribute}[2]{\smallskip\mbox{\engschrift \color{gray} #1 \normalcolor #2}}

@@ -1,0 +1,27 @@
+% Bulk
+% https://2e.aonprd.com/Rules.aspx?ID=187
+
+\Card{Rule}{}{Bulk}
+
+\Flavor{%
+Carrying especially heavy or unwieldy items can make it more difficult for you
+to move, as can overloading yourself with too much gear. The Bulk value of an
+item reflects how difficult the item is to handle, representing its size,
+weight, and general awkwardness.
+}
+
+\Rule{CRB}{272}{Bulk Limits}
+
+\Attribute{Carry Capacity}{%
+  \(\FormulaVariable{current}{\phantom{1000}}\) / 
+  \(\FormulaVariable{str + 5}{\phantom{100}}\) encumbered / 
+  \(\FormulaVariable{str + 10}{\phantom{100}}\) max
+}
+
+\Rule{CRB}{272}{Bulk Values}
+
+\Attribute{Bulk}{n}
+\Attribute{Light}{L} {\small(0.1)}
+\Attribute{Negligible}{-} {\small(0)}
+
+The total bulk value is computed by the sum over all items, fractions are rounded down.
