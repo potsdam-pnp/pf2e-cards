@@ -1,4 +1,4 @@
-# pathfinder2-cards
+# pf2e-cards
 
 LaTeX styles and software for generating printable playing cards for Pathfinder 2.
 
