@@ -1,0 +1,37 @@
+% Mage Hand
+% https://2e.aonprd.com/Spells.aspx?ID=177
+
+\foreach \level in {1, ..., 10} {
+\Card{Cantrip}{\level}{Mage Hand}
+
+\CardTraits{Evocation}
+
+\Flavor{You create a single magical hand, either invisible or ghostlike, that grasps the target object and moves it slowly.}
+
+\Action[Somatic, Verbal]{CRB}{348}{2}{Cast}
+
+{%
+\def\bulk{L}
+\def\range{30 feet}
+\ifnum \level > 2 
+% Heightened 3rd
+\def\bulk{1}
+\fi
+\ifnum \level > 4
+% Heightened 5th
+\def\range{60 feet}
+\fi
+\ifnum \level > 6 
+% Heightened 7th
+\def\bulk{2}
+\fi
+
+Target 1 unattended object of Bulk \bulk{} or less within \range.
+}
+
+A magical hand grasps the target object and moves it slowly up to 20 feet. 
+
+Because you're levitating the object, you can move it in any direction. 
+When you Sustain the Spell, you can move the object an additional 20 feet. 
+If the object is in the air when the spell ends, the object falls.
+}
