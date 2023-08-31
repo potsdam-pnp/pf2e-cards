@@ -26,8 +26,11 @@
 \setlength\parindent{0pt} % todo: avoid in favor of some komascript feature
 \setlength\parskip{4pt} % todo: avoid in favor of some komascript feature
 
-\addtokomafont{section}{\clearpage\normalfont\postamt}
+\addtokomafont{section}{\normalfont\postamt}
 \addtokomafont{subsection}{\normalfont\mittelschrift}
+
+% move the card headings higher (into the page border?)
+\RedeclareSectionCommand[runin=false, afterindent=false, beforeskip=-2em]{section}
 
 \renewcommand*{\sectionformat}{}
 \renewcommand*{\subsectionformat}{}
@@ -47,9 +50,18 @@
   \ifnum\pdfstrcmp{\cardStyle@cardColor}{}=0 \else
     \tikz[remember picture,overlay] {%
       \draw [color=\cardStyle@cardColor,rounded corners=4mm,line width=4mm]
-        (current page.south west)
-        rectangle
-        (current page.north east);
+        (current page.north east)
+        +(-24mm,0mm) coordinate(a)
+        +(0mm, -3mm) coordinate(b)
+        
+        (current page.north west) 
+        {[rounded corners=0mm]--(a)} 
+        {[rounded corners=1mm]--(a |- b)}
+        {[rounded corners=0mm]--(b)}
+        --(current page.south east)  
+        --(current page.south west)
+        --cycle
+        (a) -- (current page.north east);
     }
   \fi
 }
@@ -57,7 +69,9 @@
 \xdef\cardStyle@currentCardCategory{None}
 \AddToHook{shipout/background}{\cardStyle@drawCardFrame{\cardStyle@currentCardCategory}}
 
-\newcommand{\Card}[3]{%
+% \Card{<card-type>}{<level>}{<title>}[<source-book>][<source-page>]
+% TODO: make reference mandatory, but we need to define all the references first
+\NewDocumentCommand{\Card}{mmmoo}{%
   \clearpage
 
   % Check that last card fitted on one page
@@ -83,7 +97,9 @@
   \stepcounter{cards}
 
   \bookmark[page=\thepage, level=1]{#3 \ifnum\pdfstrcmp{#2}{}=0\else (#1 #2)\fi}%
-  \section{#3 \hfill \color{gray} #1 #2}%
+  \raisebox{0pt}[0pt][0pt]{}%
+  \hfill\raisebox{1em}[0pt][0pt]{\normalfont\postamt#1 #2}%
+  \section{#3 \hfill \Reference{#4}{#5}}%
 }
 
 \pagestyle{empty}
