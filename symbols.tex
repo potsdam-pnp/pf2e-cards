@@ -134,8 +134,10 @@
           {\ifnum\pdfstrcmp{#1}{}=0 \else\DamageType{#1}\fi}
         \(
           \mbox{#3}
-          \foreach \part in {#4} {
-            + \FormulaVariable{\part}{\phantom{100}}
+          \foreach[count=\index] \part in {#4} {
+            \pgfmathparse{\index > 1 || \pdfstrcmp{#3}{} != 0}
+            \ifnum\pgfmathresult=1 + \fi
+            \FormulaVariable{\part}{\phantom{100}}
           }
         \)
       }
