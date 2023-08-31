@@ -1,4 +1,4 @@
-\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
 \ProvidesClass{card-style}
   [2023/08/25 v0.01]
 
