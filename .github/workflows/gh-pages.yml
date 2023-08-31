@@ -27,7 +27,7 @@ jobs:
       - name: Create destination directory
         run: mkdir _site
       - name: Copy information about licenses from README.md
-        run: mkdir -p docs/_includes && sed -n '/Licenses/,$p' README.md > docs/_includes/LICENSES.md
+        run: mkdir -p docs/_includes && sed -n '/Open Game Content/,$p' README.md > docs/_includes/LICENSES.md
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
