@@ -99,7 +99,7 @@
   \bookmark[page=\thepage, level=1]{#3 \ifnum\pdfstrcmp{#2}{}=0\else (#1 #2)\fi}%
   \raisebox{0pt}[0pt][0pt]{}%
   \hfill\raisebox{1em}[0pt][0pt]{\normalfont\postamt#1 #2}%
-  \section{#3 \hfill \Reference{#4}{#5}}%
+  \section{#3 \hfill \IfValueT{#4}{\IfValueT{#5}{\Reference{#4}{#5}}}}%
 }
 
 \pagestyle{empty}
