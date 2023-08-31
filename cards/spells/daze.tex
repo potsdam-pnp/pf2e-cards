@@ -1,0 +1,26 @@
+% Daze
+% https://2e.aonprd.com/Spells.aspx?ID=61
+
+\foreach[
+  evaluate=\level as \dice using int(floor((\level-1)/2))
+] \level in {1, ..., 10} {
+\Card{Cantrip}{\level}{Daze}
+
+\CardTraits{Enchanment, Mental, Nonlethal}
+
+\Flavor{You cloud the target's mind and daze it with a mental jolt.}
+
+\Action[Somatic, Verbal]{CRB}{348}{2}{Cast}
+
+Target 1 creature within 60 feet.
+
+The target gets a basic Will save.
+
+\ifnum \dice < 1
+\DamageRoll{Mental}{}{spell mod}
+\else
+\DamageRoll{Mental}{\dice{}d6}{spell mod}
+\fi
+
+\pfsymbol{critical-failure} The target is also stunned 1.
+}

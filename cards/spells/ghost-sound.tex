@@ -1,0 +1,29 @@
+% Ghost Sound
+% https://2e.aonprd.com/Spells.aspx?ID=132
+
+\foreach \level in {1, ..., 10} {
+\Card{Cantrip}{\level}{Ghost Sound}
+
+\CardTraits{Auditory, Illusion}
+
+\Flavor{You create an auditory illusion of simple sounds.}
+
+\Action[Somatic, Verbal]{CRB}{340}{2}{Cast}
+
+{%
+\def\range{30 feet}
+\ifnum \level > 2 
+% Heightened 3rd
+\def\range{60 feet}
+\fi
+\ifnum \level > 4
+% Heightened 5th
+\def\range{120 feet}
+\fi
+
+Sounds emanate from a square you designate within \range.
+
+The sound has a maximum volume equal to four normal humans shouting.
+You can't create intelligible words or other intricate sounds (such as music).
+}
+}

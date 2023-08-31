@@ -1,4 +1,4 @@
-\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
 \ProvidesClass{card-style}
   [2023/08/25 v0.01]
 
@@ -36,6 +36,27 @@
 
 \newcounter{cards}
 
+\newcommand{\cardStyle@drawCardFrame}[1]{%
+  \def\cardStyle@cardColor{}
+  \ifnum\pdfstrcmp{#1}{Item}=0      \def\cardStyle@cardColor{blue!40} \fi
+  \ifnum\pdfstrcmp{#1}{Action}=0    \def\cardStyle@cardColor{yellow!40} \fi
+  \ifnum\pdfstrcmp{#1}{Spell}=0     \def\cardStyle@cardColor{green!40} \fi
+  \ifnum\pdfstrcmp{#1}{Cantrip}=0   \def\cardStyle@cardColor{green!40} \fi
+  \ifnum\pdfstrcmp{#1}{Focus}=0     \def\cardStyle@cardColor{green!40} \fi
+  
+  \ifnum\pdfstrcmp{\cardStyle@cardColor}{}=0 \else
+    \tikz[remember picture,overlay] {%
+      \draw [color=\cardStyle@cardColor,rounded corners=4mm,line width=4mm]
+        (current page.south west)
+        rectangle
+        (current page.north east);
+    }
+  \fi
+}
+
+\xdef\cardStyle@currentCardCategory{None}
+\AddToHook{shipout/background}{\cardStyle@drawCardFrame{\cardStyle@currentCardCategory}}
+
 \newcommand{\Card}[3]{%
   \clearpage
 
@@ -56,6 +77,8 @@
   \fi
   % store current file in LastCardFilePath, in case it's needed later to produce a better error message
   \xdef\LastCardFilePath{\CurrentFilePath/\CurrentFile}
+
+  \xdef\cardStyle@currentCardCategory{#1}
 
   \stepcounter{cards}
 
