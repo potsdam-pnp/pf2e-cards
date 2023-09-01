@@ -30,7 +30,10 @@
 \addtokomafont{subsection}{\normalfont\mittelschrift}
 
 % move the card headings higher (into the page border?)
-\RedeclareSectionCommand[runin=false, afterindent=false, beforeskip=-2em]{section}
+% TODO: don't hardcode the beforeskip like this here, it's currently calculated as
+% 2*(baselineskip in section heading)-(baselineskip before section heading)
+% to typeset it as if there was no content beforehand
+\RedeclareSectionCommand[runin=false, afterindent=false, beforeskip=-16.91999pt]{section}
 
 \renewcommand*{\sectionformat}{}
 \renewcommand*{\subsectionformat}{}
