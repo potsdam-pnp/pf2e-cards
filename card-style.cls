@@ -61,7 +61,8 @@
         --(current page.south east)  
         --(current page.south west)
         --cycle
-        (a) -- (current page.north east);
+        (a) -- (current page.north east)
+            -- +(1mm,0mm);
     }
   \fi
 }
