@@ -38,6 +38,10 @@ jobs:
         with:
           name: cards
           path: _site
+      - name: Extract a few cards as images for the website
+        run: |
+          sudo apt-get install pdftk poppler-utils
+          cd _site && ../.github/workflows/gh-pages-images
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
   deploy:
