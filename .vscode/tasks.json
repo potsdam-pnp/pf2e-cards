@@ -11,6 +11,11 @@
                 "reveal": "never",
                 "revealProblems": "onProblem"
             },
+            "options": {
+                "env": {
+                    "max_print_line": "1000"
+                }
+            },
             "problemMatcher": [
                 {
                     "owner": "latex",
@@ -23,6 +28,20 @@
                         "file": 1,
                         "line": 2,
                         "message": 3
+                    }
+                },
+                {
+                    "owner": "latex",
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}"
+                    ],
+                    "severity": "warning",
+                    "pattern": {
+                        "kind": "file",
+                        "regexp": "^Class card-style (Warning: Previous card defined in (.*) needed [0-9]+ pages too much) on input line [0-9]+\\.$",
+                        "file": 2,
+                        "message": 1
                     }
                 }
             ],
