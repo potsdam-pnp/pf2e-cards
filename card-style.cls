@@ -42,20 +42,37 @@
 
 \newcounter{cards}
 
-\newcommand{\cardStyle@drawCardFrame}[1]{%
-  \def\cardStyle@cardColor{}
-  \ifnum\pdfstrcmp{#1}{Item}=0      \def\cardStyle@cardColor{blue!40} \fi
-  \ifnum\pdfstrcmp{#1}{Action}=0    \def\cardStyle@cardColor{yellow!40} \fi
-  \ifnum\pdfstrcmp{#1}{Spell}=0     \def\cardStyle@cardColor{green!40} \fi
-  \ifnum\pdfstrcmp{#1}{Cantrip}=0   \def\cardStyle@cardColor{green!40} \fi
-  \ifnum\pdfstrcmp{#1}{Focus}=0     \def\cardStyle@cardColor{green!40} \fi
-  \ifnum\pdfstrcmp{#1}{Rule}=0      \def\cardStyle@cardColor{gray!40} \fi
-  \ifnum\pdfstrcmp{#1}{Condition}=0 \def\cardStyle@cardColor{gray!40} \fi
+\newif\ifCardStyle@shouldDrawBorder
+\pgfkeys{
+  /cardStyle border/.is family, /cardStyle border,
+%
+  shouldDrawBorder/.is if=CardStyle@shouldDrawBorder,
+  color/.estore in = \cardStyle@borderColor,
+  color/.append style = shouldDrawBorder,
+%
+  default/.style = {
+    shouldDrawBorder=false
+  },
+%
+  type/.is choice,
+  type/.add code={\ifnum \pdfstrcmp{#1}{}=0\else}{\fi}, % don't do anything for an empty type
+%
+  type/Item/.style      = {color=blue!40},
+  type/Action/.style    = {color=yellow!40},
+  type/Spell/.style     = {color=green!40},
+  type/Cantrip/.style   = {color=green!40},
+  type/Focus/.style     = {color=green!40},
+  type/Rule/.style      = {color=gray!40},
+  type/Condition/.style = {color=gray!40},
+  type/.unknown/.style  = {shouldDrawBorder=false}
+}
 
-  
-  \ifnum\pdfstrcmp{\cardStyle@cardColor}{}=0 \else
+\newcommand{\cardStyle@drawCardFrame}[1]{%
+  \pgfkeys{/cardStyle border, default, type=#1}
+
+  \ifCardStyle@shouldDrawBorder
     \tikz[remember picture,overlay] {%
-      \draw [color=\cardStyle@cardColor,rounded corners=4mm,line width=4mm]
+      \draw [color=\cardStyle@borderColor,rounded corners=4mm,line width=4mm]
         (current page.north east)
         +(-24mm,0mm) coordinate(a)
         +(0mm, -3mm) coordinate(b)
