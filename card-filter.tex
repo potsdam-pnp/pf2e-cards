@@ -1,0 +1,35 @@
+\newif\ifvisible
+
+\pgfkeys{
+  /card filter/.is family, /card filter,
+  visible/.is if=visible,
+  %
+  default/.style={visible},
+  type/.estore in=\type,
+  level/.estore in=\tlevel,
+  title/.estore in=\title,
+  source book/.estore in=\sourceBook
+  %compute/.style=default
+}
+
+\pgfkeys{
+  /card filter definition/.is family, /card filter definition,
+  .compute/.style = {/card filter/compute/.code = {#1}},
+  .append compute/.estyle = {/card filter/compute/.append code = {#1}},
+  .style compute/.estyle = {/card filter/compute/.style = {#1}},
+  %
+  visible/.style = {.style compute={/card filter/visible=true}},
+  invisible/.style = {.style compute={/card filter/visible=false}},
+  %
+  visible/level/.style = {.append compute={
+    \ifnum\pdfstrcmp{#1}{\tlevel}=0
+      \pgfkeysalso{visible=true}
+    \fi
+  }}
+}
+
+\newcommand{\filter}[1]{%
+  \pgfkeys{/card filter definition,#1}
+}
+
+\NewDocumentEnvironment{invisible}{+b}{}{}
