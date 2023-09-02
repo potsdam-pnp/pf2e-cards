@@ -1,0 +1,181 @@
+on: 
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+name: Show cards in Github issues
+
+jobs:
+  extract-image:
+    name: Extract image
+    runs-on: ubuntu-latest
+    steps:
+     - name: Find images to create
+       id: find
+       uses: actions/github-script@v6
+       with:
+         result-encoding: string
+         script: |
+           console.log(context.payload.comment.body);
+           const matched = /\/show (.*)/.exec(context.payload.comment.body);
+           if (matched) {
+             console.log("matched", matched[1]);
+             return matched[1];
+           }
+           else
+             return "no"
+     - uses: actions/github-script@v6
+       if: "steps.find.outputs.result != 'no'"
+       id: sha
+       name: Find correct SHA
+       with:
+         result-encoding: string
+         script: |
+           if (context.payload.issue.pull_request) {
+             const pr = (await github.request("GET /repos/{owner}/{repo}/pulls/{pull_number}", {
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               pull_number: context.issue.number,
+             })).data;
+             return pr.head.sha;
+           } else {
+             return context.sha;
+           }
+     - uses: actions/github-script@v6
+       if: "steps.sha.outcome == 'success'"
+       id: download-cards
+       name: Download cards.pdf
+       env:
+         sha: ${{ steps.sha.outputs.result }}
+       with:
+          result-encoding: string
+          script: |        
+            const workflowRuns = (await github.request('GET /repos/{owner}/{repo}/actions/runs', {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head_sha: process.env.sha
+            })).data;
+
+            let compileWorkflowRun = workflowRuns.workflow_runs.filter(x => x.name == "compile")[0];
+
+            while (!compileWorkflowRun.conclusion) {
+              console.log("Waiting for worklow run to finish");
+              await new Promise((resolve) => setTimeout(resolve, 5000));
+
+              compileWorkflowRun = (await github.request('GET /repos/{owner}/{repo}/actions/runs/{run_id}', {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: compileWorkflowRun.id,
+              })).data;
+
+              const allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: compileWorkflowRun.id,
+              });
+
+              let matchArtifact = allArtifacts.data.artifacts.filter((artifact) => {
+                return artifact.name == "cards"
+              })[0];
+
+              if (matchArtifact) break;
+            }
+
+            const allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: compileWorkflowRun.id,
+            });
+
+            let matchArtifact = allArtifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "cards"
+            })[0];
+
+            let download = await github.rest.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+
+            let fs = require('fs').promises;
+            await fs.writeFile('result.zip', Buffer.from(download.data));
+     - name: Unzip cards.pdf
+       if: "steps.download-cards.outcome == 'success'"
+       run: unzip result.zip
+     - name: Install packages
+       if: "steps.download-cards.outcome == 'success'"
+       run: sudo apt-get install pdftk poppler-utils
+     - name: Extract image
+       id: extract
+       if: "steps.download-cards.outcome == 'success'"
+       env:
+         cardName: ${{ steps.find.outputs.result }}
+       run: |
+         pdftk cards.pdf dump_data_utf8 | grep ^Bookmark > bookmarks.txt
+         count=$(cat bookmarks.txt | sed -n "/^BookmarkTitle: $cardName/,+2s/BookmarkPageNumber: //p" | wc -l)
+         page=$(cat bookmarks.txt | sed -n "/^BookmarkTitle: $cardName/,+2s/BookmarkPageNumber: //p" | head -n 1)
+         if [ $count == 0 ]; then
+           echo "Card not found"
+         else
+           pdftoppm -f $page -l $page -png cards.pdf > "$cardName.png"
+         fi
+         echo "count=$count" >> $GITHUB_OUTPUT
+     - name: Upload image as gist
+       id: upload
+       if: "steps.download-cards.outcome == 'success' && steps.extract.outputs.count >= 1"
+       uses: exuanbo/actions-deploy-gist@v1
+       with:
+         token: ${{ secrets.GISTSECRET }}
+         gist_id: 11ab434c9bd674976f25810b70a9cb56
+         file_type: binary
+         file_path: ${{steps.find.outputs.result}}.png
+         gist_file_name: ${{ steps.sha.outputs.result }}-${{steps.find.outputs.result}}.png
+     - name: Comment on issue
+       if: "steps.upload.outcome == 'success'"
+       uses: actions/github-script@v6
+       env:
+         fileName: ${{ steps.sha.outputs.result }}-${{steps.find.outputs.result}}.png
+         sha: ${{ steps.sha.outputs.result }}
+       with:
+         script: |
+           let prefix = '';
+           if (${{ steps.extract.outputs.count }} > 1) {
+             prefix = "Found ${{ steps.extract.outputs.count }} cards matching, this is the first one:\n"
+           }
+           const suffix = "from " + process.env.sha;
+           const fileName = encodeURIComponent(process.env.fileName);
+           await github.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
+             owner: context.repo.owner,
+             repo: context.repo.repo,
+             issue_number: context.issue.number,
+             body: prefix + '![${{steps.find.outputs.result}}](https://gist.githubusercontent.com/fkz/11ab434c9bd674976f25810b70a9cb56/raw/' + fileName + ')\n' + suffix
+           });
+     - name: Comment on issue when not found
+       uses: actions/github-script@v6
+       if: "steps.extract.outputs.count == 0"
+       with:
+         script: |
+          await github.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
+             owner: context.repo.owner,
+             repo: context.repo.repo,
+             issue_number: context.issue.number,
+             body: 'No card found for "${{ steps.find.outputs.result }}"'
+           });
+     - name: Comment when other failures happen
+       if: failure()
+       uses: actions/github-script@v6
+       with:
+         script: |
+          console.log(JSON.stringify(context, null, 2))
+          await github.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
+             owner: context.repo.owner,
+             repo: context.repo.repo,
+             issue_number: context.issue.number,
+             body: 'There was some issue fetching card images. [Details](https://github.com/' + 
+             context.repo.owner + '/' + context.repo.repo + '/actions/runs/' + context.runId + ')'
+           });
+
