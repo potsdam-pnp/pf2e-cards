@@ -57,14 +57,15 @@
   type/.is choice,
   type/.add code={\ifnum \pdfstrcmp{#1}{}=0\else}{\fi}, % don't do anything for an empty type
 %
-  type/Item/.style      = {color=blue!40},
-  type/Action/.style    = {color=yellow!40},
-  type/Spell/.style     = {color=green!40},
-  type/Cantrip/.style   = {color=green!40},
-  type/Focus/.style     = {color=green!40},
-  type/Rule/.style      = {color=gray!40},
-  type/Condition/.style = {color=gray!40},
-  type/.unknown/.style  = {shouldDrawBorder=false}
+  type/.cd,
+  Item/.style      = {color=blue!40},
+  Action/.style    = {color=yellow!40},
+  Spell/.style     = {color=green!40},
+  Cantrip/.style   = {color=green!40},
+  Focus/.style     = {color=green!40},
+  Rule/.style      = {color=gray!40},
+  Condition/.style = {color=gray!40},
+  .unknown/.style  = {shouldDrawBorder=false}
 }
 
 \newcommand{\cardStyle@drawCardFrame}[1]{%
