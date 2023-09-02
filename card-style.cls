@@ -49,6 +49,9 @@
   \ifnum\pdfstrcmp{#1}{Spell}=0     \def\cardStyle@cardColor{green!40} \fi
   \ifnum\pdfstrcmp{#1}{Cantrip}=0   \def\cardStyle@cardColor{green!40} \fi
   \ifnum\pdfstrcmp{#1}{Focus}=0     \def\cardStyle@cardColor{green!40} \fi
+  \ifnum\pdfstrcmp{#1}{Rule}=0      \def\cardStyle@cardColor{gray!40} \fi
+  \ifnum\pdfstrcmp{#1}{Condition}=0 \def\cardStyle@cardColor{gray!40} \fi
+
   
   \ifnum\pdfstrcmp{\cardStyle@cardColor}{}=0 \else
     \tikz[remember picture,overlay] {%
