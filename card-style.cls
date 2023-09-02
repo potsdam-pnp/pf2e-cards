@@ -95,6 +95,8 @@
 \AddToHook{shipout/background}{\cardStyle@drawCardFrame{\cardStyle@currentCardCategory}}
 
 % \begin{card}{<card-type>}{<level>}{<title>}[<source-book>][<source-page>]
+% ...
+% \end{card}
 % TODO: make reference mandatory, but we need to define all the references first
 \NewDocumentEnvironment{card}{mmmoo}{%
   \clearpage
