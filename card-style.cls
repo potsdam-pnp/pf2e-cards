@@ -94,16 +94,18 @@
 \xdef\cardStyle@currentCardCategory{None}
 \AddToHook{shipout/background}{\cardStyle@drawCardFrame{\cardStyle@currentCardCategory}}
 
-% \Card{<card-type>}{<level>}{<title>}[<source-book>][<source-page>]
+% \begin{card}{<card-type>}{<level>}{<title>}[<source-book>][<source-page>]
+% ...
+% \end{card}
 % TODO: make reference mandatory, but we need to define all the references first
-\NewDocumentCommand{\Card}{mmmoo}{%
+\NewDocumentEnvironment{card}{mmmoo}{%
   \clearpage
 
   % Check that last card fitted on one page
   \pgfmathparse{int(\value{cards})}
   \ifnum\pgfmathresult=0
     \pgfmathparse{int(\value{page})}
-    \let\pageOfFirstCard\pgfmathresult
+    \xdef\pageOfFirstCard{\pgfmathresult}
   \else
     \pgfmathparse{int(\value{page} - \pageOfFirstCard - \value{cards})}
     \ifnum\pgfmathresult=0
@@ -125,6 +127,6 @@
   \raisebox{0pt}[0pt][0pt]{}%
   \hfill\raisebox{1.2em}[0pt][0pt]{\normalfont\postamt#1 #2}%
   \section{#3 \hfill \IfValueT{#4}{\IfValueT{#5}{\Reference{#4}{#5}}}}%
-}
+}{}
 
 \pagestyle{empty}
