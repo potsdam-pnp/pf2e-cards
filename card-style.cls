@@ -96,14 +96,7 @@
 \xdef\cardStyle@currentCardCategory{None}
 \AddToHook{shipout/background}{\cardStyle@drawCardFrame{\cardStyle@currentCardCategory}}
 
-% \long\def\cardStyle@swallowContent#1\end#2{%
-%   \ifnum\pdfstrcmp{#2}{card}=0
-%     \end{card}
-%   \else
-%     \expandafter\cardStyle@swallowContent
-%   \fi
-% }
-
+% Code to swallow cards that should not be visible
 \def\cardStyle@swallowCode#1{
   \ifnum\pdfstrcmp{#1}{card}=0%
     \end{card}%
