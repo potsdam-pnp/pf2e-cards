@@ -12,6 +12,7 @@
 \RequirePackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
 \RequirePackage{multicol}
 \RequirePackage{xparse}
+\RequirePackage[left=4mm, right=4mm, top=4mm, bottom=4mm]{geometry}
 \RequirePackage[implicit=false]{hyperref}
 \RequirePackage{bookmark}
 
@@ -57,14 +58,15 @@
   type/.is choice,
   type/.add code={\ifnum \pdfstrcmp{#1}{}=0\else}{\fi}, % don't do anything for an empty type
 %
-  type/Item/.style      = {color=blue!40},
-  type/Action/.style    = {color=yellow!40},
-  type/Spell/.style     = {color=green!40},
-  type/Cantrip/.style   = {color=green!40},
-  type/Focus/.style     = {color=green!40},
-  type/Rule/.style      = {color=gray!40},
-  type/Condition/.style = {color=gray!40},
-  type/.unknown/.style  = {shouldDrawBorder=false}
+  type/.cd,
+  Item/.style      = {color=blue!40},
+  Action/.style    = {color=yellow!40},
+  Spell/.style     = {color=green!40},
+  Cantrip/.style   = {color=green!40},
+  Focus/.style     = {color=green!40},
+  Rule/.style      = {color=gray!40},
+  Condition/.style = {color=gray!40},
+  .unknown/.style  = {shouldDrawBorder=false}
 }
 
 \newcommand{\cardStyle@drawCardFrame}[1]{%
@@ -75,7 +77,7 @@
       \draw [color=\cardStyle@borderColor,rounded corners=4mm,line width=4mm]
         (current page.north east)
         +(-24mm,0mm) coordinate(a)
-        +(0mm, -3mm) coordinate(b)
+        +(0mm, -2.5mm) coordinate(b)
         
         (current page.north west) 
         {[rounded corners=0mm]--(a)} 
@@ -93,16 +95,18 @@
 \xdef\cardStyle@currentCardCategory{None}
 \AddToHook{shipout/background}{\cardStyle@drawCardFrame{\cardStyle@currentCardCategory}}
 
-% \Card{<card-type>}{<level>}{<title>}[<source-book>][<source-page>]
+% \begin{card}{<card-type>}{<level>}{<title>}[<source-book>][<source-page>]
+% ...
+% \end{card}
 % TODO: make reference mandatory, but we need to define all the references first
-\NewDocumentCommand{\Card}{mmmoo}{%
+\NewDocumentEnvironment{card}{mmmoo}{%
   \clearpage
 
   % Check that last card fitted on one page
   \pgfmathparse{int(\value{cards})}
   \ifnum\pgfmathresult=0
     \pgfmathparse{int(\value{page})}
-    \let\pageOfFirstCard\pgfmathresult
+    \xdef\pageOfFirstCard{\pgfmathresult}
   \else
     \pgfmathparse{int(\value{page} - \pageOfFirstCard - \value{cards})}
     \ifnum\pgfmathresult=0
