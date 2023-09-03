@@ -12,6 +12,7 @@
 \RequirePackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
 \RequirePackage{multicol}
 \RequirePackage{xparse}
+\RequirePackage[left=4mm, right=4mm, top=4mm, bottom=4mm]{geometry}
 \RequirePackage[implicit=false]{hyperref}
 \RequirePackage{bookmark}
 
@@ -76,7 +77,7 @@
       \draw [color=\cardStyle@borderColor,rounded corners=4mm,line width=4mm]
         (current page.north east)
         +(-24mm,0mm) coordinate(a)
-        +(0mm, -3mm) coordinate(b)
+        +(0mm, -2.5mm) coordinate(b)
         
         (current page.north west) 
         {[rounded corners=0mm]--(a)} 
