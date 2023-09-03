@@ -131,3 +131,7 @@
 }{}
 
 \pagestyle{empty}
+
+% Prefer underfull over overfull boxes
+\pretolerance=150
+\tolerance=900
