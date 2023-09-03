@@ -96,13 +96,42 @@
 \xdef\cardStyle@currentCardCategory{None}
 \AddToHook{shipout/background}{\cardStyle@drawCardFrame{\cardStyle@currentCardCategory}}
 
+% \long\def\cardStyle@swallowContent#1\end#2{%
+%   \ifnum\pdfstrcmp{#2}{card}=0
+%     \end{card}
+%   \else
+%     \expandafter\cardStyle@swallowContent
+%   \fi
+% }
+
+\def\cardStyle@swallowCode#1{
+  \ifnum\pdfstrcmp{#1}{card}=0%
+    \end{card}%
+  \else
+    \expandafter\cardStyle@swallowContent
+  \fi
+}
+
+\long\def\cardStyle@swallowContent#1{%
+  \def\a{#1}%
+  \def\b{\end}%
+  \ifx\a\b
+    \expandafter\cardStyle@swallowCode
+  \else
+    \expandafter\cardStyle@swallowContent
+  \fi
+}
+
 % \begin{card}{<card-type>}{<level>}{<title>}[<source-book>][<source-page>]
 % ...
 % \end{card}
 % TODO: make reference mandatory, but we need to define all the references first
 \NewDocumentEnvironment{card}{mmmoo}{%
-  \clearpage
-
+  \pgfkeys{/card filter, type=#1, level=#2, title=#3, source book=#4, compute}%
+  \ifvisible
+%
+  \clearpage%
+%
   % Check that last card fitted on one page
   \pgfmathparse{int(\value{cards})}
   \ifnum\pgfmathresult=0
@@ -125,14 +154,13 @@
 
   \stepcounter{cards}
 
-  \pgfkeys{/card filter, type=#1, level=#2, title=#3, source book=#4, compute}
-
-  \ifvisible \else \begin{invisible} \fi
-
   \bookmark[page=\thepage, level=1]{#3 \ifnum\pdfstrcmp{#2}{}=0\else (#1 #2)\fi}%
   \raisebox{0pt}[0pt][0pt]{}%
   \hfill\raisebox{1.2em}[0pt][0pt]{\normalfont\postamt#1 #2}%
   \section{#3 \hfill \IfValueT{#4}{\IfValueT{#5}{\Reference{#4}{#5}}}}%
-}{ \ifvisible \else \end{invisible} \fi }
+  \else
+    \expandafter\cardStyle@swallowContent
+  \fi
+}{}
 
 \pagestyle{empty}
