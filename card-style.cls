@@ -43,6 +43,8 @@
 
 \newcounter{cards}
 
+\input{palette.tex}
+
 \newif\ifCardStyle@shouldDrawBorder
 \pgfkeys{
   /cardStyle border/.is family, /cardStyle border,
@@ -59,13 +61,13 @@
   type/.add code={\ifnum \pdfstrcmp{#1}{}=0\else}{\fi}, % don't do anything for an empty type
 %
   type/.cd,
-  Item/.style      = {color=blue!40},
-  Action/.style    = {color=yellow!40},
-  Spell/.style     = {color=green!40},
-  Cantrip/.style   = {color=green!40},
-  Focus/.style     = {color=green!40},
-  Rule/.style      = {color=gray!40},
-  Condition/.style = {color=gray!40},
+  Item/.style      = {color=accent-blue},
+  Action/.style    = {color=accent-red},
+  Spell/.style     = {color=accent-purple},
+  Cantrip/.style   = {color=accent-purple!40},
+  Focus/.style     = {color=accent-purple!70},
+  Rule/.style      = {color=accent-gray},
+  Condition/.style = {color=accent-brown},
   .unknown/.style  = {shouldDrawBorder=false}
 }
 
