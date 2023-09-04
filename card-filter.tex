@@ -1,0 +1,51 @@
+\newif\ifvisible
+
+\pgfkeys{
+  /card filter/.is family, /card filter,
+  visible/.is if=visible,
+  %
+  default/.style={visible},
+  type/.estore in=\type,
+  level/.estore in=\tlevel,
+  title/.estore in=\title,
+  source book/.estore in=\sourceBook
+  %compute/.style=default
+}
+
+\def\makeVisibleCommand#1#2{
+  \pgfkeys{
+    /card filter definition,
+    visible/#1/.style = {/card filter definition/.append compute={
+      \ifnum\pdfstrcmp{##1}{#2}=0
+        \pgfkeysalso{visible=true}
+      \fi
+    }},
+    invisible/#1/.style = {/card filter definition/.append compute={
+      \ifnum\pdfstrcmp{##1}{#2}=0
+        \pgfkeysalso{visible=false}
+      \fi
+    }}
+  }
+}
+
+\pgfkeys{
+  /card filter definition/.is family, /card filter definition,
+  .compute/.style = {/card filter/compute/.code = {#1}},
+  .append compute/.estyle = {/card filter/compute/.append code = {#1}},
+  .style compute/.estyle = {/card filter/compute/.style = {#1}},
+  %
+  visible/all/.style = {/card filter definition/.style compute={/card filter/visible=true}},
+  invisible/all/.style = {/card filter definition/.style compute={/card filter/visible=false}},
+}
+\makeVisibleCommand{level}{\tlevel}
+\makeVisibleCommand{title}{\title}
+\makeVisibleCommand{type}{\type}
+\makeVisibleCommand{source book}{\sourceBook}
+
+\newcommand{\filter}[1]{%
+  \pgfkeys{/card filter definition,#1}
+}
+
+\newcommand{\showCards}[1]{%
+  \pgfkeys{/card filter definition,invisible/all,visible/.cd,#1}
+}

@@ -24,6 +24,8 @@
 
 \input{symbols.tex}
 
+\input{card-filter.tex}
+
 \setlength\parindent{0pt} % todo: avoid in favor of some komascript feature
 \setlength\parskip{4pt} % todo: avoid in favor of some komascript feature
 
@@ -95,13 +97,35 @@
 \xdef\cardStyle@currentCardCategory{None}
 \AddToHook{shipout/background}{\cardStyle@drawCardFrame{\cardStyle@currentCardCategory}}
 
+% Code to swallow cards that should not be visible
+\def\cardStyle@swallowCode#1{
+  \ifnum\pdfstrcmp{#1}{card}=0%
+    \end{card}%
+  \else
+    \expandafter\cardStyle@swallowContent
+  \fi
+}
+
+\long\def\cardStyle@swallowContent#1{%
+  \def\a{#1}%
+  \def\b{\end}%
+  \ifx\a\b
+    \expandafter\cardStyle@swallowCode
+  \else
+    \expandafter\cardStyle@swallowContent
+  \fi
+}
+
 % \begin{card}{<card-type>}{<level>}{<title>}[<source-book>][<source-page>]
 % ...
 % \end{card}
 % TODO: make reference mandatory, but we need to define all the references first
 \NewDocumentEnvironment{card}{mmmoo}{%
-  \clearpage
-
+  \pgfkeys{/card filter, type=#1, level=#2, title=#3, source book=#4, compute}%
+  \ifvisible
+%
+  \clearpage%
+%
   % Check that last card fitted on one page
   \pgfmathparse{int(\value{cards})}
   \ifnum\pgfmathresult=0
@@ -128,6 +152,9 @@
   \raisebox{0pt}[0pt][0pt]{}%
   \hfill\raisebox{1.2em}[0pt][0pt]{\normalfont\postamt#1 #2}%
   \section{#3 \hfill \IfValueT{#4}{\IfValueT{#5}{\Reference{#4}{#5}}}}%
+  \else
+    \expandafter\cardStyle@swallowContent
+  \fi
 }{}
 
 \pagestyle{empty}
