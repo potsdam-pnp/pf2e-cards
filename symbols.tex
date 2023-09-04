@@ -1,8 +1,10 @@
+\input{palette.tex}
+
 \tikzset{roll box/.style={inner ysep=0.5em, inner xsep=0.1em, fill=black!20}}
-\tikzset{check roll box/.style={roll box, fill=blue!20}}
-\tikzset{damage roll box/.style={roll box, fill=red!20, rounded corners=0.5em}}
-\tikzset{healing roll box/.style={roll box, fill=green!20, rounded corners=0.5em}}
-\tikzset{effect box/.style={roll box, fill=red!20, rounded corners=0.5em}}
+\tikzset{check roll box/.style={roll box, fill=box-blue}}
+\tikzset{damage roll box/.style={roll box, fill=box-red, rounded corners=0.5em}}
+\tikzset{healing roll box/.style={roll box, fill=box-green, rounded corners=0.5em}}
+\tikzset{effect box/.style={roll box, fill=box-red, rounded corners=0.5em}}
 
 \newcommand{\pfsymbol}[1]{%
   \mbox{\pfsymbols\selectfont#1}
