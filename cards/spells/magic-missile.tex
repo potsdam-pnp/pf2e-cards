@@ -4,7 +4,7 @@
 \foreach[
   evaluate=\level as \half using int(ceil(\level/2))
 ] \level in {1, ..., 10} {
-\Card{Spell}{\level}{Magic Missile}
+\begin{card}{Spell}{\level}{Magic Missile}[CRB][349]
 
 \CardTraits{Evocation, Force}
 
@@ -21,4 +21,5 @@ You send \half{} darts per \pfsymbol{one-action} spent.
 Target one creature within 120 feet per dart.
 
 \DamageRoll{Force}{1d4+1}{} per dart
+\end{card}
 }

@@ -12,6 +12,7 @@
 \RequirePackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
 \RequirePackage{multicol}
 \RequirePackage{xparse}
+\RequirePackage[left=4mm, right=4mm, top=4mm, bottom=4mm]{geometry}
 \RequirePackage[implicit=false]{hyperref}
 \RequirePackage{bookmark}
 
@@ -30,7 +31,10 @@
 \addtokomafont{subsection}{\normalfont\mittelschrift}
 
 % move the card headings higher (into the page border?)
-\RedeclareSectionCommand[runin=false, afterindent=false, beforeskip=-2em]{section}
+% TODO: don't hardcode the beforeskip like this here, it's currently calculated as
+% 2*(baselineskip in section heading)-(baselineskip before section heading)
+% to typeset it as if there was no content beforehand
+\RedeclareSectionCommand[runin=false, afterindent=false, beforeskip=-16.91999pt]{section}
 
 \renewcommand*{\sectionformat}{}
 \renewcommand*{\subsectionformat}{}
@@ -39,20 +43,41 @@
 
 \newcounter{cards}
 
+\newif\ifCardStyle@shouldDrawBorder
+\pgfkeys{
+  /cardStyle border/.is family, /cardStyle border,
+%
+  shouldDrawBorder/.is if=CardStyle@shouldDrawBorder,
+  color/.estore in = \cardStyle@borderColor,
+  color/.append style = shouldDrawBorder,
+%
+  default/.style = {
+    shouldDrawBorder=false
+  },
+%
+  type/.is choice,
+  type/.add code={\ifnum \pdfstrcmp{#1}{}=0\else}{\fi}, % don't do anything for an empty type
+%
+  type/.cd,
+  Item/.style      = {color=blue!40},
+  Action/.style    = {color=yellow!40},
+  Spell/.style     = {color=green!40},
+  Cantrip/.style   = {color=green!40},
+  Focus/.style     = {color=green!40},
+  Rule/.style      = {color=gray!40},
+  Condition/.style = {color=gray!40},
+  .unknown/.style  = {shouldDrawBorder=false}
+}
+
 \newcommand{\cardStyle@drawCardFrame}[1]{%
-  \def\cardStyle@cardColor{}
-  \ifnum\pdfstrcmp{#1}{Item}=0      \def\cardStyle@cardColor{blue!40} \fi
-  \ifnum\pdfstrcmp{#1}{Action}=0    \def\cardStyle@cardColor{yellow!40} \fi
-  \ifnum\pdfstrcmp{#1}{Spell}=0     \def\cardStyle@cardColor{green!40} \fi
-  \ifnum\pdfstrcmp{#1}{Cantrip}=0   \def\cardStyle@cardColor{green!40} \fi
-  \ifnum\pdfstrcmp{#1}{Focus}=0     \def\cardStyle@cardColor{green!40} \fi
-  
-  \ifnum\pdfstrcmp{\cardStyle@cardColor}{}=0 \else
+  \pgfkeys{/cardStyle border, default, type=#1}
+
+  \ifCardStyle@shouldDrawBorder
     \tikz[remember picture,overlay] {%
-      \draw [color=\cardStyle@cardColor,rounded corners=4mm,line width=4mm]
+      \draw [color=\cardStyle@borderColor,rounded corners=4mm,line width=4mm]
         (current page.north east)
         +(-24mm,0mm) coordinate(a)
-        +(0mm, -3mm) coordinate(b)
+        +(0mm, -2.5mm) coordinate(b)
         
         (current page.north west) 
         {[rounded corners=0mm]--(a)} 
@@ -61,7 +86,8 @@
         --(current page.south east)  
         --(current page.south west)
         --cycle
-        (a) -- (current page.north east);
+        (a) -- (current page.north east)
+            -- +(1mm,0mm);
     }
   \fi
 }
@@ -69,16 +95,18 @@
 \xdef\cardStyle@currentCardCategory{None}
 \AddToHook{shipout/background}{\cardStyle@drawCardFrame{\cardStyle@currentCardCategory}}
 
-% \Card{<card-type>}{<level>}{<title>}[<source-book>][<source-page>]
+% \begin{card}{<card-type>}{<level>}{<title>}[<source-book>][<source-page>]
+% ...
+% \end{card}
 % TODO: make reference mandatory, but we need to define all the references first
-\NewDocumentCommand{\Card}{mmmoo}{%
+\NewDocumentEnvironment{card}{mmmoo}{%
   \clearpage
 
   % Check that last card fitted on one page
   \pgfmathparse{int(\value{cards})}
   \ifnum\pgfmathresult=0
     \pgfmathparse{int(\value{page})}
-    \let\pageOfFirstCard\pgfmathresult
+    \xdef\pageOfFirstCard{\pgfmathresult}
   \else
     \pgfmathparse{int(\value{page} - \pageOfFirstCard - \value{cards})}
     \ifnum\pgfmathresult=0
@@ -98,8 +126,12 @@
 
   \bookmark[page=\thepage, level=1]{#3 \ifnum\pdfstrcmp{#2}{}=0\else (#1 #2)\fi}%
   \raisebox{0pt}[0pt][0pt]{}%
-  \hfill\raisebox{1em}[0pt][0pt]{\normalfont\postamt#1 #2}%
+  \hfill\raisebox{1.2em}[0pt][0pt]{\normalfont\postamt#1 #2}%
   \section{#3 \hfill \IfValueT{#4}{\IfValueT{#5}{\Reference{#4}{#5}}}}%
-}
+}{}
 
 \pagestyle{empty}
+
+% Prefer underfull over overfull boxes
+\pretolerance=150
+\tolerance=900

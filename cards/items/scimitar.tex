@@ -1,7 +1,7 @@
 % Scimitar
 % https://2e.aonprd.com/Weapons.aspx?ID=38
 
-\Card{Item}{0}{Scimitar}
+\begin{card}{Item}{0}{Scimitar}[CRB][281]
 
 \CardTraits{Forceful, Sweep}
 
@@ -19,7 +19,7 @@
 
 If you already attacked a different target this turn using this weapon.
 
-\CheckRoll{MeeleAttack}{str, prof, 1}
+\CheckRoll{MeeleAttack}[r]{str, prof, 1}
 \DamageRoll{Slashing}{1d6}{str}
 
 \vfill
@@ -30,10 +30,11 @@ If you already attacked a different target this turn using this weapon.
 \WeaponType{Melee}
 \WeaponCategory{Martial}
 \WeaponGroup{Sword}
+\end{card}
 
 % +1 Scimitar
 
-\Card{Item}{2}{+1 Scimitar}
+\begin{card}{Item}{2}{+1 Scimitar}
 
 \CardTraits{Forceful, Sweep, Magical}
 
@@ -44,14 +45,14 @@ If you already attacked a different target this turn using this weapon.
 
 \Action[Attack]{CRB}{471}{1}{Strike}
 
-\CheckRoll{MeeleAttack}{str, prof, 1}
+\CheckRoll{MeeleAttack}[r]{str, prof, 1}
 \DamageRoll{Slashing}{1d6}{str}
 
 \Action[Attack]{CRB}{471}{1}{Sweeping Strike}
 
 If you already attacked a different target this turn using this weapon.
 
-\CheckRoll{MeeleAttack}{str, prof, 1, 1}
+\CheckRoll{MeeleAttack}[r]{str, prof, 1, 1}
 \DamageRoll{Slashing}{1d6}{str}
 
 \vfill
@@ -61,4 +62,5 @@ If you already attacked a different target this turn using this weapon.
 \ItemHands{1}
 \WeaponType{Melee}
 \WeaponCategory{Martial}
-\WeaponGroup{Sword}
+\WeaponGroup{Sword}%
+\end{card}

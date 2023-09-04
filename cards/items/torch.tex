@@ -1,14 +1,14 @@
 % Torch
 % https://2e.aonprd.com/Equipment.aspx?ID=60
 
-\Card{Item}{0}{Torch}
+\begin{card}{Item}{0}{Torch}[CRB][292]
 
 A torch sheds bright light in a 20-foot radius (and dim light to the next 20 feet) for 1 hour. 
 
 It can be used as an improvised weapon.
 
 \Action[Attack]{CRB}{471}{1}{Strike}
-\CheckRoll{MeleeAttack}{str, prof ~-~ 2} %TODO '-' should be supported by \CheckFormula
+\CheckRoll{MeleeAttack}[r]{str, prof ~-~ 2} %TODO '-' should be supported by \CheckFormula
 \DamageRoll{Bludgeoning}{1d4}{}
 \DamageRoll{Fire}{1}{}
 
@@ -20,4 +20,4 @@ It can be used as an improvised weapon.
 \WeaponType{Melee}
 \WeaponCategory{Simple}
 %\WeaponGroup{Improvised}
-\hfill\Reference{CRB}{292}
+\end{card}

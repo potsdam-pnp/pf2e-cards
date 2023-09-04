@@ -4,7 +4,7 @@
 \foreach[
   evaluate=\level as \dice using int(2*\level)
 ] \level in {1, 4} {
-\Card{Spell}{\level}{Pest Form}
+\begin{card}{Spell}{\level}{Pest Form}[CRB][356]
 
 \CardTraits{Polymorhp, Transmutation}
 
@@ -38,4 +38,5 @@ You gain the following statistics and abilities:
 Low-light vision and imprecise scent 30 feet.
 
 % TODO: add \Action[???]{CRB}{???}{1}{Dismiss}
+\end{card}
 }

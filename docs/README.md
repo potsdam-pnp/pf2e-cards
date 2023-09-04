@@ -6,6 +6,11 @@ Generate printable playing cards.
 
 These have been generated using the software provided at <https://github.com/potsdam-pnp/pf2e-cards>.
 
+![crossbow](./Crossbow.png)
+![demoralize](./Demoralize.png)
+![detect](./Detect.png)
+![heal](./Heal.png)
+
 {% include LICENSES.md %}
 
 [license]: https://github.com/potsdam-pnp/pf2e-cards/blob/main/LICENSE
