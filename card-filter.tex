@@ -1,51 +1,225 @@
-\newif\ifvisible
+% Definition of the filter language
 
-\pgfkeys{
-  /card filter/.is family, /card filter,
-  visible/.is if=visible,
-  %
-  default/.style={visible},
-  type/.estore in=\type,
-  level/.estore in=\tlevel,
-  title/.estore in=\title,
-  source book/.estore in=\sourceBook
-  %compute/.style=default
+% Helper function used to define the semantics of the filter language
+
+% for mathematical expression used with \pgfmath<XXX>
+\def\mathoperator#1#2{
+  {#1}{%
+    {\unexpanded{##1}}\unexpanded{\toks0=\expandafter{\intResult}%
+    {##2}\toks2=\expandafter{\intResult}%
+    \edef\res{\noexpand#2{\the\toks0}{\the\toks2}}%
+    \res\xdef\intResult{\pgfmathresult}}%
+  }%
 }
 
-\def\makeVisibleCommand#1#2{
-  \pgfkeys{
-    /card filter definition,
-    visible/#1/.style = {/card filter definition/.append compute={
-      \ifnum\pdfstrcmp{##1}{#2}=0
-        \pgfkeysalso{visible=true}
-      \fi
-    }},
-    invisible/#1/.style = {/card filter definition/.append compute={
-      \ifnum\pdfstrcmp{##1}{#2}=0
-        \pgfkeysalso{visible=false}
-      \fi
-    }}
+% other helpers
+\pgfkeys{
+  /language/.cd, precedence/.is choice, operator/.is choice, value/.is choice,
+  /handlers/.precedence/.code={%
+    \edef\pgfkeyscurrentkey{\pgfkeyscurrentpath}\pgfkeyssplitpath{}%
+    \pgfkeysalso{\pgfkeyscurrentpath/precedence/\pgfkeyscurrentname/.style={current precedence=#1}}%
+  },
+  /handlers/.operator expanded/.code={%
+    \edef\pgfkeyscurrentkey{\pgfkeyscurrentpath}\pgfkeyssplitpath{}%
+    \pgfkeysalso{%
+      \pgfkeyscurrentpath/operator/\pgfkeyscurrentname/.style={current operator/.expanded=#1}
+    }
+  },
+  /handlers/.operator/.code={%
+    \edef\pgfkeyscurrentkey{\pgfkeyscurrentpath}\pgfkeyssplitpath{}%
+    \pgfkeysalso{%
+      \pgfkeyscurrentpath/operator/\pgfkeyscurrentname/.style={current operator=#1}
+    }
+  },
+  /handlers/.store intResult/.code 2 args={\pgfkeysalso{%
+    \pgfkeyscurrentpath/.style={current value={#1}{\xdef\intResult{#2}}}%
+  }},
+  /handlers/.value/.code 2 args={\pgfkeysalso{%
+    \pgfkeyscurrentpath/.style={current value={#1}{#2}}
+  }},
+  /handlers/.same value/.code={%
+    \edef\pgfkeyscurrentkey{\pgfkeyscurrentpath}\pgfkeyssplitpath{}%
+    \edef\helper{current value={#1}{\pgfkeyscurrentname}}%
+    \pgfkeysalso{%
+      \pgfkeyscurrentpath/\pgfkeyscurrentname/.style/.expand once=\helper
+    }
   }
 }
 
+% Definition of syntax and semantics of the filter language for cards
 \pgfkeys{
-  /card filter definition/.is family, /card filter definition,
-  .compute/.style = {/card filter/compute/.code = {#1}},
-  .append compute/.estyle = {/card filter/compute/.append code = {#1}},
-  .style compute/.estyle = {/card filter/compute/.style = {#1}},
+  /language/.cd,
+  % Define operator precedences
+  or/.precedence=2,
+  and/.precedence=3,
+  </.precedence=4,
+  >/.precedence=4,
+  eq/.precedence=4,
+  <>/.precedence=4,
+  +/.precedence=5,
+  */.precedence=6,
+  -/.precedence=5,
+  % Define types and semantics of operators
+  bool and bool/.operator expanded=\mathoperator{bool}{\pgfmathand},
+  bool or bool/.operator expanded=\mathoperator{bool}{\pgfmathor},
   %
-  visible/all/.style = {/card filter definition/.style compute={/card filter/visible=true}},
-  invisible/all/.style = {/card filter definition/.style compute={/card filter/visible=false}},
+  number + number/.operator expanded=\mathoperator{number}{\pgfmathadd},
+  number * number/.operator expanded=\mathoperator{number}{\pgfmathmultiply},
+  number - number/.operator expanded=\mathoperator{number}{\pgfmathsubtract},
+  number < number/.operator expanded=\mathoperator{bool}{\pgfmathless},
+  number > number/.operator expanded=\mathoperator{bool}{\pgfmathgreater},
+  number eq number/.operator expanded=\mathoperator{bool}{\pgfmathgreater},
+  %
+  type eq type/.operator={bool}{\xdef\intResult{\ifnum\pdfstrcmp{##1}{##2}=0 1 \else 0 \fi}},
+  type <> type/.operator={bool}{\xdef\intResult{\ifnum\pdfstrcmp{##1}{##2}=0 0 \else 1 \fi}},
+  %
+  title eq title/.operator={bool}{\xdef\intResult{\ifnum\pdfstrcmp{##1}{##2}=0 1 \else 0 \fi}},
+  title <> title/.operator={bool}{\xdef\intResult{\ifnum\pdfstrcmp{##1}{##2}=0 0 \else 1 \fi}},
+  %
+  % Define types and semantics of values
+  value/true/.store intResult={bool}{1},
+  value/false/.store intResult={bool}{0},
+  %
+  value/0/.store intResult={number}0,
+  value/1/.store intResult={number}1,
+  value/2/.store intResult={number}2,
+  value/3/.store intResult={number}3,
+  value/4/.store intResult={number}4,
+  value/4+/.store intResult={number}4.5,
+  value/5/.store intResult={number}5,
+  value/6/.store intResult={number}6,
+  value/7/.store intResult={number}7,
+  value/8/.store intResult={number}8,
+  value/9/.store intResult={number}9,
+  %
+  value/level/.store intResult={number}{\cardLevel},
+  %
+  value/type/.value={type}{\cardType},
+  value/Item/.same value=type,
+  value/Action/.same value=type,
+  value/Spell/.same value=type,
+  value/Cantrip/.same value=type,
+  value/Focus/.same value=type,
+  value/Rule/.same value=type,
+  value/Condition/.same value=type,
+  %
+  value/title/.value={title}{\cardTitle},
+  value/title/.unknown/.code={
+    \edef\currentname{\pgfkeyscurrentname}
+    \pgfkeysalso{current value/.expanded={title}{\currentname}}
+  }
 }
-\makeVisibleCommand{level}{\tlevel}
-\makeVisibleCommand{title}{\title}
-\makeVisibleCommand{type}{\type}
-\makeVisibleCommand{source book}{\sourceBook}
 
-\newcommand{\filter}[1]{%
-  \pgfkeys{/card filter definition,#1}
+% Convenience layer for filtering
+
+\pgfkeys{
+  /card attributes/.cd,
+  type/.estore in=\cardType,
+  level/.estore in=\cardLevel,
+  level/.append code={\ifnum\pdfstrcmp{\cardLevel}{}=0 \edef\cardLevel{-1}\fi},
+  level/.append code={\ifnum\pdfstrcmp{\cardLevel}{4+}=0 \edef\cardLevel{4.5}\fi},
+  title/.estore in=\cardTitle,
+  source book/.estore in=\cardSourceBook
 }
 
-\newcommand{\showCards}[1]{%
-  \pgfkeys{/card filter definition,invisible/all,visible/.cd,#1}
+\NewDocumentEnvironment{filterBy}{}{\startExpression}{%
+  \ifnum \pdfstrcmp{\currentType}{bool}=0 \else
+    \errmessage{Wrong type of filter expression, expected bool but got \currentType}
+  \fi
+  \global\let\cardFilter=\currentCalc
+}
+
+\NewDocumentCommand\ifVisible{o}{%
+  \pgfqkeys{/card attributes}{#1}%
+  \cardFilter
+  \ifnum\intResult=1
+}
+
+% Implementation of semantics and type-checking
+
+% Set up pgfkeys to forward values to the correct macros
+
+\pgfkeys{
+  /language/current precedence/.code={%
+    \xdef\nextPrecedence{#1}%
+  },
+  /language/current value/.code 2 args={%
+    \edef\currentType{#1}%
+    \def\currentCalc{#2}%
+  },
+  /language/current operator/.code 2 args={%
+    \edef\currentType{#1}
+    \def\helper##1##2{#2}
+    \toks0=\expandafter{\currentCalc}
+    \toks2=\expandafter{\nextCalc}
+    \edef\currentCalc{%
+      \noexpand\helper{\the\toks0}{\the\toks2}%
+    }%
+    \edef\currentCalc{%
+      \unexpanded\expandafter\expandafter\expandafter{\currentCalc}%
+    }%
+  }
+}
+
+% entrypoint
+\def\startExpression#1{
+  \pgfqkeys{/language}{value=#1}
+  \edef\currentLevel{0}
+  \edef\currentPrecedence{0}
+  \edef\currentOperator{}
+  \continue
+}
+
+\def\continue#1{
+  \def\currentToken{#1}
+  \def\a{\end}
+  \ifx\a\currentToken
+    % finish 
+    \closeLevels
+    \expandafter\end
+  \else
+    \expandafter\continueWith
+  \fi
+}
+
+\def\continueWith#1{
+  \xdef\nextOperator{\currentToken}
+  \xdef\eqToken{=}
+  \ifx\nextOperator\eqToken \xdef\nextOperator{eq} \fi % convert = to eq to support pgfkeys better
+  \pgfqkeys{/language}{precedence/.expanded=\nextOperator}
+  \endgroupsPrecedence
+  \edef\currentOperator{\nextOperator}
+  \begingroup
+  \edef\currentOperator{}
+  \edef\currentPrecedence{\nextPrecedence}
+  \pgfqkeys{/language}{value=#1}
+  \pgfmathparse{\currentLevel+1}
+  \edef\currentLevel{\pgfmathresult}%
+  \continue
+}
+
+\def\promoteCurrentType{
+  \def\empty{}%
+  \ifx\empty\currentOperator
+    \edef\currentType{\nextType}
+    \edef\currentCalc{\unexpanded\expandafter{\nextCalc}}
+  \else
+    \pgfqkeys{/language}{operator/.expanded=\currentType\space\currentOperator\space\nextType}
+  \fi
+}
+
+\def\endgroupsPrecedence{
+  \pgfmathparse{\nextPrecedence<\currentPrecedence} %
+  \ifnum\pgfmathresult=1
+    \xdef\nextType{\currentType}
+    \xdef\nextCalc{\unexpanded\expandafter{\currentCalc}}
+    \endgroup
+    \promoteCurrentType
+    \endgroupsPrecedence
+  \fi
+}
+
+\def\closeLevels{
+  \xdef\nextPrecedence{1}
+  \endgroupsPrecedence
 }
