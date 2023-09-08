@@ -123,7 +123,7 @@
 % \end{card}
 % TODO: make reference mandatory, but we need to define all the references first
 \NewDocumentEnvironment{card}{mmmoo}{%
-  \ifVisible[type=#1, level=#2, title=#3, source book=#4]
+  \ifVisible[type=#1, level=#2, title=#3, source book=#4]%
 %
   \clearpage%
 %

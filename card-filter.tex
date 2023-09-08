@@ -122,15 +122,17 @@
   source book/.estore in=\cardSourceBook
 }
 
+\def\allowedControlSequencesForFilteringCards{
+  \def\and{and}%
+  \def\or{or}%
+  \def\title{title}%
+  \def\level{level}%
+  \def\type{type}%
+  \def\ne{<>}%
+}
+
 \NewDocumentEnvironment{filterBy}{}{%
-  \def\allowedControlSequences{%
-    \def\and{and}%
-    \def\or{or}%
-    \def\title{title}%
-    \def\level{level}%
-    \def\type{type}%
-    \def\ne{<>}%
-  }%
+  \let\allowedControlSequences=\allowedControlSequencesForFilteringCards
   \startExpression
 }{%
   \ifnum \pdfstrcmp{\currentType}{bool}=0 \else
@@ -143,6 +145,49 @@
   \pgfqkeys{/card attributes}{#1}%
   \cardFilter
   \ifnum\intResult=1
+  \clearpage
+  \writeMetadata
+}
+
+% Write metadata information about some file
+
+\newwrite\metadataFile
+\openout\metadataFile=metadata.txt
+
+\pgfkeys{
+  /collections/all/.style={},
+  /collections/by name/.code={%
+    \pgfkeysalso{/collections/#1}%
+    \ifnum\intResult=1
+      \immediate\write\metadataFile{ collection=#1}
+    \fi
+  }
+}
+
+\NewDocumentEnvironment{collection}{m}{%
+  \let\allowedControlSequences=\allowedControlSequencesForFilteringCards
+  \startExpression
+}{%
+  \ifnum \pdfstrcmp{\currentType}{bool}=0 \else
+    \errmessage{Wrong type of collection expression, expected bool but got \currentType}
+  \fi
+  \global\let\collectionCurrentCalc=\currentCalc
+  \gdef\evalAfterGroup{
+    \pgfkeys{
+      /collections/#1/.code/.expand once=\collectionCurrentCalc,
+      /collections/all/.append style={/collections/by name=#1}
+    }
+  }
+  \aftergroup\evalAfterGroup
+}
+
+\def\writeMetadata{
+  \immediate\write\metadataFile{page=\thepage}%
+  \immediate\write\metadataFile{ title=\cardTitle}%
+  \immediate\write\metadataFile{ level=\cardLevel}%
+  \immediate\write\metadataFile{ type=\cardType}%
+  \immediate\write\metadataFile{ card source book=\cardSourceBook}%
+  \pgfkeys{/collections/all}%
 }
 
 % Implementation of semantics and type-checking
