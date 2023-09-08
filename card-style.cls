@@ -100,7 +100,7 @@
 \AddToHook{shipout/background}{\cardStyle@drawCardFrame{\cardStyle@currentCardCategory}}
 
 % Code to swallow cards that should not be visible
-\def\cardStyle@swallowCode#1{
+\def\cardStyle@swallowCode#1{%
   \ifnum\pdfstrcmp{#1}{card}=0%
     \end{card}%
   \else
