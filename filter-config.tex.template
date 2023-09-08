@@ -2,9 +2,9 @@
 % Copy this file to <filter-config.tex> to activate such a filter
 %
 \begin{filterBy}
-  {level} < 2 
-  {or} {type} {<>} {Spell} 
-       {and} {type} {<>} {Cantrip} 
-       {and} {type} {<>} {Focus} 
-  {or} {title} = {title/Breastplate}
+  \level < 2 
+  \or \type \ne {Spell} 
+      \and \type \ne {Cantrip} 
+      \and \type \ne {Focus} 
+  \or \title = {title/Breastplate}
 \end{filterBy}

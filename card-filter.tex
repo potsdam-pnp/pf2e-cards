@@ -122,7 +122,17 @@
   source book/.estore in=\cardSourceBook
 }
 
-\NewDocumentEnvironment{filterBy}{}{\startExpression}{%
+\NewDocumentEnvironment{filterBy}{}{%
+  \def\allowedControlSequences{%
+    \def\and{and}%
+    \def\or{or}%
+    \def\title{title}%
+    \def\level{level}%
+    \def\type{type}%
+    \def\ne{<>}%
+  }%
+  \startExpression
+}{%
   \ifnum \pdfstrcmp{\currentType}{bool}=0 \else
     \errmessage{Wrong type of filter expression, expected bool but got \currentType}
   \fi
@@ -163,7 +173,8 @@
 
 % entrypoint
 \def\startExpression#1{
-  \pgfqkeys{/language}{value=#1}
+  \parseValue{#1}
+  \pgfqkeys{/language}{value/.expanded=\currentValue}
   \edef\currentLevel{0}
   \edef\currentPrecedence{0}
   \edef\currentOperator{}
@@ -183,19 +194,37 @@
 }
 
 \def\continueWith#1{
-  \xdef\nextOperator{\currentToken}
-  \xdef\eqToken{=}
-  \ifx\nextOperator\eqToken \xdef\nextOperator{eq} \fi % convert = to eq to support pgfkeys better
+  \parseOperator
   \pgfqkeys{/language}{precedence/.expanded=\nextOperator}
   \endgroupsPrecedence
   \edef\currentOperator{\nextOperator}
   \begingroup
   \edef\currentOperator{}
   \edef\currentPrecedence{\nextPrecedence}
-  \pgfqkeys{/language}{value=#1}
+  \parseValue{#1}
+  \pgfqkeys{/language}{value/.expanded=\currentValue}
   \pgfmathparse{\currentLevel+1}
   \edef\currentLevel{\pgfmathresult}%
   \continue
+}
+
+\def\allowedControlSequences{}
+
+\def\parseOperator{
+  {
+    \allowedControlSequences
+    \xdef\nextOperator{\currentToken}
+  }
+  \xdef\eqToken{=}
+  % convert = to eq to support pgfkeys better
+  \ifx\nextOperator\eqToken \xdef\nextOperator{eq} \fi
+}
+
+\def\parseValue#1{%
+  {%
+    \allowedControlSequences
+    \xdef\currentValue{#1}%
+  }%
 }
 
 \def\promoteCurrentType{
