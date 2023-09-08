@@ -1,10 +1,10 @@
 \documentclass{card-style}
 
-\begin{document}
+\InputIfFileExists{filter-config.tex}{}{
+  \begin{filterBy} {true} \end{filterBy}
+}
 
-\showCards{all}
-%\showCards{title=Breastplate}
-%\showCards{level=1,level=0}
+\begin{document}
 
 \input{cards/cards.tex}
 
