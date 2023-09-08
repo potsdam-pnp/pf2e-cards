@@ -124,40 +124,60 @@ jobs:
            pdftoppm -f $page -l $page -png cards.pdf > "$cardName.png"
          fi
          echo "count=$count" >> $GITHUB_OUTPUT
-     - name: Upload image as gist
+     - name: Generate a token to authenticate as show-cards
+       id: generate_token
+       uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
+       with:
+         app_id: ${{ secrets.SHOWCARDSAPPID }}
+         private_key: ${{ secrets.SHOWCARDSPRIVATEKEY }}
+     - name: Upload image
        id: upload
        if: "steps.download-cards.outcome == 'success' && steps.extract.outputs.count >= 1"
-       uses: exuanbo/actions-deploy-gist@v1
-       with:
-         token: ${{ secrets.GISTSECRET }}
-         gist_id: 11ab434c9bd674976f25810b70a9cb56
-         file_type: binary
+       uses: actions/github-script@v6
+       env:
+         dir: ${{ steps.sha.outputs.result }}
          file_path: ${{steps.find.outputs.result}}.png
-         gist_file_name: ${{ steps.sha.outputs.result }}-${{steps.find.outputs.result}}.png
+       with:
+         github-token: ${{ steps.generate_token.outputs.token }}
+         script: |
+           let fs = require('fs').promises;
+           await github.request('PUT /repos/{owner}/{repo}/contents/{path}', {
+             owner: context.repo.owner,
+             repo: 'pf2e-generated-card-images',
+             path: process.env.dir + "/" + process.env.file_path,
+             message: 'upload files for some comment in ' + context.payload.comment.html_url,
+             content: (await fs.readFile(process.env.file_path).toString("base64")),
+             headers: {
+              'X-GitHub-Api-Version': '2022-11-28'
+             }
+           });
      - name: Comment on issue
        if: "steps.upload.outcome == 'success'"
        uses: actions/github-script@v6
        env:
-         fileName: ${{ steps.sha.outputs.result }}-${{steps.find.outputs.result}}.png
-         sha: ${{ steps.sha.outputs.result }}
+         dir: ${{ steps.sha.outputs.result }}
+         file_path: ${{steps.find.outputs.result}}.png
+         sha: "${{ steps.sha.outputs.result }}"
        with:
+         github-token: ${{ steps.generate_token.outputs.token }}
          script: |
            let prefix = '';
            if (${{ steps.extract.outputs.count }} > 1) {
              prefix = "Found ${{ steps.extract.outputs.count }} cards matching, this is the first one:\n"
            }
            const suffix = "from " + process.env.sha;
-           const fileName = encodeURIComponent(process.env.fileName);
+           const fileName = encodeURIComponent(process.env.dir) + "/" + encodeURIComponent(process.env.file_path);
            await github.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
              owner: context.repo.owner,
              repo: context.repo.repo,
              issue_number: context.issue.number,
-             body: prefix + '![${{steps.find.outputs.result}}](https://gist.githubusercontent.com/fkz/11ab434c9bd674976f25810b70a9cb56/raw/' + fileName + ')\n' + suffix
+             body: prefix + '![${{steps.find.outputs.result}}](https://raw.githubusercontent.com/potsdam-pnp/pf2e-generated-card-images/main/' + fileName + ')\n' + suffix
            });
      - name: Comment on issue when not found
        uses: actions/github-script@v6
        if: "steps.upload.outcome == 'success' && steps.extract.outputs.count == 0"
        with:
+         github-token: ${{ steps.generate_token.outputs.token }}
          script: |
           await github.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
              owner: context.repo.owner,
