@@ -3,7 +3,7 @@
 
 \foreach[
   evaluate=\level as \dice using int(floor((\level-1)/2))
-] \level in {1, ..., 10} {
+] \level in {1, ..., 10} {%
 \begin{card}{Cantrip}{\level}{Daze}[CRB][327]
 
 \CardTraits{Enchanment, Mental, Nonlethal}
@@ -23,5 +23,5 @@ The target gets a basic Will save.
 \fi
 
 \pfsymbol{critical-failure} The target is also stunned 1.
-\end{card}
+\end{card}%
 }

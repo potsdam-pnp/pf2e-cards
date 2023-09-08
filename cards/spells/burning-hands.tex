@@ -3,7 +3,7 @@
 
 \foreach[
   evaluate=\level as \dice using int(2*\level)
-] \level in {1, ..., 10} {
+] \level in {1, ..., 10} {%
 \begin{card}{Spell}{\level}{Burning Hands}[CRB][322]
 
 \CardTraits{Evocation, Fire}
@@ -17,5 +17,5 @@ Affect all creatures in a 15-foot cone.
 They get a basic Reflex save.
 
 \DamageRoll{Fire}{\dice{}d6}{}
-\end{card}
+\end{card}%
 }

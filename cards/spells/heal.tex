@@ -1,7 +1,7 @@
 % Heal
 % https://2e.aonprd.com/Spells.aspx?ID=148
 
-\foreach[evaluate=\level as \bonus using int(\level*8)] \level in {1, ..., 10} {
+\foreach[evaluate=\level as \bonus using int(\level*8)] \level in {1, ..., 10} {%
 \begin{card}{Spell}{\level}{Heal}[CRB][343]
 
 \CardTraits{Positive, Healing, Necromancy}
@@ -27,5 +27,5 @@ You can restore \(\operatorname{\level d8}+\bonus\) instead of \(\operatorname{\
 \Flavor{Disperse positive energy in a 30-foot emanation.}
 
 Target every creature within 30 feet.
-\end{card}
+\end{card}%
 }

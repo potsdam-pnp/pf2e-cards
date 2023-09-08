@@ -1,7 +1,7 @@
 % Ray of Frost
 % https://2e.aonprd.com/Spells.aspx?ID=245
 
-\foreach[evaluate=\level as \bonus using int(\level*8)] \level in {1, ..., 10} {
+\foreach[evaluate=\level as \bonus using int(\level*8)] \level in {1, ..., 10} {%
 \begin{card}{Cantrip}{\level}{Ray of Frost}[CRB][362]
 
 \CardTraits{Cold, Evocation}
@@ -17,5 +17,6 @@ Target 1 creature within 120 feet with a spell atack.
 
 \pfsymbol{critical-success} The target takes double damage
 and takes a \(-10\)-foot status penalty to its Speeds for 1 round.
-\end{card}
+
+\end{card}%
 }
