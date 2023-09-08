@@ -146,7 +146,7 @@ jobs:
              repo: 'pf2e-generated-card-images',
              path: process.env.dir + "/" + process.env.file_path,
              message: 'upload files for some comment in ' + context.payload.comment.html_url,
-             content: (await fs.readFile(process.env.file_path).toString("base64")),
+             content: (await fs.readFile(process.env.file_path)).toString("base64"),
              headers: {
               'X-GitHub-Api-Version': '2022-11-28'
              }
