@@ -151,8 +151,8 @@
 
 % Write metadata information about some file
 
-\newwrite\metadataFile
-\openout\metadataFile=metadata.txt
+\immediate\newwrite\metadataFile
+\immediate\openout\metadataFile=metadata.txt
 
 \pgfkeys{
   /collections/all/.style={},
@@ -186,7 +186,7 @@
   \immediate\write\metadataFile{ title=\cardTitle}%
   \immediate\write\metadataFile{ level=\cardLevel}%
   \immediate\write\metadataFile{ type=\cardType}%
-  \immediate\write\metadataFile{ card source book=\cardSourceBook}%
+  \immediate\write\metadataFile{ source book=\cardSourceBook}%
   \pgfkeys{/collections/all}%
 }
 
