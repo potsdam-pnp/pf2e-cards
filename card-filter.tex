@@ -196,7 +196,8 @@
 
 \pgfkeys{
   /language/current precedence/.code={%
-    \xdef\nextPrecedence{#1}%
+    \pgfmathparse{\basePrecedence + #1}
+    \xdef\nextPrecedence{\pgfmathresult}%
   },
   /language/current value/.code 2 args={%
     \edef\currentType{#1}%
@@ -217,28 +218,31 @@
 }
 
 % entrypoint
-\def\startExpression#1{
-  \parseValue{#1}
-  \pgfqkeys{/language}{value/.expanded=\currentValue}
-  \edef\currentLevel{0}
-  \edef\currentPrecedence{0}
-  \edef\currentOperator{}
-  \continue
+\def\startExpression{
+  \xdef\basePrecedence{0}%
+  \edef\currentPrecedence{0}%
+  \edef\currentOperator{}%
+  \continueWithValue
 }
 
 \def\continue#1{
   \def\currentToken{#1}
-  \def\a{\end}
+  \def\a{\end}\def\b{)}%
   \ifx\a\currentToken
-    % finish 
+    % finish
     \closeLevels
     \expandafter\end
-  \else
-    \expandafter\continueWith
+  \else\ifx\b\currentToken
+      \pgfmathparse{int(\basePrecedence-1000)}%
+      \xdef\basePrecedence{\pgfmathresult}%
+      \expandafter\expandafter\expandafter\continue
+    \else
+      \expandafter\expandafter\expandafter\continueWithOperator
+    \fi
   \fi
 }
 
-\def\continueWith#1{
+\def\continueWithOperator{
   \parseOperator
   \pgfqkeys{/language}{precedence/.expanded=\nextOperator}
   \endgroupsPrecedence
@@ -246,11 +250,21 @@
   \begingroup
   \edef\currentOperator{}
   \edef\currentPrecedence{\nextPrecedence}
-  \parseValue{#1}
-  \pgfqkeys{/language}{value/.expanded=\currentValue}
-  \pgfmathparse{\currentLevel+1}
-  \edef\currentLevel{\pgfmathresult}%
-  \continue
+  \continueWithValue
+}
+
+\def\continueWithValue#1{
+  \def\a{(}
+  \def\b{#1}
+  \ifx\a\b
+    \pgfmathparse{\basePrecedence+1000}%
+    \xdef\basePrecedence{\pgfmathresult}%
+    \expandafter\continueWithValue
+  \else
+    \parseValue{#1}
+    \pgfqkeys{/language}{value/.expanded=\currentValue}
+    \expandafter\continue
+  \fi
 }
 
 \def\allowedControlSequences{}
@@ -294,6 +308,12 @@
 }
 
 \def\closeLevels{
-  \xdef\nextPrecedence{1}
-  \endgroupsPrecedence
+  \xdef\initialBasePrecedence{0}
+  \ifx\basePrecedence\initialBasePrecedence
+    \xdef\nextPrecedence{0}
+    \endgroupsPrecedence
+  \else
+    \pgfmathparse{\basePrecedence / 1000}%
+    \errmessage{Not enough closing brackets at end of expression, \pgfmathresult\space brackets missing}%
+  \fi
 }
