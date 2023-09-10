@@ -101,7 +101,7 @@ async function findAndUploadImage(github, context, metadataLines, searchString) 
   const path = encodeURIComponent(process.env.sha) + "/" + fileName;
   return {
     prefix: prefix,
-    images: '![' + fileName + '](https://raw.githubusercontent.com/potsdam-pnp/pf2e-generated-card-images/main/' + path + ')\n'
+    images: '![' + fileName + '](https://raw.githubusercontent.com/potsdam-pnp/pf2e-generated-card-images/main/' + path + ') '
   }
 }
 
