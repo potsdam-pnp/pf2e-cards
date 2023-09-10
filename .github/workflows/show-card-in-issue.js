@@ -60,7 +60,7 @@ class Commit {
         'X-GitHub-Api-Version': '2022-11-28'
       }
     });
-    const mainCommitSha = mainRef.data[0].sha;
+    const mainCommitSha = mainRef.data[0].object.sha;
     console.log("current head: ", mainRef.data[0].url);
 
     const mainTree = await this.github.request('GET /repos/{owner}/{repo}/git/commits/{commit_sha}', {
