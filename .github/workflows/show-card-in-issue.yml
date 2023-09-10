@@ -117,6 +117,11 @@ jobs:
        with:
          app_id: ${{ secrets.SHOWCARDSAPPID }}
          private_key: ${{ secrets.SHOWCARDSPRIVATEKEY }}
+     - name: Checkout latex-compile-check.js
+       uses: actions/checkout@v3
+       with:
+         sparse-checkout: .github/workflows/show-card-in-issue.js
+         sparse-checkout-cone-mode: false
      - name: Extract images and comment on issue
        id: extract
        if: "steps.generate_token.outcome == 'success'"
