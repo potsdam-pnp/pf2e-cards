@@ -128,7 +128,7 @@ jobs:
          github-token: ${{ steps.generate_token.outputs.token }}
          script: |
            const script = require(".github/workflows/show-card-in-issue.js");
-           await script(github, context, execa);
+           await script(github, context);
      - name: Comment when some failures happen
        if: failure()
        uses: actions/github-script@v6
