@@ -48,11 +48,7 @@ function extractImageOnPage(page) {
   })
 }
 
-async function main(github, context) {
-  const metadataLines = (await fs.readFile("metadata.txt", "utf-8")).split("\n");
-  const showParameter = process.env.showParameter;
-  const searchString = showParameter.trim();
-
+async function findAndUploadImage(github, context, metadataLines, searchString) {
   const matchingPages = [];
   let currentPage = 0;
   for (const line of metadataLines) {
@@ -74,12 +70,17 @@ async function main(github, context) {
       }
     }
     if (matchingStrings.length > 0) {
-      const tries = matchingStrings.map(x => "\t/show " + x).join("\n");
-      await commentIssue(github, context, `No card found for matching '${searchString}', maybe try one of the following instead?\n` + tries)
+      const tries = matchingStrings.map(x => "\tshow " + x).join("\n");
+      return {
+        prefix: `No card found for matching '${searchString}', maybe try one of the following instead?\n\`\`\`` + tries + "\n```\n",
+        images: ""
+      };
     } else {
-      await commentIssue(github, context, `No card found matching '${searchString}'`);
+      return {
+        prefix: `No card found matching '${searchString}'\n`,
+        images: ""
+      };
     }
-    return;
   }
 
   console.log(`Found ${matchingPages.length} matching pages`, matchingPages);
@@ -95,11 +96,39 @@ async function main(github, context) {
 
   let prefix = '';
   if (matchingPages.length > 1) {
-    prefix = `Found ${matchingPages.length} cards matching, this is the first one:\n`
+    prefix = `Found ${matchingPages.length} cards matching '${searchString}', showing only the first one.\n`;
   }
-  const suffix = "from " + process.env.sha;
   const path = encodeURIComponent(process.env.sha) + "/" + fileName;
-  await commentIssue(github, context, prefix + '![' + fileName + '](https://raw.githubusercontent.com/potsdam-pnp/pf2e-generated-card-images/main/' + path + ')\n' + suffix)
+  return {
+    prefix: prefix,
+    images: '![' + fileName + '](https://raw.githubusercontent.com/potsdam-pnp/pf2e-generated-card-images/main/' + path + ')\n'
+  }
+}
+
+async function main(github, context) {
+  const metadataLines = (await fs.readFile("metadata.txt", "utf-8")).split("\n");
+  const commentBody = process.env.commentBody ?? context.payload.comment.body;
+  const searchStrings = commentBody.split("\n").flatMap(line => {
+    const index = line.indexOf("/show ");
+    if (index == -1) 
+      return [];
+    else
+      return [line.substring(index + "/show ".length).trim()];
+  });
+
+  let prefix = "";
+  let images = "";
+  let suffix = "from " + process.env.sha;
+
+  for (const searchString of searchStrings) {
+    const result = await findAndUploadImage(github, context, metadataLines, searchString);
+    prefix += result.prefix;
+    images += result.images;
+  }
+
+  if (images == "") suffix = "";
+
+  await commentIssue(github, context, prefix + "\n" + images + "\n" + suffix)
 }
 
 if (process.env.execute) { main() }
