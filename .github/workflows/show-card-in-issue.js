@@ -72,7 +72,7 @@ async function findAndUploadImage(github, context, metadataLines, searchString) 
     if (matchingStrings.length > 0) {
       const tries = matchingStrings.map(x => "\tshow " + x).join("\n");
       return {
-        prefix: `No card found for matching '${searchString}', maybe try one of the following instead?\n\`\`\`` + tries + "\n```\n",
+        prefix: `No card found for matching '${searchString}', maybe try one of the following instead?\n\`\`\`\n` + tries + "\n```\n",
         images: ""
       };
     } else {
