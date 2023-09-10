@@ -63,7 +63,7 @@ class Commit {
     const mainCommitSha = mainRef.data[0].sha;
     console.log("current head: ", mainRef.data[0].url);
 
-    const mainTree = this.github.request('GET /repos/{owner}/{repo}/git/commits/{commit_sha}', {
+    const mainTree = await this.github.request('GET /repos/{owner}/{repo}/git/commits/{commit_sha}', {
       owner: this.context.repo.owner,
       repo: 'pf2e-generated-card-images',
       commit_sha: mainCommitSha,
@@ -168,7 +168,7 @@ async function findAndUploadImage(commit, metadataLines, searchString) {
   const imagePayload = await extractImageOnPage(matchingPages[0]);
   const fileName = matchingPages[0] + ".png";
 
-  commit.addFile(process.env.sha + "/" + fileName, imagePayload);
+  await commit.addFile(process.env.sha + "/" + fileName, imagePayload);
 
   let prefix = '';
   if (matchingPages.length > 1) {
