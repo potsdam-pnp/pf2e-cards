@@ -108,84 +108,28 @@ jobs:
        run: unzip result.zip
      - name: Install packages
        if: "steps.download-cards.outcome == 'success'"
-       run: sudo apt-get install pdftk poppler-utils
-     - name: Extract image
-       id: extract
-       if: "steps.download-cards.outcome == 'success'"
-       env:
-         cardName: ${{ steps.find.outputs.result }}
-       run: |
-         pdftk cards.pdf dump_data_utf8 | grep ^Bookmark > bookmarks.txt
-         count=$(cat bookmarks.txt | sed -n "/^BookmarkTitle: $cardName/,+2s/BookmarkPageNumber: //p" | wc -l)
-         page=$(cat bookmarks.txt | sed -n "/^BookmarkTitle: $cardName/,+2s/BookmarkPageNumber: //p" | head -n 1)
-         if [ $count == 0 ]; then
-           echo "Card not found"
-         else
-           pdftoppm -f $page -l $page -png cards.pdf > "$cardName.png"
-         fi
-         echo "count=$count" >> $GITHUB_OUTPUT
+       id: install
+       run: sudo apt-get install poppler-utils
      - name: Generate a token to authenticate as show-cards
+       if: "steps.install.outcome == 'success'"
        id: generate_token
        uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
        with:
          app_id: ${{ secrets.SHOWCARDSAPPID }}
          private_key: ${{ secrets.SHOWCARDSPRIVATEKEY }}
-     - name: Upload image
-       id: upload
-       if: "steps.download-cards.outcome == 'success' && steps.extract.outputs.count >= 1"
+     - name: Extract images and comment on issue
+       id: extract
+       if: "steps.generate_token.outcome == 'success'"
        uses: actions/github-script@v6
        env:
-         dir: ${{ steps.sha.outputs.result }}
-         file_path: ${{steps.find.outputs.result}}.png
+         showParameter: ${{ steps.find.outputs.result }}
+         sha: ${{ steps.sha.outputs.result }}
        with:
          github-token: ${{ steps.generate_token.outputs.token }}
          script: |
-           let fs = require('fs').promises;
-           await github.request('PUT /repos/{owner}/{repo}/contents/{path}', {
-             owner: context.repo.owner,
-             repo: 'pf2e-generated-card-images',
-             path: process.env.dir + "/" + process.env.file_path,
-             message: 'upload files for some comment in ' + context.payload.comment.html_url,
-             content: (await fs.readFile(process.env.file_path)).toString("base64"),
-             headers: {
-              'X-GitHub-Api-Version': '2022-11-28'
-             }
-           });
-     - name: Comment on issue
-       if: "steps.upload.outcome == 'success'"
-       uses: actions/github-script@v6
-       env:
-         dir: ${{ steps.sha.outputs.result }}
-         file_path: ${{steps.find.outputs.result}}.png
-         sha: "${{ steps.sha.outputs.result }}"
-       with:
-         github-token: ${{ steps.generate_token.outputs.token }}
-         script: |
-           let prefix = '';
-           if (${{ steps.extract.outputs.count }} > 1) {
-             prefix = "Found ${{ steps.extract.outputs.count }} cards matching, this is the first one:\n"
-           }
-           const suffix = "from " + process.env.sha;
-           const fileName = encodeURIComponent(process.env.dir) + "/" + encodeURIComponent(process.env.file_path);
-           await github.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
-             owner: context.repo.owner,
-             repo: context.repo.repo,
-             issue_number: context.issue.number,
-             body: prefix + '![${{steps.find.outputs.result}}](https://raw.githubusercontent.com/potsdam-pnp/pf2e-generated-card-images/main/' + fileName + ')\n' + suffix
-           });
-     - name: Comment on issue when not found
-       uses: actions/github-script@v6
-       if: "steps.upload.outcome == 'success' && steps.extract.outputs.count == 0"
-       with:
-         github-token: ${{ steps.generate_token.outputs.token }}
-         script: |
-          await github.request('POST /repos/{owner}/{repo}/issues/{issue_number}/comments', {
-             owner: context.repo.owner,
-             repo: context.repo.repo,
-             issue_number: context.issue.number,
-             body: 'No card found for "${{ steps.find.outputs.result }}"'
-           });
-     - name: Comment when other failures happen
+           const script = require(".github/workflows/show-card-in-issue.js");
+           await script(github, context);
+     - name: Comment when some failures happen
        if: failure()
        uses: actions/github-script@v6
        with:
@@ -198,4 +142,3 @@ jobs:
              body: 'There was some issue fetching card images. [Details](https://github.com/' + 
              context.repo.owner + '/' + context.repo.repo + '/actions/runs/' + context.runId + ')'
            });
-
