@@ -92,7 +92,7 @@ class Commit {
     });
     const newTreeSha = newTree.data.sha;
     const newCommit = await this.github.request('POST /repos/{owner}/{repo}/git/commits', {
-      owner: this.context.repo,
+      owner: this.context.repo.owner,
       repo: 'pf2e-generated-card-images',
       message: message,
       parents: [mainCommitSha],
@@ -103,7 +103,7 @@ class Commit {
     });
     const newCommitSha = newCommit.data.sha;
     await this.github.request('PATCH /repos/{owner}/{repo}/git/refs/{ref}', {
-      owner: this.context.repo,
+      owner: this.context.repo.owner,
       repo: 'pf2e-generated-card-images',
       ref: 'heads/main',
       sha: newCommitSha,
