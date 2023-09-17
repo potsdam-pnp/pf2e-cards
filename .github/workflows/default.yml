@@ -1,4 +1,4 @@
-name: 'compile'
+name: Build
 on:
   workflow_dispatch:
   push:
@@ -13,7 +13,7 @@ permissions:
   checks: write
 jobs:
   compile:
-    name: Generate cards.pdf
+    name: Build
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -24,22 +24,23 @@ jobs:
         name: potsdam-pnp
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - name: Compile LaTeX document
-      run: nix build --option log-lines 100
+      run: nix build --option log-lines 300
     - name: Archive cards.pdf
       uses: actions/upload-artifact@v3
       with:
         name: cards
         path: result/
-    - name: Show cards.log
-      run: cat result/cards.log
     - name: Archive compile logs
       uses: actions/upload-artifact@v3
       with:
         name: compile-log
         path: result/cards.log
+    - name: Github page
+      run: nix build .#website --option log-lines 300 -o _site
+    - uses: actions/upload-pages-artifact@v2
   gh-pages:
-    name: Generate website
-    uses: ./.github/workflows/gh-pages.yml
+    name: Deploy website
+    uses: ./.github/workflows/deploy-gh-pages.yml
     needs: compile
   checks:
     uses: ./.github/workflows/latex-compile-check.yml
