@@ -18,28 +18,21 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - uses: cachix/install-nix-action@v22
     - name: Compile LaTeX document
-      uses: xu-cheng/latex-action@v2
-      with:
-        root_file: |
-           cards.tex
-           a4print.tex
-        latexmk_use_xelatex: true
-        pre_compile: "export max_print_line=1000"
+      run: nix build
     - name: Archive cards.pdf
       uses: actions/upload-artifact@v3
       with:
         name: cards
-        path: |
-          *.pdf
-          metadata.txt
+        path: result/
     - name: Show cards.log
-      run: cat cards.log
+      run: cat result/cards.log
     - name: Archive compile logs
       uses: actions/upload-artifact@v3
       with:
         name: compile-log
-        path: "*.log"
+        path: result/cards.log
   gh-pages:
     name: Generate website
     uses: ./.github/workflows/gh-pages.yml
