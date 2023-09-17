@@ -1,6 +1,5 @@
-# What -xelatex would do
-$pdf_mode = 5;
-$dvi_mode = $postscript_mode = 0; 
+# Use xelatex
+$invoked_name = "xelatexmk";
 
 # Other options we want to forward to xelatex
 push @extra_xelatex_options, "-synctex=1", "-interaction=nonstopmode", "-halt-on-error", "-file-line-error";
