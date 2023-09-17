@@ -1,0 +1,11 @@
+### Site metadata ###
+title: pf2e-cards
+description: ""
+
+repository: potsdam-pnp/pf2e-cards
+
+### Build settings ###
+
+url: https://potsdam-pnp.github.io/pf2e-cards/
+baseurl: "/pf2e-cards"
+
