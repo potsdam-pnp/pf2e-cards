@@ -6,6 +6,6 @@ repository: potsdam-pnp/pf2e-cards
 
 ### Build settings ###
 
-url: https://potsdam-pnp.github.io/pf2e-cards/
+url: https://potsdam-pnp.github.io
 baseurl: "/pf2e-cards"
 
