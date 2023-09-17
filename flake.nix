@@ -5,6 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/release-23.05";
   };
 
+  # Happy
   outputs = { self, nixpkgs }: 
     rec {
       packages.x86_64-linux.default = import ./default.nix  (nixpkgs.legacyPackages.x86_64-linux);
