@@ -4,9 +4,14 @@ stdenv.mkDerivation {
   name = "pf2e-cards-website";
   src = ./content;
 
-  buildInputs = [ rubyPackages.github-pages glibcLocales git pdftk poppler_utils ];
+  nativeBuildInputs = [ rubyPackages.github-pages glibcLocales git pdftk poppler_utils ];
 
   LANG = "en_US.UTF-8";
+
+  # The build on MacOS appears to not be completely seperated, so to
+  # make the github-metadata plugin behave correctly, we set the url
+  # to some non-existing domain
+  PAGES_API_URL=https://no-internet-allowed.example.org;
 
   buildPhase = ''
     mkdir -p _includes
