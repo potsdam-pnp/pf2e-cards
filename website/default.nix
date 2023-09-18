@@ -4,7 +4,7 @@ stdenv.mkDerivation {
   name = "pf2e-cards-website";
   src = ./content;
 
-  buildInputs = [ rubyPackages.github-pages glibcLocales git pdftk poppler_utils ];
+  nativeBuildInputs = [ rubyPackages.github-pages glibcLocales git pdftk poppler_utils ];
 
   LANG = "en_US.UTF-8";
 

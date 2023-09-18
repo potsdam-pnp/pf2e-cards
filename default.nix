@@ -10,7 +10,7 @@ stdenv.mkDerivation {
         lib.hasSuffix ".tex" path ||
         lib.hasSuffix ".cls" path;
     };
-    buildInputs = [ (texlive.combine { inherit (texlive) scheme-small latexmk; }) ];
+    nativeBuildInputs = [ (texlive.combine { inherit (texlive) scheme-small latexmk; }) ];
     buildPhase = ''
       max_print_line=1000 latexmk -synctex=1 -interaction=nonstopmode -halt-on-error -file-line-error -xelatex cards.tex a4print.tex
       # strip /nix/<...> from cards.log to remove artifical dependency
