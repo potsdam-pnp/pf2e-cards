@@ -19,12 +19,14 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     - uses: cachix/install-nix-action@v22
+      with:
+        extra_nix_config: "log-lines = 300"
     - uses: cachix/cachix-action@v12
       with:
         name: potsdam-pnp
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - name: Compile LaTeX document
-      run: nix build --option log-lines 300 --no-update-lock-file
+      run: nix build --no-update-lock-file
     - name: Archive cards.pdf
       uses: actions/upload-artifact@v3
       with:
@@ -34,9 +36,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-      run: nix run .#latex-check --option log-lines 300 --no-update-lock-file -- result/cards.log
+      run: nix run .#latex-check --no-update-lock-file -- result/cards.log
     - name: Github page
-      run: nix build .#website --option log-lines 300 -o _site --no-update-lock-file
+      run: nix build .#website -o _site --no-update-lock-file
     - uses: actions/upload-pages-artifact@v2
   gh-pages:
     name: Deploy website
