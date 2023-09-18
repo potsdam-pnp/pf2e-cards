@@ -24,7 +24,7 @@ jobs:
         name: potsdam-pnp
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - name: Compile LaTeX document
-      run: nix build --option log-lines 300
+      run: nix build --option log-lines 300 --no-update-lock-file
     - name: Archive cards.pdf
       uses: actions/upload-artifact@v3
       with:
@@ -36,7 +36,7 @@ jobs:
         name: compile-log
         path: result/cards.log
     - name: Github page
-      run: nix build .#website --option log-lines 300 -o _site
+      run: nix build .#website --option log-lines 300 -o _site --no-update-lock-file
     - uses: actions/upload-pages-artifact@v2
   gh-pages:
     name: Deploy website
