@@ -12,8 +12,11 @@ async function main() {
       "auth": process.env.GITHUB_TOKEN
     });
 
-    await github.request('POST /repos/{repo}/check-runs', {
-      repo: process.env.GITHUB_REPOSITORY,
+    const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
+
+    await github.request('POST /repos/{owner}/{repo}/check-runs', {
+      owner,
+      repo,
       ...payload
     });
   } else {
