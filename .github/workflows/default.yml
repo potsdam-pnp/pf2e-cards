@@ -30,18 +30,15 @@ jobs:
       with:
         name: cards
         path: result/
-    - name: Archive compile logs
-      uses: actions/upload-artifact@v3
-      with:
-        name: compile-log
-        path: result/cards.log
+    - name: Latex check
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      run: nix run .#latex-check --option log-lines 300 --no-update-lock-file -- result/cards.log
     - name: Github page
       run: nix build .#website --option log-lines 300 -o _site --no-update-lock-file
     - uses: actions/upload-pages-artifact@v2
   gh-pages:
     name: Deploy website
     uses: ./.github/workflows/deploy-gh-pages.yml
-    needs: compile
-  checks:
-    uses: ./.github/workflows/latex-compile-check.yml
     needs: compile

@@ -245,9 +245,8 @@ function toAnnotationLevel(errorLevel) {
     }
 }
 
-async function main() {
-  const log = await fs.readFile(process.argv[2], "utf8");
-  const rootFile = process.argv[3];
+async function main(logFile, rootFile, sha) {
+  const log = await fs.readFile(logFile, "utf8");
   const result = parse(log, rootFile);
 
 
@@ -282,7 +281,7 @@ async function main() {
 
   const apiPayload = {
     name: "latex",
-    head_sha: process.argv[4],
+    head_sha: sha,
     conclusion: conclusion,
     output: {
       title: title,
@@ -299,7 +298,7 @@ async function main() {
     }
   };
 
-  console.log(JSON.stringify(apiPayload, null, 2));
+  return apiPayload;
 }
 
-main();
+module.exports = main;
