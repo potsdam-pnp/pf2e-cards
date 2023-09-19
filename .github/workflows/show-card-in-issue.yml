@@ -44,25 +44,96 @@ jobs:
            } else {
              return context.sha;
            }
-     - uses: cachix/install-nix-action@v22
-       if: "steps.find.outputs.result != 'no'"
+     - name: Checkout show-card-in-issue.js
+       uses: actions/checkout@v3
        with:
-         extra_nix_config: "log-lines = 300"
-     - uses: cachix/cachix-action@v12
-       if: "steps.find.outputs.result != 'no'"
-       with:
-         name: potsdam-pnp
-         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-     - name: Fetch or compile cards.pdf
-       if: "steps.find.outputs.result != 'no'"
-       run: nix build --no-update-lockfile github:${{ github.repository }}/${{ steps.sha.outputs.result }}
-     - uses: potsdam-pnp/show-cards@main
-       if: "steps.find.outputs.result != 'no'"
-       with:
-         app-id: ${{ secrets.SHOWCARDSAPPID }}
-         app-private-key: ${{ secrets.SHOWCARDSPRIVATEKEY }}
+         sparse-checkout: .github/workflows/show-card-in-issue.js
+         sparse-checkout-cone-mode: false
+     - uses: actions/github-script@v6
+       if: "steps.sha.outcome == 'success'"
+       id: download-cards
+       name: Download cards.pdf
+       env:
          sha: ${{ steps.sha.outputs.result }}
-         content-path: ./result
+       with:
+          result-encoding: string
+          script: |        
+            const workflowRuns = (await github.request('GET /repos/{owner}/{repo}/actions/runs', {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head_sha: process.env.sha
+            })).data;
+
+            let compileWorkflowRun = workflowRuns.workflow_runs.filter(x => x.name == "compile")[0];
+
+            while (!compileWorkflowRun.conclusion) {
+              console.log("Waiting for worklow run to finish");
+              await new Promise((resolve) => setTimeout(resolve, 5000));
+
+              compileWorkflowRun = (await github.request('GET /repos/{owner}/{repo}/actions/runs/{run_id}', {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: compileWorkflowRun.id,
+              })).data;
+
+              const allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: compileWorkflowRun.id,
+              });
+
+              let matchArtifact = allArtifacts.data.artifacts.filter((artifact) => {
+                return artifact.name == "cards"
+              })[0];
+
+              if (matchArtifact) break;
+            }
+
+            const allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: compileWorkflowRun.id,
+            });
+
+            let matchArtifact = allArtifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "cards"
+            })[0];
+
+            let download = await github.rest.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+
+            let fs = require('fs').promises;
+            await fs.writeFile('result.zip', Buffer.from(download.data));
+     - name: Unzip cards.pdf
+       if: "steps.download-cards.outcome == 'success'"
+       run: unzip result.zip
+     - name: Install packages
+       if: "steps.download-cards.outcome == 'success'"
+       id: install
+       run: sudo apt-get install poppler-utils
+     - name: Generate a token to authenticate as show-cards
+       if: "steps.install.outcome == 'success'"
+       id: generate_token
+       uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
+       with:
+         app_id: ${{ secrets.SHOWCARDSAPPID }}
+         private_key: ${{ secrets.SHOWCARDSPRIVATEKEY }}
+     - name: Extract images and comment on issue
+       id: extract
+       if: "steps.generate_token.outcome == 'success'"
+       uses: actions/github-script@v6
+       env:
+         showParameter: ${{ steps.find.outputs.result }}
+         sha: ${{ steps.sha.outputs.result }}
+       with:
+         github-token: ${{ steps.generate_token.outputs.token }}
+         script: |
+           const script = require(".github/workflows/show-card-in-issue.js");
+           await script(github, context);
      - name: Comment when some failures happen
        if: failure()
        uses: actions/github-script@v6
