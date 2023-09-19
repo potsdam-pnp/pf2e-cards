@@ -56,7 +56,7 @@ jobs:
      - name: Fetch or compile cards.pdf
        if: "steps.find.outputs.result != 'no'"
        run: nix build --no-update-lockfile github:${{github.repository}}/${{steps.sha.outputs.result}}
-     - uses: potsdam-pnp/show-cards
+     - uses: potsdam-pnp/show-cards@main
        if: "steps.find.outputs.result != 'no'"
        with:
          app-id: ${{ secrets.SHOWCARDSAPPID }}
