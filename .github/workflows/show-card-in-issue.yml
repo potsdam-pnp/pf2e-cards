@@ -55,7 +55,7 @@ jobs:
          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
      - name: Fetch or compile cards.pdf
        if: "steps.find.outputs.result != 'no'"
-       run: nix build --no-update-lockfile github:${{github.repository}}/${{steps.sha.outputs.result}}
+       run: nix build --no-update-lockfile github:${{ github.repository }}/${{ steps.sha.outputs.result }}
      - uses: potsdam-pnp/show-cards@main
        if: "steps.find.outputs.result != 'no'"
        with:
