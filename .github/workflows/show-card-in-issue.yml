@@ -11,7 +11,7 @@ name: Show cards in Github issues
 jobs:
   extract-image:
     name: Extract image
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
      - name: Find images to create
        id: find
@@ -44,15 +44,6 @@ jobs:
            } else {
              return context.sha;
            }
-     - uses: cachix/install-nix-action@v22
-       if: "steps.find.outputs.result != 'no'"
-       with:
-         extra_nix_config: "log-lines = 300"
-     - uses: cachix/cachix-action@v12
-       if: "steps.find.outputs.result != 'no'"
-       with:
-         name: potsdam-pnp
-         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
      - name: Fetch or compile cards.pdf
        if: "steps.find.outputs.result != 'no'"
        run: nix build --no-update-lock-file github:${{ github.repository }}/${{ steps.sha.outputs.result }}
