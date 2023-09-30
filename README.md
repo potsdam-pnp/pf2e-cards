@@ -25,8 +25,8 @@ Various icons are taken from <https://game-icons.net/> and used under [CC-by-3.0
 [cc-by-3.0]: http://creativecommons.org/licenses/by/3.0/
 [license]: LICENSE
 [license-altedin1451]: fonts/LICENSE-din1451alt
-[license-ogl]: cards/LICENSE-OGL
-[license-stix2]: fonts/LICENSE-STIXTwo
+[license-ogl]: src/cards/LICENSE-OGL
+[license-stix2]: src/fonts/LICENSE-STIXTwo
 [sil open font license]: https://scripts.sil.org/OFL
-[symbols.tex]: symbols.tex
-[fonts/PF2ESymbols]: fonts/PF2ESymbols
+[symbols.tex]: src/symbols.tex
+[fonts/PF2ESymbols]: src/fonts/PF2ESymbols
