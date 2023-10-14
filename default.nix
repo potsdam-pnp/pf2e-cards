@@ -8,11 +8,12 @@ stdenv.mkDerivation {
         lib.hasInfix "cards" path ||
         lib.hasInfix "fonts" path ||
         lib.hasSuffix ".tex" path ||
-        lib.hasSuffix ".cls" path;
+        lib.hasSuffix ".cls" path ||
+        lib.hasSuffix ".latexmkrc" path;
     };
     nativeBuildInputs = [ (texlive.combine { inherit (texlive) scheme-small latexmk; }) ];
     buildPhase = ''
-      max_print_line=1000 latexmk -synctex=1 -interaction=nonstopmode -halt-on-error -file-line-error -xelatex cards.tex a4print.tex
+      max_print_line=1000 latexmk
       # strip /nix/<...> from cards.log to remove artifical dependency
       sed -i 's|/nix/store/.\{32\}|/installation|g' cards.log
     '';
