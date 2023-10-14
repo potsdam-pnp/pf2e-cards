@@ -6,6 +6,11 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
+  nixConfig = {
+    extra-substituters = "https://potsdam-pnp.cachix.org";
+    extra-trusted-public-keys = "potsdam-pnp.cachix.org-1:ZbQQiYz7KI9iZLOwECW6ErfJLFowbVOrNUF7PXJGLhw=";
+  };
+
   outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system: 
       let pkgs = nixpkgs.legacyPackages.${system}; in rec {
