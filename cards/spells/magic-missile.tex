@@ -1,10 +1,9 @@
 % Magic Missile
 % https://2e.aonprd.com/Spells.aspx?ID=180
 
-\foreach[
+\begin{card-collection}{Spell}{\level}{Magic Missile}[CRB][349]{\level}[
   evaluate=\level as \half using int(ceil(\level/2))
-] \level in {1, ..., 10} {
-\begin{card}{Spell}{\level}{Magic Missile}[CRB][349]
+]{1, ..., 10}
 
 \CardTraits{Evocation, Force}
 
@@ -21,5 +20,4 @@ You send \half{} darts per \pfsymbol{one-action} spent.
 Target one creature within 120 feet per dart.
 
 \DamageRoll{Force}{1d4+1}{} per dart
-\end{card}
-}
+\end{card-collection}

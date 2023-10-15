@@ -1,11 +1,9 @@
 % Burning Hands
 % https://2e.aonprd.com/Spells.aspx?ID=30
 
-\foreach[
+\begin{card-collection}{Spell}{\level}{Burning Hands}[CRB][322]{\level}[
   evaluate=\level as \dice using int(2*\level)
-] \level in {1, ..., 10} {%
-\begin{card}{Spell}{\level}{Burning Hands}[CRB][322]
-
+]{1, ..., 10}%
 \CardTraits{Evocation, Fire}
 
 \Flavor{Gouts of flame rush from your hands.}
@@ -17,5 +15,4 @@ Affect all creatures in a 15-foot cone.
 They get a basic Reflex save.
 
 \DamageRoll{Fire}{\dice{}d6}{}
-\end{card}%
-}
+\end{card-collection}%

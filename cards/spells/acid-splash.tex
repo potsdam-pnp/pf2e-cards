@@ -1,11 +1,10 @@
 % Acid Splash
 % https://2e.aonprd.com/Spells.aspx?ID=3
 
-\foreach[
+\begin{card-collection}{Cantrip}{\level}{Acid Splash}[CRB][316]{\level}[
   evaluate=\level as \half using int(ceil(\level/2)),
   evaluate=\level as \dice using int(floor((\level-1)/2))
-] \level in {1, ..., 10} {%
-\begin{card}{Cantrip}{\level}{Acid Splash}[CRB][316]
+]{1, ..., 10}
 
 \CardTraits{Acid, Evocation}
 
@@ -26,5 +25,5 @@ Target one creature within 30 feet.
 \fi
 
 \pfsymbol{critical-success} The target takes \pfsymbol{acid} \half{} persistent damage.
-\end{card}%
-}
+\end{card-collection}%
+

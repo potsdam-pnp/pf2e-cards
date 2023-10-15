@@ -1,8 +1,9 @@
 % Detect Magic
 % https://2e.aonprd.com/Spells.aspx?ID=66
 
-\foreach[evaluate=\level as \lowerLevel using int(\level - 1)] \level in {1, ..., 10} {%
-\begin{card}{Cantrip}{\level}{Detect Magic}[CRB][328]
+\begin{card-collection}{Cantrip}{\level}{Detect Magic}[CRB][328]{\level}[
+  evaluate=\level as \lowerLevel using int(\level - 1)
+]{1, ..., 10}
 
 \CardTraits{Detection, Divination}
 
@@ -31,5 +32,4 @@ Detect illusion magic for effects with a level \(\le \lowerLevel\).
 \else
 You cannot detect illusion magic.
 \fi
-\end{card}%
-}
+\end{card-collection}%
