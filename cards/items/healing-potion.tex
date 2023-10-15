@@ -2,15 +2,15 @@
 
 % https://2e.aonprd.com/Equipment.aspx?ID=186
 
-\foreach \type / \tlevel / \price / \hitPoints in {
+\begin{card-collection}{Item}{\tlevel}{\type{} Healing Potion}[CRB][290]{
+  \type / \tlevel / \price / \hitPoints
+}{
   Minor/1/4gp/1d8,
   Lesser/3/12gp/2d8+5,
   Moderate/6/50gp/3d8+10,
   Greater/12/400gp/6d8+20,
   Major/18/5000gp/8d8+30
-} {
-
-\begin{card}{Item}{\tlevel}{\type{} Healing Potion}[CRB][290]
+}
 
 \CardTraits{Positive, Potion, Consumable, Healing, Magical, Necromancy}
 
@@ -29,5 +29,4 @@ Target 1 willing or helpless creature within touch range.
 \ItemHands{1}
 \ItemBulk{L}
 \ItemPrice{\price}
-\end{card}
-}
+\end{card-collection}

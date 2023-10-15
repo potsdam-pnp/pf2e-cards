@@ -158,6 +158,10 @@
   \fi
 }{}
 
+\NewDocumentEnvironment{card-collection}{mmmoomm +b}{%
+  \foreach #6 in{#7}{\begin{card}{#1}{#2}{#3}[#4][#5]#8\end{card}}%
+}%
+
 \pagestyle{empty}
 
 % Prefer underfull over overfull boxes

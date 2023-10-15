@@ -1,8 +1,7 @@
 % Force Bolt
 % https://2e.aonprd.com/Spells.aspx?ID=529
 
-\foreach[evaluate=\level as \half using int(ceil(\level/2))] \level in {1, ..., 10} {
-\begin{card}{Focus}{\level}{Force Bolt}[CRB][407]
+\begin{card-collection}{Focus}{\level}{Force Bolt}[CRB][407]{[evaluate=\level as \half using int(ceil(\level/2))] \level}{1, ..., 10}
 
 \CardTraits{Force, Evocation, Uncommon, Wizard}
 
@@ -13,5 +12,5 @@
 Target 1 creature within 30 feet.
 
 \DamageRoll{Force}{\half d4 + \half}{}
-\end{card}
-}
+\end{card-collection}
+
