@@ -119,7 +119,8 @@
   level/.append code={\ifnum\pdfstrcmp{\cardLevel}{}=0 \edef\cardLevel{-1}\fi},
   level/.append code={\ifnum\pdfstrcmp{\cardLevel}{4+}=0 \edef\cardLevel{4.5}\fi},
   title/.estore in=\cardTitle,
-  source book/.estore in=\cardSourceBook
+  source book/.estore in=\cardSourceBook,
+  collection value/.estore in=\cardCollectionValue
 }
 
 \def\allowedControlSequencesForFilteringCards{
@@ -187,6 +188,10 @@
   \immediate\write\metadataFile{ level=\cardLevel}%
   \immediate\write\metadataFile{ type=\cardType}%
   \immediate\write\metadataFile{ source book=\cardSourceBook}%
+  \immediate\write\metadataFile{ source file=\CurrentFilePath/\CurrentFile}%
+  \ifnum\pdfstrcmp{\cardCollectionValue}{}=0\else
+    \immediate\write\metadataFile{ collection value=\cardCollectionValue}%
+  \fi
   \pgfkeys{/collections/all}%
 }
 

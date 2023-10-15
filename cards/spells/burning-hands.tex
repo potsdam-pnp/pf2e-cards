@@ -1,11 +1,9 @@
 % Burning Hands
 % https://2e.aonprd.com/Spells.aspx?ID=30
 
-\begin{card-collection}{Spell}{\level}{Burning Hands}[CRB][322]{
-  [
-    evaluate=\level as \dice using int(2*\level)
-  ] \level
-}{1, ..., 10}%
+\begin{card-collection}{Spell}{\level}{Burning Hands}[CRB][322]{\level}[
+  evaluate=\level as \dice using int(2*\level)
+]{1, ..., 10}%
 \CardTraits{Evocation, Fire}
 
 \Flavor{Gouts of flame rush from your hands.}

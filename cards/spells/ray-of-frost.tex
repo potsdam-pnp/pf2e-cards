@@ -1,7 +1,9 @@
 % Ray of Frost
 % https://2e.aonprd.com/Spells.aspx?ID=245
 
-\begin{card-collection}{Cantrip}{\level}{Ray of Frost}[CRB][362]{[evaluate=\level as \bonus using int(\level*8)] \level}{1, ..., 10}
+\begin{card-collection}{Cantrip}{\level}{Ray of Frost}[CRB][362]{\level}[
+  evaluate=\level as \bonus using int(\level*8)
+]{1, ..., 10}
 
 \CardTraits{Cold, Evocation}
 

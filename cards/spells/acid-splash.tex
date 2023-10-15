@@ -1,12 +1,10 @@
 % Acid Splash
 % https://2e.aonprd.com/Spells.aspx?ID=3
 
-\begin{card-collection}{Cantrip}{\level}{Acid Splash}[CRB][316]{
-  [
-    evaluate=\level as \half using int(ceil(\level/2)),
-    evaluate=\level as \dice using int(floor((\level-1)/2))
-  ] \level
-}{1, ..., 10}
+\begin{card-collection}{Cantrip}{\level}{Acid Splash}[CRB][316]{\level}[
+  evaluate=\level as \half using int(ceil(\level/2)),
+  evaluate=\level as \dice using int(floor((\level-1)/2))
+]{1, ..., 10}
 
 \CardTraits{Acid, Evocation}
 

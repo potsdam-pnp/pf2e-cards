@@ -1,7 +1,9 @@
 % Force Bolt
 % https://2e.aonprd.com/Spells.aspx?ID=529
 
-\begin{card-collection}{Focus}{\level}{Force Bolt}[CRB][407]{[evaluate=\level as \half using int(ceil(\level/2))] \level}{1, ..., 10}
+\begin{card-collection}{Focus}{\level}{Force Bolt}[CRB][407]{\level}[
+  evaluate=\level as \half using int(ceil(\level/2))
+]{1, ..., 10}
 
 \CardTraits{Force, Evocation, Uncommon, Wizard}
 

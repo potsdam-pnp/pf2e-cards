@@ -1,7 +1,9 @@
 % Detect Magic
 % https://2e.aonprd.com/Spells.aspx?ID=66
 
-\begin{card-collection}{Cantrip}{\level}{Detect Magic}[CRB][328]{[evaluate=\level as \lowerLevel using int(\level - 1)] \level}{1, ..., 10}
+\begin{card-collection}{Cantrip}{\level}{Detect Magic}[CRB][328]{\level}[
+  evaluate=\level as \lowerLevel using int(\level - 1)
+]{1, ..., 10}
 
 \CardTraits{Detection, Divination}
 

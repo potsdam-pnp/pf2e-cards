@@ -123,7 +123,8 @@
 % \end{card}
 % TODO: make reference mandatory, but we need to define all the references first
 \NewDocumentEnvironment{card}{mmmoo}{%
-  \ifVisible[type=#1, level=#2, title=#3, source book=#4]%
+  \ifVisible[type=#1, level=#2, title=#3, source book=#4, 
+    collection value=\ifcsname currentValueInCardCollection\endcsname\currentValueInCardCollection\fi]%
 %
   \clearpage%
 %
@@ -158,8 +159,10 @@
   \fi
 }{}
 
-\NewDocumentEnvironment{card-collection}{mmmoomm +b}{%
-  \foreach #6 in{#7}{\begin{card}{#1}{#2}{#3}[#4][#5]#8\end{card}}%
+
+\NewDocumentEnvironment{card-collection}{mmmoomom +b}{%
+  \edef\temp{\noexpand\foreach\IfValueTF{#7}{[\unexpanded{#7}]}{}}%
+  \temp#6 in{#8}{\edef\currentValueInCardCollection{#6}\begin{card}{#1}{#2}{#3}[#4][#5]#9\end{card}}%
 }%
 
 \pagestyle{empty}
