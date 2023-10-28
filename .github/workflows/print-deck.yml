@@ -1,0 +1,39 @@
+name: Print card deck
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Commit revision
+        required: true
+        type: string
+      pages:
+        description: Pages to be printed
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  compile:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.ref }}
+    - uses: cachix/install-nix-action@v22
+      with:
+        extra_nix_config: "log-lines = 300"
+    - name: Patch a4print.tex
+      run: sed -i.bak s/-/${{ inputs.pages }}/ a4print.tex
+    - uses: cachix/cachix-action@v12
+      with:
+        name: potsdam-pnp
+        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+    - name: Compile LaTeX document
+      run: nix build --no-update-lock-file
+    - name: Archive a4paper.pdf
+      uses: actions/upload-artifact@v3
+      with:
+        name: cards
+        path: result/a4print.pdf
