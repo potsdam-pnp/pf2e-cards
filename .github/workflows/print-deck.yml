@@ -25,7 +25,7 @@ jobs:
       with:
         extra_nix_config: "log-lines = 300"
     - name: Patch a4print.tex
-      run: sed -i.bak s/-/${{ inputs.pages }}/ a4print.tex
+      run: sed -i.bak 's/-/{${{ inputs.pages }}}/' a4print.tex
     - uses: cachix/cachix-action@v12
       with:
         name: potsdam-pnp
